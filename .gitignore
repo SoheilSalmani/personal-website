@@ -1,3 +1,14 @@
 # VS Code config folder for dev containers
 /.devcontainer/
 
+# Node package folder
+/node_modules/
+
+# Python cache folders
+__pycache__/
+
+# Gatsby cache folder
+/.cache/
+
+# Gatsby public folder
+/public/
