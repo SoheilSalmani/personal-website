@@ -1,4 +1,5 @@
 import React from "react"
+import Layout from "../components/layout"
 import useSkills from "../hooks/use-skills"
 
 export default function SkillsPage() {
@@ -21,7 +22,7 @@ export default function SkillsPage() {
   }
 
   return (
-    <>
+    <Layout>
       {skills.map(skill => (
         <section>
           <h2>{skill.title}</h2>
@@ -37,6 +38,6 @@ export default function SkillsPage() {
           {createSubskillsList(skill.subskills)}
         </section>
       ))}
-    </>
+    </Layout>
   )
 }
