@@ -6,7 +6,8 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "format": "prettier --write \"**/*.{js,json,md,mdx}\""
   },
   "dependencies": {
     "gatsby": "^3.14.1",
