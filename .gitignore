@@ -1,3 +1,8 @@
 # VS Code config folder for dev containers
 /.devcontainer/
 
+# Node package folder
+/node_modules/
+
+# Python cache folders
+__pycache__/
