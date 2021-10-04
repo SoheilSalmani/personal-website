@@ -12,3 +12,7 @@ __pycache__/
 
 # Gatsby public folder
 /public/
+
+# Env files
+/environments/*
+!/environments/*.template
