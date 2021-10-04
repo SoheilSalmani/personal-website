@@ -6,3 +6,9 @@
 
 # Python cache folders
 __pycache__/
+
+# Gatsby cache folder
+/.cache/
+
+# Gatsby public folder
+/public/
