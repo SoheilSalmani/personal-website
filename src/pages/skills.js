@@ -25,7 +25,7 @@ export default function SkillsPage() {
   return (
     <Layout>
       {skills.map(skill => (
-        <section>
+        <section key={skill.id}>
           <h2>{skill.title}</h2>
           <MDXRenderer>{skill.description}</MDXRenderer>
           <p>

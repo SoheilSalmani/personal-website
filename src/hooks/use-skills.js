@@ -5,6 +5,7 @@ const useSkills = (lang = "en-US") => {
     query {
       allContentfulSkill {
         nodes {
+          id
           title
           description {
             childMdx {
@@ -22,6 +23,7 @@ const useSkills = (lang = "en-US") => {
   `)
   return data.allContentfulSkill.nodes
     .map(skill => ({
+      id: skill.id,
       title: skill.title,
       description: skill.description.childMdx.body,
       score: skill.score,
