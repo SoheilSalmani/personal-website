@@ -24,6 +24,7 @@ export default function SkillsPage() {
 
   return (
     <Layout>
+      <h1>Skills</h1>
       {skills.map(skill => (
         <section key={skill.id}>
           <h2>{skill.title}</h2>
