@@ -19,11 +19,11 @@ module.exports = {
         host: process.env.CONTENTFUL_HOST,
       },
     },
-    "gatsby-plugin-emotion",
+    `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: "./src/utils/typography.js",
+        pathToConfigModule: `${__dirname}/src/utils/typography.js`,
       },
     },
     {
