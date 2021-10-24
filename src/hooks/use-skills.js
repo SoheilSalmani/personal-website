@@ -7,8 +7,8 @@ const useSkills = (lang = "en-US") => {
         nodes {
           title
           description {
-            childMarkdownRemark {
-              html
+            childMdx {
+              body
             }
           }
           score
@@ -23,7 +23,7 @@ const useSkills = (lang = "en-US") => {
   return data.allContentfulSkill.nodes
     .map(skill => ({
       title: skill.title,
-      description: skill.description.childMarkdownRemark.html,
+      description: skill.description.childMdx.body,
       score: skill.score,
       lang: skill.node_locale,
       subskills: skill.subskills,
