@@ -5,6 +5,13 @@ require("dotenv").config({
 module.exports = {
   plugins: [
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `exercise-sheets`,
+        path: `${__dirname}/content/exercise-sheets`,
+      },
+    },
+    {
       resolve: `gatsby-source-contentful`,
       options: {
         spaceId: process.env.CONTENTFUL_SPACE_ID,
@@ -12,12 +19,19 @@ module.exports = {
         host: process.env.CONTENTFUL_HOST,
       },
     },
-    "gatsby-transformer-remark",
-    "gatsby-plugin-emotion",
+    `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
-        pathToConfigModule: "./src/utils/typography.js",
+        pathToConfigModule: `${__dirname}/src/utils/typography.js`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        defaultLayouts: {
+          default: require.resolve(`${__dirname}/src/components/layout.js`),
+        },
       },
     },
   ],

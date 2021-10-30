@@ -1,5 +1,6 @@
 import React from "react"
 import Layout from "../components/layout"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 import useSkills from "../hooks/use-skills"
 
 export default function SkillsPage() {
@@ -23,15 +24,11 @@ export default function SkillsPage() {
 
   return (
     <Layout>
+      <h1>Skills</h1>
       {skills.map(skill => (
-        <section>
+        <section key={skill.id}>
           <h2>{skill.title}</h2>
-          <div
-            className="skill-description"
-            dangerouslySetInnerHTML={{
-              __html: skill.description,
-            }}
-          />
+          <MDXRenderer>{skill.description}</MDXRenderer>
           <p>
             <b>Score:</b> {skill.score}
           </p>
