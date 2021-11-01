@@ -7,7 +7,7 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `exercise-sheets`,
+        name: `exerciseSheets`,
         path: `${__dirname}/content/exercise-sheets`,
       },
     },
@@ -30,8 +30,16 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         defaultLayouts: {
-          default: require.resolve(`${__dirname}/src/components/layout.js`),
+          exerciseSheets: require.resolve(
+            `${__dirname}/src/components/exercise-sheet-layout.js`
+          ),
         },
+      },
+    },
+    {
+      resolve: "gatsby-plugin-page-creator",
+      options: {
+        path: `${__dirname}/content`,
       },
     },
   ],
