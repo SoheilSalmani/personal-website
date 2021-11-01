@@ -134,7 +134,7 @@ class ConventionalCommitWithEmoji(CommitRule):
             )
 
         for commit_type in self.options["types"].value:
-            if commit.message.title[2:].startswith(commit_type):
+            if commit.message.title.split(" ")[1].startswith(commit_type):
                 break
         else:
             msg = "Title does not start (after the emoji) with one of {0}".format(
