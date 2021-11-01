@@ -12,7 +12,7 @@ export default function ExercisesPage() {
       <ul>
         {exerciseSheets.map(exerciseSheet => (
           <li key={exerciseSheet.id}>
-            <Link to={`/exercise-sheet/${exerciseSheet.slug}`}>
+            <Link to={`/exercise-sheets/${exerciseSheet.slug}`}>
               {exerciseSheet.title}
             </Link>
           </li>
