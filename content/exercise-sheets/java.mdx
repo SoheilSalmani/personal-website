@@ -1,0 +1,720 @@
+---
+title: Java
+relatedResources:
+  - "9781838986698"
+tags:
+  - Java
+  - Programming Language
+---
+
+## The Java Workshop
+
+1. Create a Java program that declares 7 different types of variables, and print them. Build the project and run it from the CLI.
+
+   <Solution>
+
+   ```java fp=Main.java nu
+   class Main {
+       public static void main(String[] args) {
+           String s = "This is a text";
+           char c = 'A';
+           int i = 53;
+           float f = 23.08f;
+           double d = 1.97;
+           boolean b = true;
+           Object n = null;
+           System.out.println(s);
+           System.out.println(c);
+           System.out.println(i);
+           System.out.println(f);
+           System.out.println(d);
+           System.out.println(b);
+           System.out.println(n);
+       }
+   }
+   ```
+
+   ```bash
+   javac Main.java
+   java Main
+   ```
+
+   </Solution>
+
+2. Expose all types of conditional statement we can do in Java.
+
+   <Solution>
+
+   ```java fp=src/Main.java nu
+   class Main {
+       public static void main(String[] args) {
+           // Conditionals
+           int i = 10;
+           if (i > 10 && i <= 20) {
+               System.out.println("Between 11 and 20");
+           } else if (i == 10 || i == 11) {
+               System.out.println("Equals to 10 or 11");
+           } else {
+               System.out.println("Not found");
+           }
+
+           // Bad comparison of decimal values
+           double a = .6 + .6 + .6 + .6 + .6 + .6;
+           double b = .6 * 6;
+           System.out.println(a == b ? "Equal" : "Not equal");
+
+           // String value equality
+           System.out.println(!"dog".equals("cat"));
+
+           // Switch statement
+           int seasonCode = 2;
+           String season;
+           switch (seasonCode) {
+               case 1:
+                   season = "Spring";
+                   break;
+               case 2:
+                   season = "Summer";
+                   break;
+               case 3:
+                   season = "Fall";
+                   break;
+               case 4:
+                   season = "Winter";
+                   break;
+               default:
+                   season = null;
+           }
+           System.out.println(season);
+
+           // Java SE 12 switch expressions
+           seasonCode = 4;
+           season = switch (seasonCode) {
+               case 1 -> "Spring";
+               case 2 -> "Summer";
+               case 3 -> "Fall";
+               case 4 -> "Winter";
+               default -> null;
+           };
+           System.out.println(season);
+       }
+   }
+   ```
+
+   </Solution>
+
+3. Expose all types of loop statement we can do in Java.
+
+   <Solution>
+
+   ```java fp=Main.java nu
+   class Main {
+       public static void main(String[] args) {
+           // For loop
+           for (int i = 1; i < 5; i++) {
+               System.out.println("Iteration: " + i);
+           }
+
+           // For-each loop, break, and continue
+           String[] letters = { "A", "B", "C" };
+           for (String letter : letters) {
+               if (letter.equals("A")) continue;
+               System.out.println(letter);
+               if (letter.equals("B")) break;
+           }
+
+           // While loop
+           int x = 1;
+           while (x < 10) {
+               System.out.println("Odd: " + x);
+               x += 2;
+           }
+
+           // Do-while loop
+           x = 0;
+           do {
+               System.out.println("Even: " + x);
+               x += 2;
+           } while (x < 1);
+       }
+   }
+   ```
+
+   </Solution>
+
+4. Create a CLI which sums all its arguments. Use type inference.
+
+   <Solution>
+
+   ```java fp=Main.java nu
+   class Main {
+       public static void main(String[] args) {
+           var total = .0;
+           for (var arg : args) {
+               total += Double.parseDouble(arg);
+           }
+           System.out.println(total);
+       }
+   }
+   ```
+
+   </Solution>
+
+5. Check whether an object is an instance of a specific class.
+
+   <Solution>
+
+   ```java fp=Main.java nu
+   class Main {
+     public static void main(String[] args) {
+       Number i = 5;
+       Number d = .5;
+       System.out.println(i instanceof Integer);
+       System.out.println(d instanceof Double);
+     }
+   }
+   ```
+
+   </Solution>
+
+6. Create the _WordTool_ application (methods: `countWords`, `countSymbols`, `getCharFrequency`).
+
+   <Solution>
+
+   ```java fp=WordTool.java nu
+   class WordTool {
+     public int countWords(String text) {
+       return text.split("\\s+").length;
+     }
+
+     public int countSymbols(String text, boolean withSpaces) {
+       if (withSpaces) {
+         return text.length();
+       }
+       return text.replace(" ", "").length();
+     }
+
+     public int getCharFrequency(String text, char c) {
+       return text.length() - text.replace(Character.toString(c), "").length();
+     }
+
+     public static void main(String[] args) {
+       if (args.length == 0) {
+         System.out.println("Please, write a sentence...");
+         return;
+       }
+       String text = args[0];
+       WordTool wt = new WordTool();
+       System.out.println("Number of words: " + wt.countWords(text));
+       System.out.println("Number of symbols (w. spaces): " + wt.countSymbols(text, true));
+       System.out.println("Number of symbols (wo. spaces): " + wt.countSymbols(text, false));
+
+       if (args.length >= 2) {
+         char searchedChar = args[1].charAt(0);
+         System.out.println("Total amount of '" + searchedChar + "': " + wt.getCharFrequency(text, searchedChar));
+       }
+     }
+   }
+   ```
+
+   </Solution>
+
+7. Give an example of overriding and hiding methods.
+
+   <Solution>
+
+   ```java fp=Main.java nu
+   class Animal {
+       public static void introduce() {
+           System.out.println("Hello, I am an animal.");
+       }
+
+       public void scream() {
+           System.out.println("Uhm...");
+       }
+   }
+
+   class Dog extends Animal {
+       public static void introduce() {
+           System.out.println("Hi, I am a dog.");
+       }
+
+       @Overriding
+       public void scream() {
+           System.out.println("Woof!");
+       }
+   }
+
+   class Main {
+     public static void main(String[] args) {
+       Animal a1 = new Animal();
+       a1.introduce();
+       a1.scream();
+       Animal a2 = new Dog();
+       a2.introduce();
+       a2.scream();
+       Dog d = new Dog();
+       d.introduce();
+       d.scream();
+     }
+   }
+   ```
+
+   </Solution>
+
+8. How to prevent other developers from overriding parts of your class?
+
+   <Solution>
+
+   ```java fp=Main.java hl=2,6
+   class Animal {
+     final public static void introduce() {
+       ...
+     }
+
+     final public void scream() {
+       ...
+     }
+   }
+   ```
+
+   </Solution>
+
+9. How to prevent other developers from extending your class?
+
+   <Solution>
+
+   ```java fp=Main.java hl=1
+   final class Animal {
+     ...
+   }
+   ```
+
+   </Solution>
+
+10. Give an example of overloading.
+
+    <Solution>
+
+    ```java fp=Main.java nu
+    class Person {
+      public String name;
+      public double age;
+
+      Person(String name, double age) {
+        this.name = name;
+        this.age = age;
+      }
+
+      Person(String name, int ageYears, int ageMonths) {
+        this.name = name;
+        this.age = ageYears + ageMonths / 12.0;
+      }
+    }
+
+    class Main {
+      public static void main(String[] args) {
+        Person p1 = new Person("Jack", 22.5);
+        Person p2 = new Person("Alice", 27, 3);
+        System.out.println(p1.age);
+        System.out.println(p2.age);
+      }
+    }
+    ```
+
+    </Solution>
+
+11. How to indicate that a method is about to become obsolete?
+
+    <Solution>
+
+    ```java fp=Main.java hl=4
+    class Person {
+        ...
+
+        @Deprecated
+        Person(String name, int ageYears, int ageMonths) {
+            ...
+        }
+
+        ...
+    }
+    ```
+
+    </Solution>
+
+12. Hide deprecation warnings using an annotation.
+
+    <Solution>
+
+    ```java fp=Main.java hl=1
+    @SuppressWarnings("deprecation")
+    class Main {
+        public static void main(String[] args) {
+            ...
+        }
+    }
+    ```
+
+    </Solution>
+
+13. Write a class which implements several interfaces.
+
+    <Solution>
+
+    ```java nu fp=Main.java
+    interface Printer {
+      public String getBrand();
+    }
+
+    interface Computer {
+      public String getSpeed();
+    }
+
+    class HpPrinter implements Printer, Computer {
+      public String getBrand() {
+        return "HP";
+      }
+
+      public String getSpeed() {
+        return "1.2GHz";
+      }
+    }
+
+    class CanonPrinter implements Printer, Computer {
+      public String getBrand() {
+        return "Canon";
+      }
+
+      public String getSpeed() {
+        return "1.1GHz";
+      }
+    }
+
+    class Main {
+      public static void main(String[] args) {
+        Printer[] printers = new Printer[] { new HpPrinter(), new CanonPrinter() };
+        Computer[] computers = new Computer[] { new HpPrinter(), new CanonPrinter() };
+
+        for (Printer printer : printers) {
+          System.out.println(printer.getBrand());
+        }
+
+        for (Computer computer : computers) {
+          System.out.println(computer.getSpeed());
+        }
+      }
+    }
+    ```
+
+    </Solution>
+
+14. Declare an anonymous class to override a method from the original class.
+
+    <Solution>
+
+    ```java nu fp=Main.java
+    class Printer {
+      public void print() {
+        System.out.println("A problem occured...");
+      }
+    }
+
+    class Main {
+      public static void main(String[] args) {
+        Printer printer = new Printer() {
+          @Override
+          public void print() {
+            System.out.println("The document has been printed.");
+          }
+        };
+        printer.print();
+      }
+    }
+    ```
+
+    </Solution>
+
+15. Sort, copy, compare and convert arrays. Perform a binary search in an array.
+
+    <Solution>
+
+    ```java nu fp=Main.java
+    import java.util.Arrays;
+
+    class Main {
+        public static void main(String[] args) {
+            // Sorting (not using import)
+            String[] text = new String[] { "spam", "more", "buy" };
+            java.util.Arrays.sort(text);
+            System.out.println(java.util.Arrays.toString(text));
+
+            // Copying
+            int[] numbers = new int[5];
+            Arrays.fill(numbers, 1);
+            System.out.println(Arrays.toString(numbers));
+            int[] shortNumbers = Arrays.copyOfRange(numbers, 0, 2);
+            System.out.println(Arrays.toString(shortNumbers));
+            int[] longNumbers = Arrays.copyOf(numbers, 10);
+            System.out.println(Arrays.toString(longNumbers));
+
+            // Comparing
+            int[] numbers1 = new int[3];
+            Arrays.fill(numbers1, 1);
+            int[] numbers2 = { 0, 0, 0 };
+            System.out.println(Arrays.equals(numbers1, numbers2));
+
+            // Searching using binary search
+            String[] words = { "love", "is", "in", "the", "air" };
+            Arrays.sort(words);
+            System.out.println(Arrays.binarySearch(words, "is"));
+
+            // Converting as a list
+            System.out.println(Arrays.asList(words));
+        }
+    }
+    ```
+
+    </Solution>
+
+16. Which method allows to compare strings while ignoring case.
+
+    <Solution>
+
+    ```java
+    String str1 = "HELLO";
+    String str2 = "hello";
+    System.out.println(str1.compareToIgnoreCase(str2));
+    ```
+
+    </Solution>
+
+17. Play with all `Set` interfaces.
+
+    <Solution>
+
+    ```java fp=Main.java nu
+    import java.util.*;
+
+    class Main {
+        public static void main(String[] args) {
+            // HashSet will store data without guaranteeing the order of iteration
+            Integer[] numbers1 = new Integer[] { 3, 25, 2, 79, 2 };
+            Integer[] numbers2 = new Integer[] { 7, 12, 14, 79 };
+            Set<Integer> set1 = new HashSet<>();
+            Collections.addAll(set1, numbers1);
+            Set<Integer> set2 = new HashSet<>();
+            Collections.addAll(set2, numbers2);
+            set1.addAll(set2);
+            System.out.println(set1);
+
+            // TreeSet orders a set by value
+            set1 = new TreeSet<>();
+            Collections.addAll(set1, numbers1);
+            set2 = new TreeSet<>();
+            Collections.addAll(set2, numbers2);
+            set1.retainAll(set2);
+            System.out.println(set1);
+
+            // LinkedHashSet orders a set by arrival time
+            set1 = new LinkedHashSet<>();
+            set1.add(35);
+            set1.add(19);
+            set1.add(11);
+            set1.add(83);
+            set1.add(7);
+            set2 = new LinkedHashSet<>();
+            set2.add(3);
+            set2.add(19);
+            set2.add(11);
+            set2.add(0);
+            set2.add(7);
+            set1.removeAll(set2);
+            System.out.println(set1);
+            System.out.println(set1.containsAll(set2));
+        }
+    }
+    ```
+
+    </Solution>
+
+18. Play with all `List` interfaces.
+
+    <Solution>
+
+    ```java fp=Main.java nu
+    import java.util.ArrayList;
+    import java.util.Arrays;
+    import java.util.Collections;
+    import java.util.List;
+
+    class Main {
+      public static void main(String[] args) {
+        // Search in a list
+        List<Integer> list = new ArrayList<>();
+        list.add(35);
+        list.add(19);
+        list.add(11);
+        list.add(83);
+        list.add(19);
+        System.out.println(list.indexOf(19));
+        System.out.println(list.lastIndexOf(19));
+
+        // Remove a list
+        list.remove(3);
+        System.out.println(list);
+
+        // Update a list
+        list.set(1, 99);
+        System.out.println(list);
+
+        // Clear a list
+        list.clear();
+        System.out.println(list);
+
+        // Manipulate a sublist
+        list.add(1);
+        list.add(5);
+        list.add(3);
+        list.add(2);
+        list.add(3);
+        list.add(1);
+        var sublist = list.subList(2, 4);
+        sublist.clear();
+        System.out.println(list);
+
+        // Other manipulations
+        Collections.shuffle(list);
+        System.out.println(list);
+        Collections.sort(list);
+        List<Integer> listCopy = new ArrayList<>(list);
+        System.out.println(list);
+        Collections.reverse(list);
+        System.out.println(list);
+        Collections.rotate(list, 1);
+        System.out.println(list);
+        Collections.swap(list, 1, 2);
+        System.out.println(list);
+        Collections.replaceAll(list, 1, 5);
+        System.out.println(list);
+        Collections.fill(list, 6);
+        System.out.println(list);
+        System.out.println(Collections.binarySearch(listCopy, 4));
+        listCopy.add(1);
+        listCopy.add(3);
+        List<Integer> targetList = new ArrayList<>();
+        targetList.add(1);
+        targetList.add(3);
+        System.out.println(Collections.indexOfSubList(listCopy, targetList));
+        System.out.println(Collections.lastIndexOfSubList(listCopy, targetList));
+        Integer[] array = { 1, 2, 3, 4, 5 };
+        List<Integer> arrayList = Arrays.asList(array);
+        System.out.println(arrayList);
+        arrayList.add(6);
+      }
+    }
+    ```
+
+    </Solution>
+
+19. Create the _AnalyzeInput_ application.
+
+    <Solution>
+
+    ```java fp=AnalyzeInput.java nu
+    import java.io.Console;
+    import java.util.ArrayList;
+    import java.util.Arrays;
+    import java.util.Collections;
+    import java.util.HashSet;
+    import java.util.Iterator;
+    import java.util.List;
+    import java.util.Set;
+
+    public class AnalyzeInput {
+      public static void main(String[] args) {
+        Console cons = System.console();
+        String line = null;
+        List<String> text = new ArrayList<>();
+        while ((line = cons.readLine()) != null && !line.equals("")) {
+          text.addAll(Arrays.asList(line.split("\\s+")));
+        }
+        System.out.println("Words: " + text);
+        System.out.println("Word count: " + text.size());
+
+        Set<String> textSet = new HashSet<>();
+        textSet.addAll(text);
+        Iterator<String> iterator = textSet.iterator();
+        while (iterator.hasNext()) {
+          String s = iterator.next();
+          int freq = Collections.frequency(text, s);
+          System.out.println(s + " appears " + freq + " times");
+        }
+      }
+    }
+    ```
+
+    </Solution>
+
+20. Play with all `Map` interfaces.
+
+    <Solution>
+
+    ```java fp=Main.java nu
+    import java.util.HashMap;
+    import java.util.Map;
+    import java.util.Map.Entry;
+    import java.util.Set;
+
+    public class ExampleMaps {
+      public static void main(String[] args) {
+        // Add elements
+        Map<String, Object> map = new HashMap<>();
+        map.put("number", Integer.valueOf(1));
+        map.put("text", "Hello, World!");
+        map.put("decimal", Double.valueOf(5.7));
+        System.out.println(map);
+
+        // Get element
+        System.out.println(map.get("text"));
+
+        // Remove element
+        map.remove("decimal");
+        System.out.println(map);
+
+        // Show keys
+        Set<String> keys = map.keySet();
+        System.out.println(keys);
+
+        // Show entries
+        Set<Entry<String, Object>> entries = map.entrySet();
+        System.out.println(entries);
+
+        // Other manipulations
+        Map<String, Integer> otherMap = new HashMap<>();
+        otherMap.put("apple", 4);
+        otherMap.put("banana", 2);
+        otherMap.put("pear", 3);
+        map.putAll(otherMap);
+        System.out.println(map);
+        System.out.println(map.containsKey("orange"));
+      }
+    }
+    ```
+
+    </Solution>
+
+## Modern Java in Action
+
+## The Java Module System
+
+1. List all modules contained in a JDK or JRE. Get details for a single module.
+
+<Solution>
+
+```shell
+java --list-modules
+java --describe-module java.sql
+```
+
+</Solution>
