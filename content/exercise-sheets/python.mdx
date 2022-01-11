@@ -1,0 +1,81 @@
+---
+title: Python
+relatedResources:
+  - "9781617295508"
+tags:
+  - Python
+---
+
+1. Give an example which uses the walrus operator.
+
+   <Solution>
+
+   ```python nu
+   while s := input("Enter thoughts: "):
+       print(f"Your thoughts are: {s}")
+   ```
+
+   </Solution>
+
+2. (Python Workout) Exercise 1: Number guessing game.
+
+   <Solution>
+
+   ```python fp=number_guessing_game.py nu
+   import random
+
+   def ask_number():
+       required_base = random.choice([2, 8, 10, 16])
+       user_input = input(f"What is your guess (base {required_base})? ")
+       if not user_input.isdigit():
+           print("Please, give a number between 0 and 100.")
+           return ask_number()
+       return int(user_input, required_base)
+
+   def launch_guessing_game():
+       answer = random.randint(0, 100)
+       remaining_guesses = 12
+
+       while remaining_guesses > 0:
+           user_guess = ask_number()
+           if user_guess == answer:
+               print(f"Right! The answer is {user_guess}")
+               break
+           if user_guess < answer:
+               print(f"Your guess of {user_guess} is too low!")
+           else:
+               print(f"Your guess of {user_guess} is too high!")
+           remaining_guesses -= 1
+       else:
+           print("Your three chances are up!")
+
+   if __name__ == "__main__":
+       launch_guessing_game()
+   ```
+
+   ```python fp=word_guessing_game.py nu
+   import random
+
+   WORDS = [word.strip().lower() for word in open('words.txt')]
+
+   def ask_word():
+       return input(f"What is your guess? ").lower()
+
+   def launch_guessing_game():
+       answer = random.choice(WORDS).lower()
+
+       while True:
+           user_guess = ask_word()
+           if user_guess == answer:
+               print(f"Right! The answer is {user_guess}")
+               break
+           if user_guess < answer:
+               print(f"Your guess of {user_guess} is too low!")
+           else:
+               print(f"Your guess of {user_guess} is too high!")
+
+   if __name__ == "__main__":
+       launch_guessing_game()
+   ```
+
+   </Solution>
