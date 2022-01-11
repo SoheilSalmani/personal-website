@@ -15,6 +15,7 @@ const useSkills = (lang = "en-US") => {
           score
           node_locale
           subskills {
+            id
             title
           }
         }
