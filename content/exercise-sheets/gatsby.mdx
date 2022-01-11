@@ -1,0 +1,177 @@
+---
+title: Gatsby
+relatedResources:
+  - https://www.gatsbyjs.com/docs
+tags:
+  - React
+  - Gatsby
+---
+
+1. Install the Gatsby CLI using Yarn or npm.
+
+   <Solution>
+
+   ```sh
+   npm install -g gatsby-cli
+   ```
+
+   ```sh
+   yarn global add gatsby-cli
+   ```
+
+   </Solution>
+
+2. Create a Gatsby site using the CLI, and start the development server. Set up a GitHub repo and build your site with Gatsby Cloud.
+
+   <Solution>
+
+   ```sh
+   gatsby new
+   gatsby develop
+   ```
+
+   </Solution>
+
+3. Create to page components and a layout component styled using a CSS module.
+
+   <Solution>
+
+   ```jsx fp=src/pages/index.js nu
+   import * as React from "react"
+   import Layout from "../components/layout"
+
+   const IndexPage = () => {
+     return (
+       <Layout pageTitle="Home Page">
+         <p>I'm making this by following the Gatsby Tutorial.</p>
+       </Layout>
+     )
+   }
+
+   export default IndexPage
+   ```
+
+   ```jsx fp=src/pages/about.js nu
+   import * as React from "react"
+   import Layout from "../components/layout"
+
+   const AboutPage = () => {
+     return (
+       <Layout pageTitle="About Me">
+         <p>
+           Hi there! I'm the proud creator of this site, which I built with
+           Gatsby.
+         </p>
+       </Layout>
+     )
+   }
+
+   export default AboutPage
+   ```
+
+   ```jsx fp=src/components/layout.js nu
+   import * as React from "react"
+   import { Link } from "gatsby"
+   import {
+     container,
+     heading,
+     navLinks,
+     navLinkItem,
+     navLinkText,
+   } from "./layout.module.css"
+
+   const Layout = ({ pageTitle, children }) => {
+     return (
+       <div className={container}>
+         <title>{pageTitle}</title>
+         <nav>
+           <ul className={navLinks}>
+             <li className={navLinkItem}>
+               <Link to="/" className={navLinkText}>
+                 Home
+               </Link>
+             </li>
+             <li className={navLinkItem}>
+               <Link to="/about" className={navLinkText}>
+                 About
+               </Link>
+             </li>
+           </ul>
+         </nav>
+         <main>
+           <h1 className={heading}>{pageTitle}</h1>
+           {children}
+         </main>
+       </div>
+     )
+   }
+
+   export default Layout
+   ```
+
+   ```css fp=src/components/layout.module.css nu
+   .container {
+     margin: auto;
+     max-width: 500px;
+     font-family: sans-serif;
+   }
+
+   .heading {
+     color: rebeccapurple;
+   }
+
+   .nav-links {
+     display: flex;
+     list-style: none;
+     padding-left: 0;
+   }
+
+   .nav-link-item {
+     padding-right: 2rem;
+   }
+
+   .nav-link-text {
+     color: black;
+   }
+   ```
+
+   </Solution>
+
+4. Add a plugin to add responsive images to your site while maintaining high performance scores. Test the plugin with a iamge from your local filesystem, and with an image from an external URL.
+
+   <Solution>
+
+   ```sh
+   npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem
+   ```
+
+   ```js fp=gatsby-config.js nu
+   module.exports = {
+     siteMetadata: {
+       title: "My First Gatsby Site",
+     },
+     plugins: ["gatsby-plugin-image", "gatsby-plugin-sharp"],
+   }
+   ```
+
+   ```jsx fp=src/pages/index.js nu hl=3,9..12
+   import * as React from "react"
+   import Layout from "../components/layout"
+   import { StaticImage } from "gatsby-plugin-image"
+
+   const IndexPage = () => {
+     return (
+       <Layout pageTitle="Home Page">
+         <p>I'm making this by following the Gatsby Tutorial.</p>
+         <StaticImage
+           alt="Clifford, a reddish-brown pitbull, posing on a couch and looking stoically at the camera"
+           src="https://pbs.twimg.com/media/E1oMV3QVgAIr1NT?format=jpg&name=large"
+         />
+       </Layout>
+     )
+   }
+
+   export default IndexPage
+   ```
+
+   </Solution>
