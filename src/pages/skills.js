@@ -15,7 +15,7 @@ export default function SkillsPage() {
         </p>
         <ul>
           {subskills.map(subskill => (
-            <li>{subskill.title}</li>
+            <li key={subskill.id}>{subskill.title}</li>
           ))}
         </ul>
       </>
