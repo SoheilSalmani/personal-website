@@ -1,0 +1,33 @@
+---
+title: Kubernetes
+relatedResources:
+  - "9781617297618"
+tags:
+  - Kubernetes
+  - DevOps
+---
+
+1. Draw a schema to explain how the Kubernetes Control Plane works.
+
+   <Solution>
+
+   ![](/images/kubernetes-control-plane.png)
+
+   - The **Kubernetes API Server** exposes the RESTful Kubernetes API. Engineers using the cluster and other Kubernetes components create objects via this API.
+   - The **etcd** distributed datastore persists the objects you create through the API, since the API Server itself is stateless. The Server is the only component that talks to etcd.
+   - The **Scheduler** decides on which worker node each application instance should run.
+   - **Controllers** bring to life the objects you create through the API. Most of them simply create other objects, but some also communicate with external systems (for example, the cloud provider via its API).
+
+   </Solution>
+
+2. Draw a schema to explain how the Kubernetes Workload Plane works.
+
+   <Solution>
+
+   ![](/images/kubernetes-workload-plane.png)
+
+   - The **Kubelet**, an agent that talks to the API server and manages the applications running on its node. It reports the status of these applications and the node via the API.
+   - The **Container Runtime**, which can be Docker or any other runtime compatible with Kubernetes. It runs your applications in containers as instructed by the Kubelet.
+   - The **Kubernetes Service Proxy (Kube Proxy)** load-balances network traffic between applications. Its name suggests that traffic flows through it, but that’s no longer the case.
+
+   </Solution>
