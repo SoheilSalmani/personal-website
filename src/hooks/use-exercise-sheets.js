@@ -22,8 +22,6 @@ export default function useExerciseSheets() {
     }
   `)
 
-  console.log(data)
-
   return data.allFile.nodes.map(exerciseSheet => ({
     id: exerciseSheet.childMdx.id,
     title: exerciseSheet.childMdx.frontmatter.title,

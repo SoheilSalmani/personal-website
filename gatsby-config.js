@@ -42,5 +42,29 @@ module.exports = {
         path: `${__dirname}/content`,
       },
     },
+    "gatsby-plugin-image",
+    "gatsby-plugin-sharp",
+    "gatsby-transformer-sharp",
+    {
+      resolve: `gatsby-plugin-remote-images`,
+      options: {
+        nodeType: "ContentfulBook",
+        imagePath: "imageLink",
+      },
+    },
+    {
+      resolve: `gatsby-plugin-remote-images`,
+      options: {
+        nodeType: "ContentfulCourse",
+        imagePath: "imageLink",
+      },
+    },
+    {
+      resolve: `gatsby-plugin-remote-images`,
+      options: {
+        nodeType: "ContentfulWebsite",
+        imagePath: "imageLink",
+      },
+    },
   ],
 }
