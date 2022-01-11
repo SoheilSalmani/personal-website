@@ -1,0 +1,70 @@
+---
+title: Maven
+relatedResources:
+  - https://maven.apache.org/guides/
+tags:
+  - Java
+  - Maven
+---
+
+1. Generate a project using Maven in interactive mode, and in non-interactive mode (give an archetype version).
+
+   <Solution>
+
+   ```shell
+   mvn archetype:generate -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4
+   mvn -B archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4
+   ```
+
+   </Solution>
+
+2. Build a JAR using Maven, and run it with `java`.
+
+   <Solution>
+
+   ```shell
+   mvn package
+   java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
+   ```
+
+   </Solution>
+
+3. Inform Maven the Java release you are targetting, and a character encoding scheme to use for the reading and writing of files.
+
+   <Solution>
+
+   ```xml fp=pom.xml hl=6..7
+   <project ...>
+
+     ...
+
+     <properties>
+       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+       <maven.compiler.release>17</maven.compiler.release>
+     </properties>
+
+      ...
+   </project>
+   ```
+
+   </Solution>
+
+4. Clean the `target/` folder, copy all dependencies in a `target/dependency/` folder, then build the JAR file.
+
+   <Solution>
+
+   ```shell
+   mvn clean dependency:copy-dependencies package
+   ```
+
+   </Solution>
+
+5. Generate a site based upon information on the project's POM.
+
+   <Solution>
+
+   ```shell
+   mvn site
+   ```
+
+   </Solution>
