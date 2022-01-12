@@ -12,7 +12,7 @@ const useCourses = () => {
           title
           version
           authors
-          publicationDate
+          publicationDate(formatString: "MMMM YYYY")
           isVideo
           additionalResources {
             code

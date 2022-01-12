@@ -13,10 +13,6 @@ export default function Solution({ children }) {
         &[open] summary {
           border-bottom: 1px solid #aaa;
         }
-
-        & * {
-          margin: 0;
-        }
       `}
     >
       <summary
