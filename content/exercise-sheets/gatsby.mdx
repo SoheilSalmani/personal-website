@@ -175,3 +175,210 @@ tags:
    ```
 
    </Solution>
+
+5. Load the site title using GraphQL, and create a "Blog" page with data loaded from a page query.
+
+   <Solution>
+
+   ```sh
+   mkdir blog
+   cd blog
+   touch my-first-post.mdx
+   touch another-post.mdx
+   touch yet-another-post.mdx
+   ```
+
+   ```js fp=gatsby-config.js hl=6..12
+   module.exports = {
+     ...
+     plugins: [
+       "gatsby-plugin-image",
+       "gatsby-plugin-sharp",
+       {
+         resolve: "gatsby-source-filesystem",
+         options: {
+           name: `blog`,
+           path: `${__dirname}/blog`,
+         }
+       },
+     ],
+   }
+   ```
+
+   ```jsx fp=src/components/layout.js hl=2,5,9..17,21..22,28..32
+   import * as React from "react"
+   import { Link, useStaticQuery, graphql } from 'gatsby'
+   import {
+     ...
+     siteTitle,
+   } from "./layout.module.css"
+
+   const Layout = ({ pageTitle, children }) => {
+     const data = useStaticQuery(graphql`
+       query {
+         site {
+           siteMetadata {
+             title
+           }
+         }
+       }
+     `)
+
+     return (
+       <div className={container}>
+         <title>{pageTitle} | {data.site.siteMetadata.title}</title>
+         <header className={siteTitle}>{data.site.siteMetadata.title}</header>
+         <nav>
+           <ul className={navLinks}>
+             <li className={navLinkItem}>
+               ...
+             </li>
+             <li className={navLinkItem}>
+               <Link to="/blog" className={navLinkText}>
+                 Blog
+               </Link>
+             </li>
+           </ul>
+         </nav>
+         ...
+       </div>
+     )
+   }
+
+   export default Layout
+   ```
+
+   ```css fp=src/components/layout.module.css
+   ... .site-title {
+     font-size: 3rem;
+     color: gray;
+     font-weight: 700;
+     margin: 3rem 0;
+   }
+   ```
+
+   ```jsx fp=src/pages/blog.js nu
+   import * as React from "react"
+   import { graphql } from "gatsby"
+   import Layout from "../components/layout"
+
+   const BlogPage = ({ data }) => {
+     return (
+       <Layout pageTitle="My Blog Posts">
+         <ul>
+           {data.allFile.nodes.map(node => (
+             <li key={node.name}>{node.name}</li>
+           ))}
+         </ul>
+       </Layout>
+     )
+   }
+
+   export const query = graphql`
+     query {
+       allFile(filter: { sourceInstanceName: { eq: "blog" } }) {
+         nodes {
+           name
+         }
+       }
+     }
+   `
+
+   export default BlogPage
+   ```
+
+   </Solution>
+
+6. Complete the MDX content and load them in the website.
+
+<Solution>
+
+```sh
+npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+```
+
+```mdx fp=blog/another-post.mdx nu
+---
+title: "Another Post"
+date: "2021-07-24"
+---
+
+Here's another post! It's even better than the first one!
+```
+
+```mdx fp=blog/my-first-post.mdx nu
+---
+title: "My First Post"
+date: "2021-07-23"
+---
+
+This is my first blog post! Isn't it _great_?
+
+Some of my **favorite** things are:
+
+- Petting dogs
+- Singing
+- Eating potato-based foods
+```
+
+```mdx fp=blog/yet-another-post.mdx nu
+---
+title: "Yet Another Post"
+date: "2021-07-25"
+---
+
+Wow look at all this content. How do they do it?
+```
+
+```js fp=gatsby-config.js hl=5
+module.exports = {
+  ...
+  plugins: [
+    ...
+    "gatsby-plugin-mdx",
+  ],
+};
+```
+
+```jsx fp=src/pages/blog.js hl=2,9..17,25..34, nu
+...
+import { MDXRenderer } from 'gatsby-plugin-mdx'
+...
+
+const BlogPage = ({ data }) => {
+  return (
+    <Layout pageTitle="My Blog Posts">
+      {
+        data.allMdx.nodes.map((node) => (
+          <article key={node.id}>
+            <h2>{node.frontmatter.title}</h2>
+            <p>Posted: {node.frontmatter.date}</p>
+            <MDXRenderer>
+              {node.body}
+            </MDXRenderer>
+          </article>
+        ))
+      }
+    </Layout>
+  )
+}
+
+export const query = graphql`
+  query {
+    allMdx(sort: {fields: frontmatter___date, order: DESC}) {
+      nodes {
+        frontmatter {
+          date(formatString: "MMMM D, YYYY")
+          title
+        }
+        id
+        body
+      }
+    }
+  }
+`
+
+export default BlogPage
+```
+
+</Solution>
