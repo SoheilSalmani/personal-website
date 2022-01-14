@@ -291,94 +291,273 @@ tags:
 
 6. Complete the MDX content and load them in the website.
 
-<Solution>
+   <Solution>
 
-```sh
-npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
-```
+   ```sh
+   npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+   ```
 
-```mdx fp=blog/another-post.mdx nu
----
-title: "Another Post"
-date: "2021-07-24"
----
+   ```mdx fp=blog/another-post.mdx nu
+   ---
+   title: "Another Post"
+   date: "2021-07-24"
+   ---
 
-Here's another post! It's even better than the first one!
-```
+   Here's another post! It's even better than the first one!
+   ```
 
-```mdx fp=blog/my-first-post.mdx nu
----
-title: "My First Post"
-date: "2021-07-23"
----
+   ```mdx fp=blog/my-first-post.mdx nu
+   ---
+   title: "My First Post"
+   date: "2021-07-23"
+   ---
 
-This is my first blog post! Isn't it _great_?
+   This is my first blog post! Isn't it _great_?
 
-Some of my **favorite** things are:
+   Some of my **favorite** things are:
 
-- Petting dogs
-- Singing
-- Eating potato-based foods
-```
+   - Petting dogs
+   - Singing
+   - Eating potato-based foods
+   ```
 
-```mdx fp=blog/yet-another-post.mdx nu
----
-title: "Yet Another Post"
-date: "2021-07-25"
----
+   ```mdx fp=blog/yet-another-post.mdx nu
+   ---
+   title: "Yet Another Post"
+   date: "2021-07-25"
+   ---
 
-Wow look at all this content. How do they do it?
-```
+   Wow look at all this content. How do they do it?
+   ```
 
-```js fp=gatsby-config.js hl=5
-module.exports = {
-  ...
-  plugins: [
-    ...
-    "gatsby-plugin-mdx",
-  ],
-};
-```
+   ```js fp=gatsby-config.js hl=5
+   module.exports = {
+     ...
+     plugins: [
+       ...
+       "gatsby-plugin-mdx",
+     ],
+   };
+   ```
 
-```jsx fp=src/pages/blog.js hl=2,9..17,25..34, nu
-...
-import { MDXRenderer } from 'gatsby-plugin-mdx'
-...
+   ```jsx fp=src/pages/blog.js hl=2,9..17,25..34, nu
+   ...
+   import { MDXRenderer } from 'gatsby-plugin-mdx'
+   ...
 
-const BlogPage = ({ data }) => {
-  return (
-    <Layout pageTitle="My Blog Posts">
-      {
-        data.allMdx.nodes.map((node) => (
-          <article key={node.id}>
-            <h2>{node.frontmatter.title}</h2>
-            <p>Posted: {node.frontmatter.date}</p>
-            <MDXRenderer>
-              {node.body}
-            </MDXRenderer>
-          </article>
-        ))
-      }
-    </Layout>
-  )
-}
+   const BlogPage = ({ data }) => {
+     return (
+       <Layout pageTitle="My Blog Posts">
+         {
+           data.allMdx.nodes.map((node) => (
+             <article key={node.id}>
+               <h2>{node.frontmatter.title}</h2>
+               <p>Posted: {node.frontmatter.date}</p>
+               <MDXRenderer>
+                 {node.body}
+               </MDXRenderer>
+             </article>
+           ))
+         }
+       </Layout>
+     )
+   }
 
-export const query = graphql`
-  query {
-    allMdx(sort: {fields: frontmatter___date, order: DESC}) {
-      nodes {
-        frontmatter {
-          date(formatString: "MMMM D, YYYY")
-          title
-        }
-        id
-        body
-      }
-    }
-  }
-`
+   export const query = graphql`
+     query {
+       allMdx(sort: {fields: frontmatter___date, order: DESC}) {
+         nodes {
+           frontmatter {
+             date(formatString: "MMMM D, YYYY")
+             title
+           }
+           id
+           body
+         }
+       }
+     }
+   `
 
-export default BlogPage
-```
+   export default BlogPage
+   ```
 
-</Solution>
+   </Solution>
+
+7. Create a page programatically for each blog post.
+
+   <Solution>
+
+   ```jsx fp=src/pages/blog/index.js nu hl=2..3,11..15,33
+   import * as React from "react"
+   import { Link, graphql } from "gatsby"
+   import Layout from "../../components/layout"
+
+   const BlogPage = ({ data }) => {
+     return (
+       <Layout pageTitle="My Blog Posts">
+         {data.allMdx.nodes.map(node => (
+           <article key={node.id}>
+             <h2>
+               <Link to={`/blog/${node.slug}`}>{node.frontmatter.title}</Link>
+             </h2>
+             <p>Posted: {node.frontmatter.date}</p>
+           </article>
+         ))}
+       </Layout>
+     )
+   }
+
+   export const query = graphql`
+     query {
+       allMdx(sort: { fields: frontmatter___date, order: DESC }) {
+         nodes {
+           frontmatter {
+             date(formatString: "MMMM D, YYYY")
+             title
+           }
+           id
+           slug
+         }
+       }
+     }
+   `
+
+   export default BlogPage
+   ```
+
+   ```jsx fp=src/pages/blog/{mdx.slug}.js nu
+   import * as React from "react"
+   import { graphql } from "gatsby"
+   import { MDXRenderer } from "gatsby-plugin-mdx"
+   import Layout from "../../components/layout"
+
+   const BlogPost = ({ data }) => {
+     return (
+       <Layout pageTitle={data.mdx.frontmatter.title}>
+         <p>{data.mdx.frontmatter.date}</p>
+         <MDXRenderer>{data.mdx.body}</MDXRenderer>
+       </Layout>
+     )
+   }
+
+   export const query = graphql`
+     query ($id: String) {
+       mdx(id: { eq: $id }) {
+         frontmatter {
+           title
+           date(formatString: "MMMM D, YYYY")
+         }
+         body
+       }
+     }
+   `
+
+   export default BlogPost
+   ```
+
+   </Solution>
+
+8. Add a hero image for each blog post.
+
+   <Solution>
+
+   ```sh
+   npm install gatsby-transformer-sharp
+   ```
+
+   ```js fp=gatsby-config.js hl=5
+   module.exports = {
+     ...
+     plugins: [
+       ...
+       "gatsby-transformer-sharp",
+     ],
+   };
+   ```
+
+   ```mdx fp=blog/my-first-post/index.mdx
+   ---
+   title: "My First Post"
+   date: "2021-07-23"
+   hero_image: "./christopher-ayme-ocZ-_Y7-Ptg-unsplash.jpg"
+   hero_image_alt: "A gray pitbull relaxing on the sidewalk with its tongue hanging out"
+   hero_image_credit_text: "Christopher Ayme"
+   hero_image_credit_link: "https://unsplash.com/photos/ocZ-_Y7-Ptg"
+   ---
+
+   ...
+   ```
+
+   ```mdx fp=blog/another-post/index.mdx
+   ---
+   title: "Another Post"
+   date: "2021-07-24"
+   hero_image: "./anthony-duran-eLUBGqKGdE4-unsplash.jpg"
+   hero_image_alt: "A grey and white pitbull wading happily in a pool"
+   hero_image_credit_text: "Anthony Duran"
+   hero_image_credit_link: "https://unsplash.com/photos/eLUBGqKGdE4"
+   ---
+
+   ...
+   ```
+
+   ```mdx fp=blog/yet-another-post/index.mdx
+   ---
+   title: "Yet Another Post"
+   date: "2021-07-25"
+   hero_image: "./jane-almon-7rriIaBH6JY-unsplash.jpg"
+   hero_image_alt: "A white pitbull wearing big googly-eye glasses"
+   hero_image_credit_text: "Jane Almon"
+   hero_image_credit_link: "https://unsplash.com/photos/7rriIaBH6JY"
+   ---
+
+   ...
+   ```
+
+   ```jsx fp=src/pages/blog/{mdx.slug}.js nu hl=4,8,11..21,28,30,33..41
+   import * as React from "react"
+   import { graphql } from "gatsby"
+   import { MDXRenderer } from "gatsby-plugin-mdx"
+   import { GatsbyImage, getImage } from "gatsby-plugin-image"
+   import Layout from "../../components/layout"
+
+   const BlogPost = ({ data }) => {
+     const image = getImage(data.mdx.frontmatter.hero_image)
+     return (
+       <Layout pageTitle={data.mdx.frontmatter.title}>
+         <p>Posted: {data.mdx.frontmatter.date}</p>
+         <GatsbyImage image={image} alt={data.mdx.frontmatter.hero_image_alt} />
+         <p>
+           Photo Credit:{" "}
+           <a href={data.mdx.frontmatter.hero_image_credit_link}>
+             {data.mdx.frontmatter.hero_image_credit_text}
+           </a>
+         </p>
+         <MDXRenderer>{data.mdx.body}</MDXRenderer>
+       </Layout>
+     )
+   }
+
+   export const query = graphql`
+     query ($id: String) {
+       mdx(id: { eq: $id }) {
+         body
+         frontmatter {
+           title
+           date(formatString: "MMMM DD, YYYY")
+           hero_image_alt
+           hero_image_credit_link
+           hero_image_credit_text
+           hero_image {
+             childImageSharp {
+               gatsbyImageData
+             }
+           }
+         }
+       }
+     }
+   `
+   export default BlogPost
+   ```
+
+   </Solution>
