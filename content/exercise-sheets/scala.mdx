@@ -6,4 +6,57 @@ tags:
   - Scala
 ---
 
-1.
+1. Test the Scala REPL.
+
+   <Solution>
+
+   ```scala fp=Test.scala nu
+   println(1 + 2)
+   ```
+
+   ```scala
+   scala> val a = "Hello, World!"
+   val a: String = Hello, World!
+
+   scala> :reset
+
+   scala> :load Test.scala
+   3
+
+   scala> 1 + 2
+   val res0: Int = 3
+
+   scala> val x: Double = res0
+   val x: Double = 3.0
+
+   scala> def sayHello(n: String) = s"Hi $n!"
+   def sayHello(n: String): String
+
+   scala> sayHello("Scala")
+   val res1: String = Hi Scala!
+
+   scala> def sayHello(n: String): String = s"Hi $n!"
+   def sayHello(n: String): String
+
+   scala> class MyClass(n: String)
+   // defined class MyClass
+
+   scala> new MyClass("Martin")
+   val res2: MyClass = MyClass@3e2c4d4b
+
+   scala> object MyObject
+   // defined object MyObject
+
+   scala> MyObject
+   val res3: MyObject.type = MyObject$@4fee14b
+
+   scala> "na" * 3 + 42
+   val res4: String = nanana42
+
+   scala> :help
+   ...
+
+   scala> :quit
+   ```
+
+   </Solution>
