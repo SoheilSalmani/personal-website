@@ -11,4 +11,144 @@ tags:
   - Data Engineering
 ---
 
-1.
+1. Write a Spark application which prints the first five rows of the following
+   CSV file:
+
+   ```csv fp=data/books.csv nu
+   id,authorId,title,releaseDate,link
+   1,1,Fantastic Beasts and Where to Find Them: The Original Screenplay,11/18/16,http://amzn.to/2kup94P
+   2,1,"Harry Potter and the Sorcerer's Stone: The Illustrated Edition (Harry Potter, Book 1)",10/6/15,http://amzn.to/2l2lSwP
+   3,1,"The Tales of Beedle the Bard, Standard Edition (Harry Potter)",12/4/08,http://amzn.to/2kYezqr
+   4,1,"Harry Potter and the Chamber of Secrets: The Illustrated Edition (Harry Potter, Book 2)",10/4/16,http://amzn.to/2kYhL5n
+   5,2,"Informix 12.10 on Mac 10.12 with a dash of Java 8: The Tale of the Apple, the Coffee, and a Great Database",4/23/17,http://amzn.to/2i3mthT
+   6,2,"Development Tools in 2006: any Room for a 4GL-style Language?: An independent study by Jean Georges Perrin, IIUG Board Member",12/28/16,http://amzn.to/2vBxOe1
+   7,3,Adventures of Huckleberry Finn,5/26/94,http://amzn.to/2wOeOav
+   8,3,A Connecticut Yankee in King Arthur's Court,6/17/17,http://amzn.to/2x1NuoD
+   10,4,Jacques le Fataliste,3/1/00,http://amzn.to/2uZj2KA
+   11,4,Diderot Encyclopedia: The Complete Illustrations 1762-1777,,http://amzn.to/2i2zo3I
+   12,,A Woman in Berlin,7/11/06,http://amzn.to/2i472WZ
+   13,6,Spring Boot in Action,1/3/16,http://amzn.to/2hCPktW
+   14,6,Spring in Action: Covers Spring 4,11/28/14,http://amzn.to/2yJLyCk
+   15,7,Soft Skills: The software developer's life manual,12/29/14,http://amzn.to/2zNnSyn
+   16,8,Of Mice and Men,,http://amzn.to/2zJjXoc
+   17,9,"Java 8 in Action: Lambdas, Streams, and functional-style programming",8/28/14,http://amzn.to/2isdqoL
+   18,12,Hamlet,6/8/12,http://amzn.to/2yRbewY
+   19,13,Pensées,12/31/1670,http://amzn.to/2jweHOG
+   20,14,"Fables choisies, mises en vers par M. de La Fontaine",9/1/1999,http://amzn.to/2yRH10W
+   21,15,Discourse on Method and Meditations on First Philosophy,6/15/1999,http://amzn.to/2hwB8zc
+   22,12,Twelfth Night,7/1/4,http://amzn.to/2zPYnwo
+   23,12,Macbeth,7/1/3,http://amzn.to/2zPYnwo
+   ```
+
+   <Solution>
+
+   ```xml fp=pom.xml nu
+   <?xml version="1.0" encoding="UTF-8"?>
+   <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+     <modelVersion>4.0.0</modelVersion>
+
+     <groupId>com.mycompany.app</groupId>
+     <artifactId>my-app</artifactId>
+     <version>1.0-SNAPSHOT</version>
+     <packaging>jar</packaging>
+
+     <properties>
+       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+       <maven.compiler.release>1.8</maven.compiler.release>
+       <scala.version>2.13</scala.version>
+       <spark.version>3.2.0</spark.version>
+     </properties>
+
+     <dependencies>
+       <dependency>
+         <groupId>org.apache.spark</groupId>
+         <artifactId>spark-core_${scala.version}</artifactId>
+         <version>${spark.version}</version>
+       </dependency>
+       <dependency>
+         <groupId>org.apache.spark</groupId>
+         <artifactId>spark-sql_${scala.version}</artifactId>
+         <version>${spark.version}</version>
+       </dependency>
+     </dependencies>
+
+     <build>
+       <plugins>
+         <plugin>
+           <groupId>org.codehaus.mojo</groupId>
+           <artifactId>exec-maven-plugin</artifactId>
+           <version>3.0.0</version>
+           <configuration>
+             <executable>java</executable>
+             <arguments>
+               <argument>-classpath</argument>
+               <classpath />
+               <argument>com.mycompany.app.App</argument>
+             </arguments>
+           </configuration>
+         </plugin>
+       </plugins>
+     </build>
+   </project>
+   ```
+
+   ```java fp=src/main/java/com/mycompany/app/App.java nu
+   package com.mycompany.app;
+
+   import org.apache.spark.sql.Dataset;
+   import org.apache.spark.sql.Row;
+   import org.apache.spark.sql.SparkSession;
+
+   public class App {
+
+       public static void main(String[] args) {
+           App app = new App();
+           app.start();
+       }
+
+       private void start() {
+           SparkSession spark = SparkSession.builder()
+                   .appName("CSV to Dataset")
+                   .master("local")
+                   .getOrCreate();
+
+           Dataset<Row> df = spark.read().format("csv")
+                   .option("header", "true")
+                   .load("data/books.csv");
+
+           df.show(5);
+       }
+   }
+   ```
+
+   ```properties fp=src/main/resources/log4j.properties nu
+   log4j.rootCategory=ERROR, console
+   log4j.appender.console=org.apache.log4j.ConsoleAppender
+   log4j.appender.console.target=System.err
+   log4j.appender.console.layout=org.apache.log4j.PatternLayout
+   log4j.appender.console.layout.ConversionPattern=%d{yy/MM/dd HH:mm:ss} %p %c{1}: %m%n
+
+   log4j.logger.org.apache.spark.repl.Main=WARN
+   log4j.logger.org.apache.spark.sql.hive.thriftserver.SparkSQLCLIDriver=WARN
+
+   log4j.logger.org.sparkproject.jetty=WARN
+   log4j.logger.org.sparkproject.jetty.util.component.AbstractLifeCycle=ERROR
+   log4j.logger.org.apache.spark.repl.SparkIMain$exprTyper=INFO
+   log4j.logger.org.apache.spark.repl.SparkILoop$SparkILoopInterpreter=INFO
+   log4j.logger.org.apache.parquet=ERROR
+   log4j.logger.parquet=ERROR
+
+   log4j.logger.org.apache.hadoop.hive.metastore.RetryingHMSHandler=FATAL
+   log4j.logger.org.apache.hadoop.hive.ql.exec.FunctionRegistry=ERROR
+
+   log4j.appender.console.filter.1=org.apache.log4j.varia.StringMatchFilter
+   log4j.appender.console.filter.1.StringToMatch=Thrift error occurred during processing of message
+   log4j.appender.console.filter.1.AcceptOnMatch=false
+   ```
+
+   ```sh
+   mvn clean install exec:exec --quiet
+   ```
+
+   </Solution>
