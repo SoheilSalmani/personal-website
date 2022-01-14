@@ -1,0 +1,52 @@
+---
+title: Terraform
+relatedResources:
+  - "9781617296895"
+tags:
+  - Cloud Computing
+  - Terraform
+  - Infrastructure as Code
+---
+
+1. Create an administrator IAM user. Set up your credentials either with environment variables or through the AWS CLI (create a named profile called `tf-user`). Deploy an EC2 instance named "HelloWorld" using Terraform.
+
+   <Solution>
+
+   ```sh
+   aws configure --profile tf-user
+   ```
+
+   Or:
+
+   ```sh
+   export AWS_ACCESS_KEY_ID=<key-id>
+   export AWS_SECRET_ACCESS_KEY=<secret-key>
+   ```
+
+   ```hcl fp=main.tf nu
+   provider "aws" {
+     region  = "us-west-2"
+     profile = "tf-user"
+   }
+
+   resource "aws_instance" "helloworld" {
+     ami           = "ami-09dd2e08d601bff67"
+     instance_type = "t2.micro"
+     tags = {
+       Name = "HelloWorld"
+     }
+   }
+   ```
+
+   **Note:** If you are using the default profile, you can simply have an empty provider
+   declaration.
+
+   ```sh
+   terraform init
+   terraform apply
+   terraform show
+   terraform destroy
+   terraform show
+   ```
+
+   </Solution>
