@@ -1,0 +1,130 @@
+---
+title: CSS
+relatedResources:
+  - https://frontendmasters.com/courses/getting-started-css/
+tags:
+  - CSS
+  - Web Development
+---
+
+1. Create the intro and contact sections.
+
+   <Solution>
+
+   ```html nu
+   <section id="intro">
+     <p class="name">Hi, my name is <span>Soheil Salmani.</span></p>
+     <h2>I create modern apps.</h2>
+     <p>
+       I'm a developer specializing in big data processing, software engineering
+       and cloud computing.
+     </p>
+     <p>
+       Currently, I'm working at
+       <a href="https://www.ledger.com/" target="_blank">Ledger</a> as a data
+       engineer.
+     </p>
+   </section>
+
+   <section id="contact">
+     <h2>Contact me</h2>
+     <p>
+       I'm always interested in hearing about new teaching opportunities,
+       writing curricula, or instructional design work.
+     </p>
+     <p><a href="mailto:soheil@salmani.me">Email me</a></p>
+   </section>
+   ```
+
+   ```css nu
+   /* Generic styles for the page */
+
+   :root {
+     --black: #171321;
+     --dkblue: #0d314b;
+     --plum: #4b0d49;
+     --hotmag: #ff17e4;
+     --magenta: #e310cb;
+     --aqua: #86fbfb;
+     --white: #f7f8fa;
+     --font-size: 1.3rem;
+     --mono: "Oxygen mono", monospace;
+     --sans: Oxygen, sans-serif;
+   }
+
+   html {
+     box-sizing: border-box;
+   }
+
+   *,
+   *::before,
+   *::after {
+     box-sizing: inherit;
+   }
+
+   body {
+     padding: 0;
+     margin: 0;
+     font-family: var(--sans);
+     background-color: var(--black);
+     color: var(--white);
+     font-size: var(--font-size);
+   }
+
+   h1,
+   h2,
+   h3 {
+     margin: 0;
+   }
+
+   a {
+     color: var(--magenta);
+   }
+
+   a:hover {
+     color: var(--hotmag);
+     text-decoration: none;
+   }
+
+   /* Intro section */
+
+   #intro {
+     padding-bottom: 10rem;
+   }
+
+   #intro p {
+     font-size: 1rem;
+     line-height: 1.5;
+   }
+
+   #intro .name {
+     font-family: var(--mono);
+   }
+
+   .name span {
+     font-family: var(--sans);
+     font-size: 4rem;
+     color: var(--aqua);
+     display: block;
+   }
+
+   #intro h2 {
+     font-size: 4rem;
+     font-weight: normal;
+   }
+
+   /* Contact section */
+
+   #contact {
+     width: 400px;
+     text-align: center;
+     margin: 0 auto;
+     padding: 3rem 0;
+   }
+
+   #contact p:last-child {
+     margin-top: 3rem;
+   }
+   ```
+
+   </Solution>
