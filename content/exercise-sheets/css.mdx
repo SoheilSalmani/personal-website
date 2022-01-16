@@ -12,6 +12,41 @@ tags:
    <Solution>
 
    ```html nu
+   <nav>
+     <ul>
+       <li>
+         <h1>
+           <a href="index.html">
+             <span class="fas fa-code" aria-hidden="true"></span>
+             <span>Soheil Salmani</span>
+           </a>
+         </h1>
+       </li>
+       <li><a href="#projects">Projects</a></li>
+       <li><a href="about.html">About</a></li>
+       <li><a href="#contact">Contact</a></li>
+       <li>
+         <a href="https://www.linkedin.com/in/soheil-salmani/" target="_blank">
+           <span class="fab fa-linkedin" aria-hidden="true"></span>
+           <span class="sr-only">LinkedIn</span>
+         </a>
+       </li>
+       <li>
+         <a href="https://github.com/SoheilSalmani" target="_blank">
+           <span class="fab fa-github-square" aria-hidden="true"></span>
+           <span class="sr-only">GitHub</span>
+         </a>
+       </li>
+       <li>
+         <a
+           href="https://drive.google.com/file/d/1aRkK3yY7z6wudQVIsXtHWNi-TxmpHNfu/view?usp=sharing"
+           target="_blank"
+           >Resume</a
+         >
+       </li>
+     </ul>
+   </nav>
+
    <section id="intro">
      <p class="name">Hi, my name is <span>Soheil Salmani.</span></p>
      <h2>I create modern apps.</h2>
@@ -48,7 +83,7 @@ tags:
      --aqua: #86fbfb;
      --white: #f7f8fa;
      --font-size: 1.3rem;
-     --mono: "Oxygen mono", monospace;
+     --mono: "Oxygen Mono", monospace;
      --sans: Oxygen, sans-serif;
    }
 
@@ -84,6 +119,55 @@ tags:
    a:hover {
      color: var(--hotmag);
      text-decoration: none;
+   }
+
+   /* Navigation var */
+
+   nav {
+     font-family: var(--mono);
+     font-size: 80%;
+   }
+
+   nav h1 a {
+     font-family: var(--sans);
+   }
+
+   nav ul {
+     list-style-type: none;
+     padding: 0;
+     margin: 0;
+     display: flex;
+     flex-flow: row wrap;
+     justify-content: center;
+     align-items: center;
+     gap: 2rem;
+   }
+
+   nav [class*="fa-"] {
+     font-size: 150%;
+     color: var(--aqua);
+   }
+
+   nav h1 [class*="fa-"] {
+     font-size: 100%;
+     color: var(--aqua);
+   }
+
+   nav li:first-child {
+     flex-basis: 100%;
+     text-align: center;
+   }
+
+   nav a {
+     color: var(--white);
+     text-decoration: none;
+     display: block;
+   }
+
+   nav a:hover,
+   nav [class*="fa-"]:hover,
+   nav h1:hover [class*="fa-"] {
+     color: var(--magenta);
    }
 
    /* Intro section */
