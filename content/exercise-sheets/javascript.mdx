@@ -1,0 +1,77 @@
+---
+title: JavaScript
+relatedResources:
+  - https://frontendmasters.com/courses/js-fundamentals-functional-v2/
+tags:
+  - JavaScript
+  - Web Development
+---
+
+1. Guess what is printed with the following code:
+
+   ```js nu
+   var person = {}
+   person.name = "Mrs. White"
+   var person = {
+     name: "Mrs. White",
+   }
+
+   var who = person.name
+   who
+   person.name = "Mr. White"
+   who
+   who.story
+
+   var person = []
+   person.name = "Mrs. White"
+   var who = person.name
+   who
+   typeof person === "array"
+   typeof person === "object" // Array are just objects
+   person[0] = "I was not in the Billiards room"
+   person["name"]
+   var plea = "wouldShe"
+   person[plea] = "I would never!"
+   person.plea
+   person[2 + 2] = true
+   person[4]
+
+   Array.isArray([])
+   var obj = {}
+   obj[function () {}] = false
+   Object.keys(obj)[0]
+   var obj = {}
+   obj[
+     (function () {
+       return 3
+     })()
+   ] = false
+   Object.keys(obj)[0]
+
+   var y = {}
+   y[11] = 0
+   y.length
+   var y = []
+   y[11] = 0
+   y.length
+   ```
+
+   <Solution>
+
+   ```text
+   'Mrs. White'
+   'Mrs. White'
+   undefined
+   'Mrs. White'
+   false
+   true
+   undefined
+   true
+   true
+   'function () {}'
+   '3'
+   undefined
+   12
+   ```
+
+   </Solution>
