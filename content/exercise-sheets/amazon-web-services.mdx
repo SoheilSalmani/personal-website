@@ -7,4 +7,29 @@ tags:
   - Amazon Web Services
 ---
 
-1.
+1. Creating a key pair on AWS.
+
+   <Solution>
+
+   1. `EC2 > Network & Security > Key Pairs > Create key pair`.
+   2. **`Name`**: `mykey`.
+   3. **`Key pair type`**: `RSA`.
+   4. **`Private key file format`**: `.pem`.
+
+   </Solution>
+
+2. Create a billing alarm to keep track of your AWS bill.
+
+   <Solution>
+
+   1. `CloudWatch > Alarms > Billing > Create alarm`.
+   2. `Select metric > Metrics > Billing > Total Estimated Charge`, then select the `EstimatedCharges` metric.
+   3. **`than...`**: `5 USD`.
+   4. `Create new topic`.
+   5. **`Create a new topic...`**: `Billing_Alerts`.
+   6. **`Email endpoints that will receive the notification...`**: `salmani.soheil@gmail.com`.
+   7. `Create topic`.
+   8. **`Alarm name`**: `Billing_Alert`.
+   9. **`Alarm description`**: "Alert me through email whenever usage goes above 5$.".
+
+   </Solution>
