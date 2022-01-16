@@ -45,6 +45,14 @@ tags:
 
    </Solution>
 
+4. Peut-on falsifier une transaction ?
+
+   <Solution>
+
+   Pour falsifier une transaction, il faudrait, à partir d'une certaine date, pouvoir falsifier la _blockchain_ sur majorité d'ordinateurs reliés au réseau ! Quand bien même cela serait envisageable sur une période ultra-brève, il ne serait pas possible de maintenir longtemps une _blockchain_ parasite qui puisse soutenir la comparaison avec des centaines de milliers de copies licites identiques entre elles et différentes de cette dernière.
+
+   </Solution>
+
 ## Ledger
 
 1. What the fundamental problem before the appearance of blockchain technology and Bitcoin.
@@ -80,6 +88,24 @@ tags:
    ![](/images/crypto-vs-fiat.png)
 
    By cutting out the middlemen and disrupting the traditional financial system, crypto advocates decentralization and individual empowerment.
+
+   </Solution>
+
+4. Explain briefly what is blockchain.
+
+   <Solution>
+
+   In short, blockchain is a decentralized and public digital ledger that records any information – like financial transactions – in an anonymous and immutable way. Such groundbreaking features provide users with significant benefits :
+
+   - Because it is decentralized, there are no third parties involved: no banks, no cloudy actors, no administrator, no unexpected fees. Just you and your digital assets.
+   - As a public record, it provides transparency of all the transactions and allows traceability. While this can allow information counter-checking, it also makes falsifying information difficult.
+   - Information is recorded in both an anonymous and immutable way. It means that once data is added to the ledger, it cannot be removed or altered. Nor can it the provider be nominatively identified.
+
+   Put together, all these features make blockchain very hard or almost impossible to alter or hack. That is what makes blockchain technology so powerful. Besides, it provides us with major revolutionary advantages for countless applications with one same core principle: fostering the decentralization of traditional systems to give power back to the people. And this is exactly what cryptocurrencies aim to do with the traditional financial system.
+
+   ![](/images/how-does-blockchain-work.png)
+
+   Because the network is composed of multiple computers, which can be located all over the world and run by anyone with an Internet connection, it creates a decentralized and distributed validation process.
 
    </Solution>
 
@@ -150,7 +176,7 @@ tags:
 
    <Solution>
 
-   A _smart_ contract8 is an immutable executable code representing the
+   A _smart_ contract is an immutable executable code representing the
    logic of a Dapp. The data variables and functions defined in a smart contract
    collectively represent the state and operations for enforcing an application’s
    (Dapp’s) rules for verification, validation, and recording on the blockchain.
@@ -248,5 +274,39 @@ tags:
     call is transformed into actions that are recorded on the blockchain.
 
     ![](/images/smart-contract-mechanism.png)
+
+    </Solution>
+
+11. How they get recorded on the blockchain.
+
+    <Solution>
+
+    A set of transactions makes a block, and a set of blocks make a blockchain. The process is as follows:
+
+    1. Transactions on the network are verified, gathered, and pooled. Nodes select a
+       set of transactions from the pool to create a block.
+    2. Participant nodes use a consensus algorithm to collectively agree or come to a
+       consensus on a single consistent block of transactions to be appended to the
+       existing chain.
+    3. A hash or representative value of the current lead block of the chain is added to
+       the newly appended block, creating a chain link.
+
+    A blockchain is an _append-only_ distributed immutable ledger.
+    Its creation begins with a single block called the _genesis block_. Every node of a
+    stakeholder on the blockchain has an identical copy of the blockchain, starting with
+    the genesis node. A blockchain DLT, therefore, is
+
+    - _Distributed_, because the blockchain protocol ensures that every distributed node
+      involved has an identical copy of the chain of blocks.
+    - _Immutable_, because each newly created block is linked to the existing blockchain
+      by the hash value of the current head of the blockchain, as shown in figure 1.8.
+
+    </Solution>
+
+12. How trust intermediation is achieved?
+
+    <Solution>
+
+    In a decentralized system, trust intermediation is achieved by the decentralized infrastructure, the DLT, and the disintermediation protocol.
 
     </Solution>
