@@ -1,0 +1,76 @@
+---
+title: TypeScript
+relatedResources:
+  - https://frontendmasters.com/courses/typescript-v3/
+tags:
+  - TypeScript
+  - Web Development
+---
+
+1. Create a TypeScript program.
+
+   <Solution>
+
+   ```json fp=package.json nu
+   {
+     "name": "hello-ts",
+     "license:": "NOLICENSE",
+     "scripts": {
+       "dev": "tsc --watch --preserveWatchOutput"
+     },
+     "devDependencies": {
+       "typescript": "^4.5.4"
+     }
+   }
+   ```
+
+   ```json fp=tsconfig.json nu
+   {
+     "compilerOptions": {
+       "outDir": "dist",
+       "module": "CommonJS",
+       "target": "ES2015"
+     },
+     "include": ["src"]
+   }
+   ```
+
+   ```ts fp=src/index.ts nu
+   function timeout(n: number) {
+     return new Promise(res => setTimeout(res, n))
+   }
+
+   export async function addNumbers(a: number, b: number) {
+     await timeout(500)
+     return a + b
+   }
+
+   ;(async () => {
+     console.log(await addNumbers(3, 4))
+   })()
+   ```
+
+   </Solution>
+
+2. Test type functionality of TypeScript.
+
+   <Solution>
+
+   ```ts fp=src/index.ts nu
+   const RANDOM_WAIT_TIME = Math.round(Math.random() * 500) + 500
+
+   let startTime = new Date()
+   let endTime: Date
+
+   setTimeout(() => {
+     endTime = new Date()
+   }, RANDOM_WAIT_TIME)
+
+   function add(a: number, b: number) {
+     return a + b
+   }
+
+   const result = add(3, 4)
+   ```
+
+   </Solution>
