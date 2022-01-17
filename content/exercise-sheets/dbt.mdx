@@ -72,3 +72,16 @@ tags:
    Create a service account named `dbt-user` and give it the "BigQuery User" role.
 
    </Solution>
+
+2. In dbt Cloud, create a new dbt repository and name it `dbt-tutorial`. Then initialize the starter project, name the dbt project `jaffle_shop`, and run it. Finally, make a commit through the IDE.
+
+   <Solution>
+
+   ```yml fp=dbt_project.yml hl=1,6
+   name: "jaffle_shop"
+   ---
+   models:
+     jaffle_shop: ...
+   ```
+
+   </Solution>
