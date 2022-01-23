@@ -1,0 +1,37 @@
+---
+title: Docker
+relatedResources:
+  - "9781617294761"
+tags:
+  - Docker
+---
+
+1. What are 10 major system features that Docker uses to build containers?
+
+   <Solution>
+
+   - _PID namespace_—Process identifiers and capabilities
+   - _UTS namespace_—Host and domain name
+   - _MNT namespace_—Filesystem access and structure
+   - _IPC namespace_—Process communication over shared memory
+   - _NET namespace_—Network access and structure
+   - _USR namespace_—User names and identifiers
+   - _`chroot` syscall_—Controls the location of the filesystem root
+   - _cgroups_—Resource protection
+   - _CAP drop_—Operating system feature restrictions
+   - _Security modules_—Mandatory access controls
+
+   Docker uses those to build containers at runtime, but it uses another set of
+   technologies to package and ship containers.
+
+   </Solution>
+
+2. How Docker completes the traditional container technology?
+
+   <Solution>
+
+   Docker completes the traditional container technology by including a way to
+   package and distribute software. The component that fills the shipping
+   container role is called an _image_.
+
+   </Solution>
