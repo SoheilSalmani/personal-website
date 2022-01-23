@@ -21,7 +21,8 @@ tags:
 
    </Solution>
 
-2. Create a Gatsby site using the CLI, and start the development server. Set up a GitHub repo and build your site with Gatsby Cloud.
+2. Create a Gatsby site using the CLI, and start the development server. Set up
+   a GitHub repo and build your site with Gatsby Cloud.
 
    <Solution>
 
@@ -32,32 +33,201 @@ tags:
 
    </Solution>
 
-3. Create to page components and a layout component styled using a CSS module.
+3. Create page components, an SEO component, and a layout component styled using
+   a CSS module. Also, add global styles using a CSS file.
 
    <Solution>
+
+   ```sh
+   npm install gatsby-plugin-react-helmet react-helmet
+   ```
+
+   ```css fp=src/styles/global.css nu
+   :root {
+     --black: #333;
+     --gray: #555;
+     --white: #eee;
+   }
+
+   html {
+     box-sizing: border-box;
+     background-color: var(--white);
+     color: var(--gray);
+     font-family: sans-serif;
+     font-size: 18px;
+     line-height: 1.4;
+   }
+
+   *,
+   *::before,
+   *::after {
+     box-sizing: inherit;
+   }
+
+   body {
+     margin: 0;
+     padding: 2rem;
+     width: 90vw;
+     max-width: 800px;
+     margin: 0 auto;
+   }
+
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   h6 {
+     color: var(--black);
+   }
+   ```
+
+   ```js fp=gatsby-config.js nu
+   module.exports = {
+     siteMetadata: {
+       title: `My Gatsby Site`,
+       description: `A Gatsby website.`,
+       siteUrl: `<site-url>`,
+       image: `<image-url>`,
+     },
+   }
+   ```
+
+   ```jsx fp=src/components/seo.js nu
+   import * as React from "react"
+   import { Helmet } from "react-helmet"
+   import { useStaticQuery, graphql } from "gatsby"
+
+   export default function Seo(props) {
+     const data = useStaticQuery(graphql`
+       query GetSiteMetadata {
+         site {
+           siteMetadata {
+             description
+             image
+             siteUrl
+           }
+         }
+       }
+     `)
+
+     const defaults = data.site.siteMetadata
+     const title = props.pageTitle
+       ? `${props.pageTitle} | ${props.siteName}`
+       : props.siteName
+     const description = props.description || defaults.description
+     const image = new URL(props.image || defaults.image, defaults.siteUrl)
+     const url = new URL(props.path || "/", defaults.siteUrl)
+
+     return (
+       <Helmet>
+         <title>{title}</title>
+         <link rel="canonical" href={url} />
+         <meta name="description" content={description} />
+         <meta name="image" content={image} />
+         <meta property="og:url" content={url} />
+         <meta property="og:type" content="website" />
+         <meta property="og:title" content={title} />
+         <meta property="og:description" content={description} />
+         <meta property="og:image" content={image} />
+         <meta name="twitter:card" content="summary_large_image" />
+         <meta name="twitter:title" content={title} />
+         <meta name="twitter:description" content={description} />
+         <meta name="twitter:image" content={image} />
+       </Helmet>
+     )
+   }
+   ```
+
+   ```jsx fp=src/components/layout.js nu
+   import * as React from "react"
+   import { Link } from "gatsby"
+   import * as styles from "./layout.module.css"
+
+   export default function Layout({ pageTitle, children }) {
+     const data = useStaticQuery(graphql`
+       query MyQuery {
+         site {
+           siteMetadata {
+             title
+           }
+         }
+       }
+     `)
+     const siteName = data.site.siteMetadata.title
+
+     return (
+       <>
+         <Seo
+           siteName={siteName}
+           pageTitle={pageTitle}
+           description={description}
+           path={path}
+           image={image}
+         />
+         <nav>
+           <ul className={styles.navLinkList}>
+             <li className={styles.siteNameLink}>
+               <strong>
+                 <Link to="/">{siteName}</Link>
+               </strong>
+             </li>
+             <li>
+               <Link to="/">Home</Link>
+             </li>
+             <li>
+               <Link to="/about">About</Link>
+             </li>
+             <li>
+               <Link to="/blog">Blog</Link>
+             </li>
+           </ul>
+         </nav>
+         <main>
+           <h1>{pageTitle}</h1>
+           {children}
+         </main>
+       </>
+     )
+   }
+   ```
+
+   ```css fp=src/components/layout.module.css nu
+   .nav-link-list {
+     list-style-type: none;
+     padding: 0;
+     margin: 0;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     gap: 2rem;
+   }
+
+   .site-name-link {
+     margin-right: auto;
+   }
+   ```
 
    ```jsx fp=src/pages/index.js nu
    import * as React from "react"
    import Layout from "../components/layout"
 
-   const IndexPage = () => {
+   export default function IndexPage({ location }) {
      return (
-       <Layout pageTitle="Home Page">
+       <Layout pageTitle="Home" path={location.pathname}>
          <p>I'm making this by following the Gatsby Tutorial.</p>
        </Layout>
      )
    }
-
-   export default IndexPage
    ```
 
    ```jsx fp=src/pages/about.js nu
    import * as React from "react"
    import Layout from "../components/layout"
 
-   const AboutPage = () => {
+   export default function AboutPage({ location }) {
      return (
-       <Layout pageTitle="About Me">
+       <Layout pageTitle="About Me" path={location.pathname}>
          <p>
            Hi there! I'm the proud creator of this site, which I built with
            Gatsby.
@@ -65,79 +235,13 @@ tags:
        </Layout>
      )
    }
-
-   export default AboutPage
-   ```
-
-   ```jsx fp=src/components/layout.js nu
-   import * as React from "react"
-   import { Link } from "gatsby"
-   import {
-     container,
-     heading,
-     navLinks,
-     navLinkItem,
-     navLinkText,
-   } from "./layout.module.css"
-
-   const Layout = ({ pageTitle, children }) => {
-     return (
-       <div className={container}>
-         <title>{pageTitle}</title>
-         <nav>
-           <ul className={navLinks}>
-             <li className={navLinkItem}>
-               <Link to="/" className={navLinkText}>
-                 Home
-               </Link>
-             </li>
-             <li className={navLinkItem}>
-               <Link to="/about" className={navLinkText}>
-                 About
-               </Link>
-             </li>
-           </ul>
-         </nav>
-         <main>
-           <h1 className={heading}>{pageTitle}</h1>
-           {children}
-         </main>
-       </div>
-     )
-   }
-
-   export default Layout
-   ```
-
-   ```css fp=src/components/layout.module.css nu
-   .container {
-     margin: auto;
-     max-width: 500px;
-     font-family: sans-serif;
-   }
-
-   .heading {
-     color: rebeccapurple;
-   }
-
-   .nav-links {
-     display: flex;
-     list-style: none;
-     padding-left: 0;
-   }
-
-   .nav-link-item {
-     padding-right: 2rem;
-   }
-
-   .nav-link-text {
-     color: black;
-   }
    ```
 
    </Solution>
 
-4. Add a plugin to add responsive images to your site while maintaining high performance scores. Test the plugin with a iamge from your local filesystem, and with an image from an external URL.
+4. Add a plugin to add responsive images to your site while maintaining high
+   performance scores. Test the plugin with a image from your local filesystem,
+   and with an image from an external URL.
 
    <Solution>
 
@@ -159,24 +263,23 @@ tags:
    import Layout from "../components/layout"
    import { StaticImage } from "gatsby-plugin-image"
 
-   const IndexPage = () => {
+   export default function IndexPage({ location }) {
      return (
-       <Layout pageTitle="Home Page">
+       <Layout pageTitle="Home" path={location.pathname}>
          <p>I'm making this by following the Gatsby Tutorial.</p>
          <StaticImage
-           alt="Clifford, a reddish-brown pitbull, posing on a couch and looking stoically at the camera"
-           src="https://pbs.twimg.com/media/E1oMV3QVgAIr1NT?format=jpg&name=large"
+           alt="The mountains of Chamonix."
+           src="https://en.chamonix.com/sites/default/files/styles/ogimage/public/media/images/%C2%A9Fabian_Bodet.jpg"
          />
        </Layout>
      )
    }
-
-   export default IndexPage
    ```
 
    </Solution>
 
-5. Load the site title using GraphQL, and create a "Blog" page with data loaded from a page query.
+5. Load the site title using GraphQL, and create a "Blog" page with data loaded
+   from a page query.
 
    <Solution>
 
@@ -185,7 +288,6 @@ tags:
    cd blog
    touch my-first-post.mdx
    touch another-post.mdx
-   touch yet-another-post.mdx
    ```
 
    ```js fp=gatsby-config.js hl=6..12
@@ -205,86 +307,34 @@ tags:
    }
    ```
 
-   ```jsx fp=src/components/layout.js hl=2,5,9..17,21..22,28..32
-   import * as React from "react"
-   import { Link, useStaticQuery, graphql } from 'gatsby'
-   import {
-     ...
-     siteTitle,
-   } from "./layout.module.css"
-
-   const Layout = ({ pageTitle, children }) => {
-     const data = useStaticQuery(graphql`
-       query {
-         site {
-           siteMetadata {
-             title
-           }
-         }
-       }
-     `)
-
-     return (
-       <div className={container}>
-         <title>{pageTitle} | {data.site.siteMetadata.title}</title>
-         <header className={siteTitle}>{data.site.siteMetadata.title}</header>
-         <nav>
-           <ul className={navLinks}>
-             <li className={navLinkItem}>
-               ...
-             </li>
-             <li className={navLinkItem}>
-               <Link to="/blog" className={navLinkText}>
-                 Blog
-               </Link>
-             </li>
-           </ul>
-         </nav>
-         ...
-       </div>
-     )
-   }
-
-   export default Layout
-   ```
-
-   ```css fp=src/components/layout.module.css
-   ... .site-title {
-     font-size: 3rem;
-     color: gray;
-     font-weight: 700;
-     margin: 3rem 0;
-   }
-   ```
-
    ```jsx fp=src/pages/blog.js nu
    import * as React from "react"
    import { graphql } from "gatsby"
    import Layout from "../components/layout"
 
-   const BlogPage = ({ data }) => {
-     return (
-       <Layout pageTitle="My Blog Posts">
-         <ul>
-           {data.allFile.nodes.map(node => (
-             <li key={node.name}>{node.name}</li>
-           ))}
-         </ul>
-       </Layout>
-     )
-   }
-
    export const query = graphql`
-     query {
+     query GetPosts {
        allFile(filter: { sourceInstanceName: { eq: "blog" } }) {
          nodes {
+           id
            name
          }
        }
      }
    `
 
-   export default BlogPage
+   export default function BlogPage({ data, location }) {
+     const posts = data.allFile.nodes
+     return (
+       <Layout pageTitle="Blog" path={location.pathname}>
+         <ul>
+           {posts.map(post => (
+             <li key={post.id}>{post.name}</li>
+           ))}
+         </ul>
+       </Layout>
+     )
+   }
    ```
 
    </Solution>
@@ -299,35 +349,20 @@ tags:
 
    ```mdx fp=blog/another-post.mdx nu
    ---
-   title: "Another Post"
-   date: "2021-07-24"
+   title: Another Post
+   date: 2022-01-01
    ---
 
-   Here's another post! It's even better than the first one!
+   Hello, world!
    ```
 
    ```mdx fp=blog/my-first-post.mdx nu
    ---
-   title: "My First Post"
-   date: "2021-07-23"
+   title: My First Post
+   date: 2021-12-20
    ---
 
-   This is my first blog post! Isn't it _great_?
-
-   Some of my **favorite** things are:
-
-   - Petting dogs
-   - Singing
-   - Eating potato-based foods
-   ```
-
-   ```mdx fp=blog/yet-another-post.mdx nu
-   ---
-   title: "Yet Another Post"
-   date: "2021-07-25"
-   ---
-
-   Wow look at all this content. How do they do it?
+   Hello, world!
    ```
 
    ```js fp=gatsby-config.js hl=5
@@ -340,45 +375,42 @@ tags:
    };
    ```
 
-   ```jsx fp=src/pages/blog.js hl=2,9..17,25..34, nu
+   ```jsx fp=src/pages/blog.js hl=2,6..16,26..30
    ...
-   import { MDXRenderer } from 'gatsby-plugin-mdx'
+   import { MDXRenderer } from "gatsby-plugin-mdx"
    ...
-
-   const BlogPage = ({ data }) => {
-     return (
-       <Layout pageTitle="My Blog Posts">
-         {
-           data.allMdx.nodes.map((node) => (
-             <article key={node.id}>
-               <h2>{node.frontmatter.title}</h2>
-               <p>Posted: {node.frontmatter.date}</p>
-               <MDXRenderer>
-                 {node.body}
-               </MDXRenderer>
-             </article>
-           ))
-         }
-       </Layout>
-     )
-   }
 
    export const query = graphql`
-     query {
-       allMdx(sort: {fields: frontmatter___date, order: DESC}) {
+     query GetPosts {
+       allMdx(sort: { order: DESC, fields: frontmatter___date }) {
          nodes {
-           frontmatter {
-             date(formatString: "MMMM D, YYYY")
-             title
-           }
            id
            body
+           frontmatter {
+             title
+             date(formatString: "MMMM D, YYYY")
+           }
          }
        }
      }
    `
 
-   export default BlogPage
+   export default function BlogPage({ data, location }) {
+     const posts = data.allMdx.nodes
+     return (
+       <Layout pageTitle="Blog" path={location.pathname}>
+         <ul>
+           {posts.map(post => (
+             <article key={post.id}>
+               <h2>{post.frontmatter.title}</h2>
+               <p>Posted: {post.frontmatter.date}</p>
+               <MDXRenderer>{post.body}</MDXRenderer>
+             </article>
+           ))}
+         </ul>
+       </Layout>
+     )
+   }
    ```
 
    </Solution>
@@ -387,42 +419,41 @@ tags:
 
    <Solution>
 
-   ```jsx fp=src/pages/blog/index.js nu hl=2..3,11..15,33
+   ```jsx fp=src/pages/blog/index.js nu hl=2..3,10,23..31
    import * as React from "react"
-   import { Link, graphql } from "gatsby"
+   import { graphql, Link } from "gatsby"
    import Layout from "../../components/layout"
 
-   const BlogPage = ({ data }) => {
-     return (
-       <Layout pageTitle="My Blog Posts">
-         {data.allMdx.nodes.map(node => (
-           <article key={node.id}>
-             <h2>
-               <Link to={`/blog/${node.slug}`}>{node.frontmatter.title}</Link>
-             </h2>
-             <p>Posted: {node.frontmatter.date}</p>
-           </article>
-         ))}
-       </Layout>
-     )
-   }
-
    export const query = graphql`
-     query {
-       allMdx(sort: { fields: frontmatter___date, order: DESC }) {
+     query GetPosts {
+       allMdx(sort: { order: DESC, fields: frontmatter___date }) {
          nodes {
-           frontmatter {
-             date(formatString: "MMMM D, YYYY")
-             title
-           }
            id
            slug
+           frontmatter {
+             title
+             date(formatString: "MMMM D, YYYY")
+           }
          }
        }
      }
    `
-
-   export default BlogPage
+   export default function BlogPage({ data, location }) {
+     const posts = data.allMdx.nodes
+     return (
+       <Layout pageTitle="Blog" path={location.pathname}>
+         <ul>
+           {posts.map(post => (
+             <li key={post.id}>
+               <Link to={`/blog/${post.slug}`}>
+                 {post.frontmatter.title} ({post.frontmatter.date})
+               </Link>
+             </li>
+           ))}
+         </ul>
+       </Layout>
+     )
+   }
    ```
 
    ```jsx fp=src/pages/blog/{mdx.slug}.js nu
@@ -431,28 +462,27 @@ tags:
    import { MDXRenderer } from "gatsby-plugin-mdx"
    import Layout from "../../components/layout"
 
-   const BlogPost = ({ data }) => {
-     return (
-       <Layout pageTitle={data.mdx.frontmatter.title}>
-         <p>{data.mdx.frontmatter.date}</p>
-         <MDXRenderer>{data.mdx.body}</MDXRenderer>
-       </Layout>
-     )
-   }
-
    export const query = graphql`
-     query ($id: String) {
+     query GetPost($id: String) {
        mdx(id: { eq: $id }) {
+         body
          frontmatter {
            title
            date(formatString: "MMMM D, YYYY")
          }
-         body
        }
      }
    `
 
-   export default BlogPost
+   export default function BlogPost({ data, location }) {
+     const post = data.mdx
+     return (
+       <Layout pageTitle={post.frontmatter.title} path={location.pathname}>
+         <p>Posted: {post.frontmatter.date}</p>
+         <MDXRenderer>{post.body}</MDXRenderer>
+       </Layout>
+     )
+   }
    ```
 
    </Solution>
@@ -475,79 +505,43 @@ tags:
    };
    ```
 
-   ```mdx fp=blog/my-first-post/index.mdx
+   ```mdx fp=blog/my-first-post/index.mdx hl=4..5
    ---
-   title: "My First Post"
-   date: "2021-07-23"
-   hero_image: "./christopher-ayme-ocZ-_Y7-Ptg-unsplash.jpg"
-   hero_image_alt: "A gray pitbull relaxing on the sidewalk with its tongue hanging out"
-   hero_image_credit_text: "Christopher Ayme"
-   hero_image_credit_link: "https://unsplash.com/photos/ocZ-_Y7-Ptg"
+   title: My First Post
+   date: 2020-12-01
+   hero_image: ./hero.jpg
+   hero_image_alt: The mountains of Chamonix.
    ---
 
-   ...
+   Hello, world!
    ```
 
-   ```mdx fp=blog/another-post/index.mdx
+   ```mdx fp=blog/another-post/index.mdx hl=4..5
    ---
-   title: "Another Post"
-   date: "2021-07-24"
-   hero_image: "./anthony-duran-eLUBGqKGdE4-unsplash.jpg"
-   hero_image_alt: "A grey and white pitbull wading happily in a pool"
-   hero_image_credit_text: "Anthony Duran"
-   hero_image_credit_link: "https://unsplash.com/photos/eLUBGqKGdE4"
+   title: Another Post
+   date: 2021-01-01
+   hero_image: ./hero.jpg
+   hero_image_alt: The mountains of Chamonix.
    ---
 
-   ...
+   Hello, world!
    ```
 
-   ```mdx fp=blog/yet-another-post/index.mdx
-   ---
-   title: "Yet Another Post"
-   date: "2021-07-25"
-   hero_image: "./jane-almon-7rriIaBH6JY-unsplash.jpg"
-   hero_image_alt: "A white pitbull wearing big googly-eye glasses"
-   hero_image_credit_text: "Jane Almon"
-   hero_image_credit_link: "https://unsplash.com/photos/7rriIaBH6JY"
-   ---
-
-   ...
-   ```
-
-   ```jsx fp=src/pages/blog/{mdx.slug}.js nu hl=4,8,11..21,28,30,33..41
+   ```jsx fp=src/pages/blog/{mdx.slug}.js nu hl=4,14..19,30..35
    import * as React from "react"
    import { graphql } from "gatsby"
    import { MDXRenderer } from "gatsby-plugin-mdx"
    import { GatsbyImage, getImage } from "gatsby-plugin-image"
    import Layout from "../../components/layout"
 
-   const BlogPost = ({ data }) => {
-     const image = getImage(data.mdx.frontmatter.hero_image)
-     return (
-       <Layout pageTitle={data.mdx.frontmatter.title}>
-         <p>Posted: {data.mdx.frontmatter.date}</p>
-         <GatsbyImage image={image} alt={data.mdx.frontmatter.hero_image_alt} />
-         <p>
-           Photo Credit:{" "}
-           <a href={data.mdx.frontmatter.hero_image_credit_link}>
-             {data.mdx.frontmatter.hero_image_credit_text}
-           </a>
-         </p>
-         <MDXRenderer>{data.mdx.body}</MDXRenderer>
-       </Layout>
-     )
-   }
-
    export const query = graphql`
-     query ($id: String) {
+     query GetPost($id: String) {
        mdx(id: { eq: $id }) {
          body
          frontmatter {
            title
-           date(formatString: "MMMM DD, YYYY")
+           date(formatString: "MMMM D, YYYY")
            hero_image_alt
-           hero_image_credit_link
-           hero_image_credit_text
            hero_image {
              childImageSharp {
                gatsbyImageData
@@ -557,7 +551,22 @@ tags:
        }
      }
    `
-   export default BlogPost
+
+   export default function BlogPage({ data, location }) {
+     const post = data.mdx
+     return (
+       <Layout pageTitle={post.frontmatter.title} path={location.pathname}>
+         <p>Posted: {post.frontmatter.date}</p>
+         <p>
+           <GatsbyImage
+             image={getImage(post.frontmatter.hero_image)}
+             alt={post.frontmatter.hero_image_alt}
+           />
+         </p>
+         <MDXRenderer>{post.body}</MDXRenderer>
+       </Layout>
+     )
+   }
    ```
 
    </Solution>
