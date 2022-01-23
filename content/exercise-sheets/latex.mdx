@@ -1,0 +1,24 @@
+---
+title: LaTeX
+relatedResources:
+  - "9781801078658"
+tags:
+  - LaTeX
+---
+
+1. Create a document in LaTeX and compile it using the CLI.
+
+   <Solution>
+
+   ```latex fp=document.tex nu
+   \documentclass{article}
+   \begin{document}
+   This is our first document.
+   \end{document}
+   ```
+
+   ```sh
+   latex --output-format=pdf document.tex
+   ```
+
+   </Solution>
