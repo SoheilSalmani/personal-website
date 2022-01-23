@@ -31,3 +31,72 @@ tags:
    - The **Kubernetes Service Proxy (Kube Proxy)** load-balances network traffic between applications. Its name suggests that traffic flows through it, but that’s no longer the case.
 
    </Solution>
+
+3. Can you reduce the size of an image by deleting files in a directive ?
+
+   <Solution>
+
+   Each directive creates a new layer. When you delete a file, it is only marked as deleted in the new layer and is not removed from the layers below. Therefore, deleting a file with a subsequent directive won’t reduce the size of the image. If you use the RUN directive, make sure that the command it executes deletes all temporary files it creates before it terminates.
+
+   </Solution>
+
+4. Build the [`kiada:latest`](https://github.com/luksa/kubernetes-in-action-2nd-edition/tree/master/Chapter02/kiada-0.1) image, and push it in the Docker registry.
+
+   <Solution>
+
+   ```sh
+   docker build -t kiada:latest .
+   docker tag kiada soheilsalmani/kiada:0.1
+   docker login -u <user-id> -p <password> docker.io
+   docker push soheilsalmani/kiada:0.1
+   ```
+
+   </Solution>
+
+5. List all images and check the layers of you image and their size.
+
+   <Solution>
+
+   ```sh
+   docker images
+   docker history kiada:latest
+   ```
+
+   </Solution>
+
+6. Run a container from the `kiada` image, list all the containers that are running on your computer, and test your app. Then, get additional information about your container and inspect the application logs.
+
+   <Solution>
+
+   ```sh
+   docker run --name kiada-container -p 1234:8080 -d kiada
+   docker ps
+   curl localhost:1234
+   docker inspect kiada-container
+   docker logs kiada-container
+   ```
+
+   </Solution>
+
+7. Stop your container and list all running and stopped containers.
+
+   <Solution>
+
+   ```sh
+   docker stop kiada-container
+   docker ps -a
+   ```
+
+   </Solution>
+
+8. Delete your container and your image. Then, remove all dangling images.
+
+   <Solution>
+
+   ```sh
+   docker rm kiada-container
+   docker rmi kiada:latest
+   docker image prune
+   ```
+
+   </Solution>
