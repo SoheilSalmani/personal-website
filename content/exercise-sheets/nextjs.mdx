@@ -38,3 +38,102 @@ tags:
    ```
 
    </Solution>
+
+2. Create different types of routes and configure navigation.
+
+   <Solution>
+
+   ```jsx fp=pages/index.jsx nu
+   import React from "react"
+   import { useRouter } from "next/router"
+   import Link from "next/link"
+
+   const Page = () => {
+     const router = useRouter()
+     const id = 1
+     return (
+       <div>
+         <h1>Index Page</h1>
+         <Link href="/notes">
+           <a>Notes</a>
+         </Link>
+         <button onClick={e => router.push("/wiki")}>Go Wiki</button>
+         <button onClick={e => router.push("/notes/[id]", `/notes/${id}`)}>
+           Go First Note
+         </button>
+       </div>
+     )
+   }
+
+   export default Page
+   ```
+
+   ```jsx fp=pages/notes/index.jsx nu
+   import React from "react"
+   import Link from "next/link"
+
+   const Page = () => {
+     const notes = new Array(15)
+       .fill(1)
+       .map((e, i) => ({ id: i, title: `Note: ${i}` }))
+     return (
+       <div>
+         <h1>Notes Page</h1>
+         <ul>
+           {notes.map(note => (
+             <li>
+               <Link key={note.id} href="/notes/[id]" as={`/notes/${note.id}`}>
+                 <a>
+                   <strong>{note.title}</strong>
+                 </a>
+               </Link>
+             </li>
+           ))}
+         </ul>
+       </div>
+     )
+   }
+
+   export default Page
+   ```
+
+   ```jsx fp=pages/notes/[id].jsx nu
+   import React from "react"
+   import { useRouter } from "next/router"
+
+   const Page = () => {
+     const router = useRouter()
+     const { id } = router.query
+     return <h1>Note: {id}</h1>
+   }
+
+   export default Page
+   ```
+
+   ```jsx fp=pages/docs/[...params].jsx nu
+   import React from "react"
+   import { useRouter } from "next/router"
+
+   const Page = () => {
+     const router = useRouter()
+     const { params } = router.query
+     return <pre>{JSON.stringify(params, null, 2)}</pre>
+   }
+
+   export default Page
+   ```
+
+   ```jsx fp=pages/wiki/[[...params]].jsx nu
+   import React from "react"
+   import { useRouter } from "next/router"
+
+   const Page = () => {
+     const router = useRouter()
+     const { params } = router.query
+     return <pre>{JSON.stringify(params, null, 2)}</pre>
+   }
+
+   export default Page
+   ```
+
+   </Solution>
