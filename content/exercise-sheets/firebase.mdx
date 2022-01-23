@@ -1,0 +1,46 @@
+---
+title: Firebase
+relatedResources:
+  - https://firebase.google.com/
+tags:
+  - Firebase
+---
+
+1. Create a Firebase project and register your web app.
+
+2. Access Firebase in your app.
+
+   <Solution>
+
+   ```sh
+   npm install firebase
+   ```
+
+   ```js nu
+   import { initializeApp } from "firebase/app"
+   import { getFirestore, collection, getDocs } from "firebase/firestore/lite"
+
+   const firebaseConfig = {
+     apiKey: "AIzaSyAClfFo1oBdPa0JthD3AHBB2n7V74z_Xew",
+     authDomain: "new-firebase-project-965c7.firebaseapp.com",
+     projectId: "new-firebase-project-965c7",
+     storageBucket: "new-firebase-project-965c7.appspot.com",
+     messagingSenderId: "24726844814",
+     appId: "1:24726844814:web:f515a6b84ee3e5302520df",
+   }
+
+   const app = initializeApp(firebaseConfig)
+   const db = getFirestore(app)
+
+   async function getCities(db) {
+     const citiesCol = collection(db, "cities")
+     const citySnapshot = await getDocs(citiesCol)
+     const cityList = citySnapshot.docs.map(doc => doc.data())
+     return cityList
+   }
+
+   const cityList = await getCities(db)
+   console.log(cityList)
+   ```
+
+   </Solution>
