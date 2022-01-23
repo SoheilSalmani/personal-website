@@ -7,7 +7,8 @@ tags:
   - Maven
 ---
 
-1. Generate a project using Maven in interactive mode, and in non-interactive mode (give an archetype version).
+1. Generate a project using Maven in interactive mode, and in non-interactive
+   mode (give an archetype version).
 
    <Solution>
 
@@ -29,7 +30,8 @@ tags:
 
    </Solution>
 
-3. Inform Maven the Java release you are targetting, and a character encoding scheme to use for the reading and writing of files.
+3. Inform Maven the Java release you are targetting, and a character encoding
+   scheme to use for the reading and writing of files.
 
    <Solution>
 
@@ -49,7 +51,8 @@ tags:
 
    </Solution>
 
-4. Clean the `target/` folder, copy all dependencies in a `target/dependency/` folder, then build the JAR file.
+4. Clean the `target/` folder, copy all dependencies in a `target/dependency/`
+   folder, then build the JAR file.
 
    <Solution>
 
@@ -66,5 +69,75 @@ tags:
    ```shell
    mvn site
    ```
+
+   </Solution>
+
+6. Compile your application sources using Maven. Where are the compiled classes?
+
+   <Solution>
+
+   ```sh
+   mvn compile
+   ```
+
+   The compiled classes were placed in `target/classes/`.
+
+   </Solution>
+
+7. Compile and execute your tests. Then, compile your test sources but do not
+   execute the tests.
+
+   <Solution>
+
+   To compile and execute your tests, run:
+
+   ```sh
+   mvn test
+   ```
+
+   If you simply want to compile your test sources (but not execute the tests),
+   run:
+
+   ```sh
+   mvn test-compile
+   ```
+
+   </Solution>
+
+8. Create a JAR and install it in your local repository.
+
+   <Solution>
+
+   To build your JAR file, run:
+
+   ```sh
+   mvn package
+   ```
+
+   To install the artifact you've generated (the JAR file) in your local
+   repository (`~/.m2/repository` is the default location), run:
+
+   ```sh
+   mvn install
+   ```
+
+   </Solution>
+
+9. Which plugin looks for tests contained in files with a particular naming
+   convention, and executes them?
+
+   <Solution>
+
+   The surefire plugin (which executes the test) looks for tests contained in
+   files with a particular naming convention. By default the tests included are:
+
+   - `**/*Test.java`
+   - `**/Test*.java`
+   - `**/*TestCase.java`
+
+   And the default excludes are:
+
+   - `**/Abstract*Test.java`
+   - `**/Abstract*TestCase.java`
 
    </Solution>
