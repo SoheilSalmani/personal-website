@@ -60,3 +60,44 @@ tags:
    ```
 
    </Solution>
+
+2. Create a new Scala project with sbt, compile it, and run it.
+
+   <Solution>
+
+   ```sh
+   sbt
+   sbt:scala> new scala/hello-world.g8
+   cd hello-world-template
+   sbt
+   sbt:scala> compile
+   sbt:scala> run
+   ```
+
+   </Solution>
+
+3. Add a new dependency, and an sbt plugin.
+
+   <Solution>
+
+   ```scala fp=build.sbt
+   // ...
+
+   libraryDependencies += "org.typelevel" %% "cats-core" % "2.3.0"
+
+   // ...
+   ```
+
+   ```scala fp=project/plugins.sbt nu
+   addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.6.1")
+   ```
+
+   </Solution>
+
+4. Explain the structure of a typical Scala application built with sbt.
+
+   <Solution>
+
+   ![](/images/sbt-project-structure.png)
+
+   </Solution>
