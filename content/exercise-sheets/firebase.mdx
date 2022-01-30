@@ -44,3 +44,59 @@ tags:
    ```
 
    </Solution>
+
+3. Initialize the Admin SDK (Node.js, Java and Python).
+
+   <Solution>
+
+   ```sh
+   npm install firebase-admin
+   ```
+
+   ```js nu
+   import { initializeApp } from "firebase-admin/app"
+
+   const app = initializeApp()
+   ```
+
+   ```xml fp=pom.xml
+   <dependency>
+     <groupId>org.slf4j</groupId>
+     <artifactId>slf4j-simple</artifactId>
+     <version>1.7.35</version>
+   </dependency>
+   <dependency>
+     <groupId>com.google.firebase</groupId>
+     <artifactId>firebase-admin</artifactId>
+     <version>8.1.0</version>
+   </dependency>
+   <dependency>
+     <groupId>com.google.auth</groupId>
+     <artifactId>google-auth-library-oauth2-http</artifactId>
+     <version>1.4.0</version>
+   </dependency>
+   ```
+
+   ```java nu
+   package com.mycompany.app;
+
+   import com.google.firebase.FirebaseApp;
+
+   public class App {
+       public static void main(String[] args) {
+           FirebaseApp app = FirebaseApp.initializeApp();
+       }
+   }
+   ```
+
+   ```sh
+   pip install firebase-admin
+   ```
+
+   ```python nu
+   import { initializeApp } from "firebase-admin/app"
+
+   const app = initializeApp()
+   ```
+
+   </Solution>
