@@ -7,7 +7,8 @@ tags:
   - Web Development
 ---
 
-1. Create the intro and contact sections.
+1. Create the navigation bar, the intro section, the contact section, and the
+   footer.
 
    <Solution>
 
@@ -40,6 +41,7 @@ tags:
        <li>
          <a
            href="https://drive.google.com/file/d/1aRkK3yY7z6wudQVIsXtHWNi-TxmpHNfu/view?usp=sharing"
+           class="button"
            target="_blank"
            >Resume</a
          >
@@ -69,6 +71,31 @@ tags:
      </p>
      <p><a href="mailto:soheil@salmani.me">Email me</a></p>
    </section>
+
+   <footer>
+     <h2>Soheil Salmani &middot; Full-Stack Developer</h2>
+     <ul>
+       <li>
+         <a href="https://www.linkedin.com/in/soheil-salmani/" target="_blank">
+           <span class="fab fa-linkedin" aria-hidden="true"></span>
+           <span class="sr-only">LinkedIn</span>
+         </a>
+       </li>
+       <li>
+         <a href="https://github.com/SoheilSalmani" target="_blank">
+           <span class="fab fa-github-square" aria-hidden="true"></span>
+           <span class="sr-only">GitHub</span>
+         </a>
+       </li>
+       <li>
+         <a href="mailto:soheil@salmani.me">
+           <span class="fas fa-envelope" aria-hidden="true"></span>
+           <span class="sr-only">Email</span>
+         </a>
+       </li>
+     </ul>
+     <p><small>&copy; 2021 Soheil Salmani. All rights reserved.</small></p>
+   </footer>
    ```
 
    ```css nu
@@ -170,6 +197,30 @@ tags:
      color: var(--magenta);
    }
 
+   .button {
+     background-color: var(--magenta);
+     padding: 0.5rem;
+     border-radius: 5px;
+   }
+
+   .button:hover {
+     background-color: var(--hotmag);
+     color: var(--white);
+   }
+
+   @media (min-width: 850px) {
+     nav {
+       max-width: 1200px;
+       margin: 0 auto;
+     }
+
+     nav li:first-child {
+       flex-basis: auto;
+       text-align: left;
+       margin-right: auto;
+     }
+   }
+
    /* Intro section */
 
    #intro {
@@ -208,6 +259,23 @@ tags:
 
    #contact p:last-child {
      margin-top: 3rem;
+   }
+
+   /* Footer section */
+
+   footer {
+     text-align: center;
+   }
+
+   footer ul {
+     list-style-type: none;
+     padding: 0;
+     margin: 2rem 0;
+     display: flex;
+     flex-flow: row-wrap;
+     justify-content: center;
+     gap: 3rem;
+     font-size: 3rem;
    }
    ```
 
