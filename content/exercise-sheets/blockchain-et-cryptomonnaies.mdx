@@ -15,12 +15,15 @@ tags:
 
    <Solution>
 
-   - Un élément (pièce, billet, lingo d'or...) auquel nous avons convenu d'attribuer une certaine valeur.
-   - Un tiers de confiance qui est le garant de la validité de cet élément d'échange.
+   - Un élément (pièce, billet, lingo d'or...) auquel nous avons convenu
+     d'attribuer une certaine valeur.
+   - Un tiers de confiance qui est le garant de la validité de cet élément
+     d'échange.
 
    </Solution>
 
-2. Expliquer le modèle défini par Satoshi Nakamoto dans lequel la confiance ne repose plus sur les banques.
+2. Expliquer le modèle défini par Satoshi Nakamoto dans lequel la confiance ne
+   repose plus sur les banques.
 
    <Solution>
 
@@ -29,19 +32,32 @@ tags:
    - un modèle mathématique sophistiqué : la cryptographie ;
    - nous-mêmes, usagers de la monnaie.
 
-   La différence réside dans le mécanisme de confiance qui a initialement été développé et que l'on appelle la _blockchain_.
+   La différence réside dans le mécanisme de confiance qui a initialement été
+   développé et que l'on appelle la _blockchain_.
 
    </Solution>
 
-3. Qu'est-ce qu'un système _peer-to-peer_ et comment ce type de système a-t-il inspiré la création du Bitcoin ?
+3. Qu'est-ce qu'un système _peer-to-peer_ et comment ce type de système a-t-il
+   inspiré la création du Bitcoin ?
 
    <Solution>
 
-   Sur un système _peer to peer_, on dit que l'information est « décentralisée » ou « distribuée ». Bitcoin repose sur ce même principe d'informatique décentralisée. Chaque ordinateur connecté à un moment donné participe à la communauté globale. Il n'existe plus de banque et, donc, plus de serveur central. Les données relatives à vos bitcoins ne sont donc pas stockées par une entreprise unique, mais réparties entre plusieurs participants.
+   Sur un système _peer to peer_, on dit que l'information est « décentralisée »
+   ou « distribuée ». Bitcoin repose sur ce même principe d'informatique
+   décentralisée. Chaque ordinateur connecté à un moment donné participe à la
+   communauté globale. Il n'existe plus de banque et, donc, plus de serveur
+   central. Les données relatives à vos bitcoins ne sont donc pas stockées par
+   une entreprise unique, mais réparties entre plusieurs participants.
 
-   Selon une même logique, le logiciel sur lequel repose Bitcoin est _open source_ ou « libre », ce qui signifie qu'il n'appartient à aucun éditeur. Ni Microsoft, ni Google, ni Sony ne sont propriétaires de Bitcoin ni des variantes qui ont pu suivre, comme Ethereum, Ripple ou EOS.
+   Selon une même logique, le logiciel sur lequel repose Bitcoin est _open
+   source_ ou « libre », ce qui signifie qu'il n'appartient à aucun éditeur. Ni
+   Microsoft, ni Google, ni Sony ne sont propriétaires de Bitcoin ni des
+   variantes qui ont pu suivre, comme Ethereum, Ripple ou EOS.
 
-   Le logiciel qui gère une cryptomonnaie donnée est à la disposition de tous, et, mieux encore, chacun peut l'adapter à sa guise. Il en est de même pour les incroyables applications de la DeFi (finance décentralisée), qui sont en train de révolutionner les systèmes de l'épargne rémunérée et de l'assurance.
+   Le logiciel qui gère une cryptomonnaie donnée est à la disposition de tous,
+   et, mieux encore, chacun peut l'adapter à sa guise. Il en est de même pour
+   les incroyables applications de la DeFi (finance décentralisée), qui sont en
+   train de révolutionner les systèmes de l'épargne rémunérée et de l'assurance.
 
    </Solution>
 
@@ -49,21 +65,148 @@ tags:
 
    <Solution>
 
-   Pour falsifier une transaction, il faudrait, à partir d'une certaine date, pouvoir falsifier la _blockchain_ sur majorité d'ordinateurs reliés au réseau ! Quand bien même cela serait envisageable sur une période ultra-brève, il ne serait pas possible de maintenir longtemps une _blockchain_ parasite qui puisse soutenir la comparaison avec des centaines de milliers de copies licites identiques entre elles et différentes de cette dernière.
+   Pour falsifier une transaction, il faudrait, à partir d'une certaine date,
+   pouvoir falsifier la _blockchain_ sur une majorité d'ordinateurs reliés au
+   réseau ! Quand bien même cela serait envisageable sur une période
+   ultra-brève, il ne serait pas possible de maintenir longtemps une
+   _blockchain_ parasite qui puisse soutenir la comparaison avec des centaines
+   de milliers de copies licites identiques entre elles et différentes de cette
+   dernière.
+
+   </Solution>
+
+5. Décriver le système de « minage ».
+
+   <Solution>
+
+   Le système de « minage » fonctionne de la manière suivante :
+
+   - Chaque transaction en bitcoins est validée par un calcul complexe - une
+     vérification mathématique selon un système de cryptage baptisé
+     _hashage/SHA256_.
+   - Certains des usagers participant au réseau peuvent s'atteler au travail
+     consistant à résoudre ce problème de vérification. En d'autres termes, ils
+     mettent la puissance de calcul de leur ordinateur au service de cette
+     vérification. Ces usagers particuliers sont appelés des _mineurs_.
+   - La validation de chaque transaction par ces mineurs prend en compte
+     l'identifiant crypté de chaque intervenant mais aussi une _preuve de
+     travail_ issue d'un calcul ultra-complexe. Cette preuve de travail permet à
+     chacun de vérifier que la transaction est valide. Cette preuve de travail
+     est la talon d'Achille du Bitcoin. Son coût écologique est tel qu'il a
+     fallu inventer diverses alternatives à la preuve de travail, dont la
+     _preuve d'enjeu_.
+   - Si l'un de ces mineurs parvient à résoudre ce problème mathématique, il est
+     récompensé par un nouveau bitcoin. Dans la pratique, étant donné que
+     plusieurs mineurs sont en mesure de résoudre le problème au même moment, le
+     gagnant est désigné selon des règles établies par Satoshi Nakamoto.
+
+   </Solution>
+
+6. Comparer la manière dont la valeur du Bitcoin est attribuée par rapport à
+   celle du dollar et de l'euro.
+
+   <Solution>
+
+   - La valeur du dollar est garantie par la signature du secrétaire au Trésor.
+   - Pour ce qui est de l'euro, sa valeur est certifiée par le président de la
+     Banque centrale européenne (BCE). Jusqu'en 2019, c'est la mention « MDraghi
+     » qui figurait sur les billets. Depuis 2020, c'est la signature de
+     Christine Lagarde qui apparaît sur les nouveaux billets. Cette signature
+     garantit que votre billet de 10€ vaut bien 10€ et que quiconque en zone
+     Euro acceptera un paiement en échange de ce billet de banque. En
+     contrepartie de ce service de tiers de confiance, Christine Lagarde décide
+     des taux d'intérêt sur la monnaie européenne, contrôle la masse monétaire,
+     évalue les risques d'inflation et oblige même les banques à déclarer à la
+     police les transactions suspectes.
+   - La valeur du Bitcoin dépend de la demande qui existe à un moment donné pour
+     cette monnaie. Et cette valeur est garantit par la _blockchain_, qui assure
+     que toutes les transactions effectuées sur cette monnaie sont d'une
+     fiabilité incontestable.
+
+   </Solution>
+
+7. Nakamoto considère que les États sont tôt ou tard tentés d'émettre des pièces
+   et monnaies qui ne correspondent à aucune production réelle. Et, en agissant
+   ainsi, lesdits États en viennent toujours à dévaloriser leur monnaie et à
+   s'approprier les économies de leurs administrés. Expliquer le processus.
+
+   <Solution>
+
+   - Plus l'État dépense, plus il est à même d'engendrer des dettes.
+   - L'une des solutions consiste à faire fonctionner la « planche à billets ».
+     De nouveaux dollars, de nouveaux euros sont mis en circulation. L'État peut
+     ainsi rembourser ses dettes. Pourtant, cette production de « monnaie de
+     singe » est illusoire car elle entraîne une dévaluation de la monnaie
+     puisque celle-ci perd de sa valeur au passage. En effet, à l'origine, une
+     monnaie est censée représenter des biens, des services, une production
+     d'articles. Avec la « monnaie de singe », nous obtenons une monnaie qui,
+     dans le réel, ne correspond plus réellement à son équivalent en biens et
+     services.
+
+   </Solution>
+
+8. Expliquer comment Nakamoto tente de résoudre ce problème avec le Bitcoin.
+
+   <Solution>
+
+   Dès le départ, Nakamoto a limité la production de bitcoins sur le long terme
+   à 21 millions d'unités. Il lui a ainsi conféré un statut comparable à celui
+   d'un métal précieux tel que l'or, plutôt qu'à celui d'une monnaie comme
+   l'euro.
+
+   La masse monétaire est fixée à l'avance et la valeur de la monnaie ne peut
+   que progresser au fur et à mesure que son nombre d'utilisateurs augmente. Et,
+   de fait, le cours du bitcoin évolue en fonction de l'offre et de la demande,
+   comme dans le cas de l'or, du platine ou des diamants.
+
+   Le système a été conçu ainsi : de nouveaux bitcoins sont créés toutes les 10
+   minutes environ. L'émission des bitcoins a suivi une progression précise :
+   une émission rapide au tout début afin de favoriser les premiers entrants et
+   qui se ralentit peu à peu.
+
+   </Solution>
+
+9. Pourquoi le bitcoin n'a-t-il pas décoller comme moyen de paiement grand
+   public.
+
+   <Solution>
+
+   Ce que Nakamoto n'avait pas prévu, c'est que la limitation de la masse allait
+   entraîner une spéculation galopante qui conduit le bitcoin à connaître des
+   fluctuations très brutales.
+
+   Ces fluctuations sont le principal obstacle qui empêche le bitcoin de
+   décoller comme moyen de paiement grand public. En effet, difficile d'accepter
+   un règlement pour un bien ou un service si la valeur de la monnaie peut
+   varier de 10 ou 15% en l'espace d'une semaine.
 
    </Solution>
 
 ## Ledger
 
-1. What the fundamental problem before the appearance of blockchain technology and Bitcoin.
+1. What the fundamental problem before the appearance of blockchain technology
+   and Bitcoin.
 
    <Solution>
 
-   Before, it was not possible to share value in a decentralized manner. If you want to share a file or a song with a friend, via WeTransfer or email for example, you actually send a copy of the file, and keep the original on your device. But if you send one dollar to a friend while keeping that same dollar, the dollar loses its value.
+   Before, it was not possible to share value in a decentralized manner. If you
+   want to share a file or a song with a friend, via WeTransfer or email for
+   example, you actually send a copy of the file, and keep the original on your
+   device. But if you send one dollar to a friend while keeping that same
+   dollar, the dollar loses its value.
 
-   The only way to exchange money was through intermediaries, whether they be digital or physical (there you are banks). So the million-dollar question was: _how to extend decentralization to the sharing of value?_ In other words, _how to create a digital currency that would allow peer-to-peer transactions?_
+   The only way to exchange money was through intermediaries, whether they be
+   digital or physical (there you are banks). So the million-dollar question
+   was: _how to extend decentralization to the sharing of value?_ In other
+   words, _how to create a digital currency that would allow peer-to-peer
+   transactions?_
 
-   The answer came up in 2008 with the birth of Bitcoin, the first cryptocurrency. When its creator Satoshi Nakamoto published the white paper called _Bitcoin: A Peer-to-Peer Electronic Cash System_. With this pretty descriptive title, it explains what Bitcoin is and how it works. By doing so, it had carved the path for the cryptocurrency ecosystem and market as well as a new way to share peer-to-peer value.
+   The answer came up in 2008 with the birth of Bitcoin, the first
+   cryptocurrency. When its creator Satoshi Nakamoto published the white paper
+   called _Bitcoin: A Peer-to-Peer Electronic Cash System_. With this pretty
+   descriptive title, it explains what Bitcoin is and how it works. By doing so,
+   it had carved the path for the cryptocurrency ecosystem and market as well as
+   a new way to share peer-to-peer value.
 
    </Solution>
 
@@ -71,23 +214,36 @@ tags:
 
    <Solution>
 
-   Put simply, while cryptocurrency is like digital money, blockchain is the network on which the money transactions operate.
+   Put simply, while cryptocurrency is like digital money, blockchain is the
+   network on which the money transactions operate.
 
-   Knowing that, most cryptocurrencies have their own blockchains with their own rules. That’s why you have on one hand “the blockchain technology”: the generic technical concept, and on the other hand several “blockchains” which support the different cryptocurrencies, such as the “Bitcoin blockchain network” or “Ethereum Blockchain”.
+   Knowing that, most cryptocurrencies have their own blockchains with their own
+   rules. That’s why you have on one hand “the blockchain technology”: the
+   generic technical concept, and on the other hand several “blockchains” which
+   support the different cryptocurrencies, such as the “Bitcoin blockchain
+   network” or “Ethereum Blockchain”.
 
-   While blockchain is the supporting technology, cryptocurrency is so far the most common use of this technology.
+   While blockchain is the supporting technology, cryptocurrency is so far the
+   most common use of this technology.
 
    </Solution>
 
-3. Give the differences and similarities between cryptocurrencies and fiat currencies.
+3. Give the differences and similarities between cryptocurrencies and fiat
+   currencies.
 
    <Solution>
 
-   Both are mediums of exchange that can be used to store and transfer value, as well as to purchase goods and services. Both are legal. Both can be used for trading or investment. Both rely on widespread consumer trust to function as means of exchange. Both have their value governed by economic factors such as supply, demand, work and scarcity. However, there are 5 major critical differences. This is where the revolutionary power of crypto lies in.
+   Both are mediums of exchange that can be used to store and transfer value, as
+   well as to purchase goods and services. Both are legal. Both can be used for
+   trading or investment. Both rely on widespread consumer trust to function as
+   means of exchange. Both have their value governed by economic factors such as
+   supply, demand, work and scarcity. However, there are 5 major critical
+   differences. This is where the revolutionary power of crypto lies in.
 
    ![](/images/crypto-vs-fiat.png)
 
-   By cutting out the middlemen and disrupting the traditional financial system, crypto advocates decentralization and individual empowerment.
+   By cutting out the middlemen and disrupting the traditional financial system,
+   crypto advocates decentralization and individual empowerment.
 
    </Solution>
 
@@ -95,17 +251,110 @@ tags:
 
    <Solution>
 
-   In short, blockchain is a decentralized and public digital ledger that records any information – like financial transactions – in an anonymous and immutable way. Such groundbreaking features provide users with significant benefits :
+   In short, blockchain is a decentralized and public digital ledger that
+   records any information – like financial transactions – in an anonymous and
+   immutable way. Such groundbreaking features provide users with significant
+   benefits :
 
-   - Because it is decentralized, there are no third parties involved: no banks, no cloudy actors, no administrator, no unexpected fees. Just you and your digital assets.
-   - As a public record, it provides transparency of all the transactions and allows traceability. While this can allow information counter-checking, it also makes falsifying information difficult.
-   - Information is recorded in both an anonymous and immutable way. It means that once data is added to the ledger, it cannot be removed or altered. Nor can it the provider be nominatively identified.
+   - Because it is decentralized, there are no third parties involved: no banks,
+     no cloudy actors, no administrator, no unexpected fees. Just you and your
+     digital assets.
+   - As a public record, it provides transparency of all the transactions and
+     allows traceability. While this can allow information counter-checking, it
+     also makes falsifying information difficult.
+   - Information is recorded in both an anonymous and immutable way. It means
+     that once data is added to the ledger, it cannot be removed or altered. Nor
+     can it the provider be nominatively identified.
 
-   Put together, all these features make blockchain very hard or almost impossible to alter or hack. That is what makes blockchain technology so powerful. Besides, it provides us with major revolutionary advantages for countless applications with one same core principle: fostering the decentralization of traditional systems to give power back to the people. And this is exactly what cryptocurrencies aim to do with the traditional financial system.
+   Put together, all these features make blockchain very hard or almost
+   impossible to alter or hack. That is what makes blockchain technology so
+   powerful. Besides, it provides us with major revolutionary advantages for
+   countless applications with one same core principle: fostering the
+   decentralization of traditional systems to give power back to the people. And
+   this is exactly what cryptocurrencies aim to do with the traditional
+   financial system.
 
    ![](/images/how-does-blockchain-work.png)
 
-   Because the network is composed of multiple computers, which can be located all over the world and run by anyone with an Internet connection, it creates a decentralized and distributed validation process.
+   Because the network is composed of multiple computers, which can be located
+   all over the world and run by anyone with an Internet connection, it creates
+   a decentralized and distributed validation process.
+
+   </Solution>
+
+5. What are the differencies between Proof of Work and Proof of Stake?
+
+   <Solution>
+
+   In the Bitcoin network, the verification and validation of transactions is
+   made according to the Proof of Work consensus protocol. But some more recent
+   blockchains are based on another consensus mechanism for verification and
+   validation called Proof of Stake. Here are the main differences.
+
+   ![](/images/pow-vs-pos.png)
+
+   Another main difference is what PoS allows you to do with your coins:
+   staking. It provides you with the option to generate passive income. By
+   owning such coins, you can delegate some of your assets to a validator. The
+   validator is rewarded with fees and shares parts of it with you. In other
+   words, PoS allows you to grow your assets without doing anything. You don’t
+   even need to be a validator.
+
+   </Solution>
+
+6. What are the 3 different groups of cryptocurrencies ?
+
+   <Solution>
+
+   **Bitcoin**
+
+   Bitcoin’s goals are about purchasing goods and services and storing value.
+   And its blockchain rules are based on the Proof of Work protocol.
+
+   **Altcoins**
+
+   Simply standing for “alternative coins”, this group includes all the
+   cryptocurrencies other than Bitcoin. Today, there are more than a thousand
+   Altcoins in existence. They can be distinguished in 2 subgroups.
+
+   - **Bitcoin-derived coins:** they are alternate versions of Bitcoin with
+     minor changes. Their goals are often to solve any limitations that Bitcoin
+     has. One of the most successful is Litecoin, which aims to improve
+     transaction speed.
+   - **Native coins:** they are very different from Bitcoin, in terms of rules,
+     protocols and goals. Among the many rule variations existing between
+     blockchains, there is the choice of validation protocol, between Proof of
+     Work (PoW) and Proof of Stake (PoS). Some famous native altcoins with PoS
+     protocols are TRON (TRX) or TEZOS (WTZ).
+
+   **Crypto tokens**
+
+   Compared to the other two groups, they are completely unique in the fact that
+   they do not have their own blockchain. Instead, they only exist on other
+   blockchains. There are several blockchains that allow the existence of tokens
+   on their network. The most famous one is Ethereum.
+
+   </Solution>
+
+7. What is Ethereum and how it allows the existence of tokens on its network?
+
+   <Solution>
+
+   The Ethereum blockchain was launched in 2015. Its native currency is known as
+   Ether (ETH) and it is one of these highly distinctive Altcoins. Ethereum
+   quickly became the number two cryptocurrency in terms of market
+   capitalization. While being a decentralized and open-source blockchain like
+   many other crypto projects, it has made its way to the top by having unique
+   goals and features.
+
+   Ethereum has been designed to be a an application layer that others can build
+   on and create proprietary ecosystems – all on a single blockchain. While also
+   hosting its own native currency (ETH). Very far from Bitcoin’s purpose to be
+   a digital currency indeed.
+
+   With such rules, everyone can create their own crypto tokens on the Ethereum
+   blockchain, called ERC20 tokens. And each token has its own rules. This means
+   that the options are limitless!
 
    </Solution>
 
@@ -115,10 +364,10 @@ tags:
 
    <Solution>
 
-   A _transaction_ recorded on a blockchain contains a peer-to-peer
-   message that specifies the operations executed, data parameters used for the
-   execution of operations, the sender and receiver of the message, the transaction
-   fee, and the timestamp of its recording.
+   A _transaction_ recorded on a blockchain contains a peer-to-peer message that
+   specifies the operations executed, data parameters used for the execution of
+   operations, the sender and receiver of the message, the transaction fee, and
+   the timestamp of its recording.
 
    </Solution>
 
@@ -126,10 +375,12 @@ tags:
 
    <Solution>
 
-   A _blockchain_ is a technology for enabling trust in a decentralized system of transacting
-   peer participants. The purpose of a blockchain is to verify and validate (or reject, if
-   not valid) a transaction initiated by a participant, and then execute the transaction
-   and record the proof of these actions with the consensus of the peer participants. Blockchain infrastructure contains software for a specific purpose: trust intermediation
+   A _blockchain_ is a technology for enabling trust in a decentralized system
+   of transacting peer participants. The purpose of a blockchain is to verify
+   and validate (or reject, if not valid) a transaction initiated by a
+   participant, and then execute the transaction and record the proof of these
+   actions with the consensus of the peer participants. Blockchain
+   infrastructure contains software for a specific purpose: trust intermediation
    among a large number of (typically unknown) peer-to-peer participants.
 
    </Solution>
@@ -138,24 +389,26 @@ tags:
 
    <Solution>
 
-   Bitcoin has only the wallet application, whereas Ethereum features programmable code called _smart contracts_.
+   Bitcoin has only the wallet application, whereas Ethereum features
+   programmable code called _smart contracts_.
 
    ![](/images/bitcoin-and-ethereum.png)
 
    There are three levels of programming:
 
-   - _Protocol-level programming_—This level involves software that is needed for the
-     deployment and operation of the blockchain itself. This software is similar to
-     your operating system or networking software. If you are a systems programmer
-     and administrator, you’ll program at this level.
-   - _Smart contract-level programming_—One level above is smart contract (or rules
-     engine) programming. It is at this level that you design and program the rules
-     for verification and validation, and specify the data and messages that are to be
-     recorded on the underlying blockchain. The smart contract is the engine that
-     drives the blockchain on behalf of the user application.
-   - _Application-level programming_—This level involves programming using web (or
-     enterprise or mobile) application frameworks and user interface design concepts
-     that are outside the blockchain protocol.
+   - _Protocol-level programming_—This level involves software that is needed
+     for the deployment and operation of the blockchain itself. This software is
+     similar to your operating system or networking software. If you are a
+     systems programmer and administrator, you’ll program at this level.
+   - _Smart contract-level programming_—One level above is smart contract (or
+     rules engine) programming. It is at this level that you design and program
+     the rules for verification and validation, and specify the data and
+     messages that are to be recorded on the underlying blockchain. The smart
+     contract is the engine that drives the blockchain on behalf of the user
+     application.
+   - _Application-level programming_—This level involves programming using web
+     (or enterprise or mobile) application frameworks and user interface design
+     concepts that are outside the blockchain protocol.
 
    </Solution>
 
@@ -163,12 +416,13 @@ tags:
 
    <Solution>
 
-   _Dapps_ are web or enterprise applications that include application
-   logic to invoke blockchain functions that implement trust intermediation.
+   _Dapps_ are web or enterprise applications that include application logic to
+   invoke blockchain functions that implement trust intermediation.
 
-   Dapps embed a significant code element—that of smart contracts. For any given smart
-   contract, an exact copy of the smart contract’s code is transmitted through a special
-   transaction and deployed in the participant nodes of a blockchain network.
+   Dapps embed a significant code element—that of smart contracts. For any given
+   smart contract, an exact copy of the smart contract’s code is transmitted
+   through a special transaction and deployed in the participant nodes of a
+   blockchain network.
 
    </Solution>
 
@@ -176,10 +430,11 @@ tags:
 
    <Solution>
 
-   A _smart_ contract is an immutable executable code representing the
-   logic of a Dapp. The data variables and functions defined in a smart contract
-   collectively represent the state and operations for enforcing an application’s
-   (Dapp’s) rules for verification, validation, and recording on the blockchain.
+   A _smart contract_ is an immutable executable code representing the logic of
+   a Dapp. The data variables and functions defined in a smart contract
+   collectively represent the state and operations for enforcing an
+   application’s (Dapp’s) rules for verification, validation, and recording on
+   the blockchain.
 
    </Solution>
 
@@ -187,23 +442,25 @@ tags:
 
    <Solution>
 
-   - _Decentralized infrastructure_—Special computing hardware and software stacks
-     support the blockchain protocol, smart contracts, and applications (Dapps).
-     The main components of this infrastructure are the computing nodes and networks
-     connecting the nodes.
-   - _Distributed ledger technology_—On top of the infrastructure is the ledger. Transactions and data are recorded simultaneously in all stakeholders’ ledgers. The
-     ledger is distributed because all the stakeholders record the same facts. It is
-     immutable because each block is linked to the signature of the previous block,
-     making it tamperproof.
-   - _Disintermediation protocol_—Participants in a decentralized system follow the same
-     blockchain protocol to connect and to communicate and transact with one
-     another. The protocol is a set of rules for everyone to follow. Ethereum and
-     Hyperledger, for example, are two different blockchain protocols.
-   - _Trust enabler_—In a decentralized system of participants, there are no central
-     authorities or intermediaries such as banks. You, therefore, need an infrastructure
-     that implements the rules for governance, provenance, compliance, and
-     the like automatically, without any intermediaries. Blockchain software assumes
-     the role of a _trust enabler_.
+   - _Decentralized infrastructure_—Special computing hardware and software
+     stacks support the blockchain protocol, smart contracts, and applications
+     (Dapps). The main components of this infrastructure are the computing nodes
+     and networks connecting the nodes.
+   - _Distributed ledger technology_—On top of the infrastructure is the ledger.
+     Transactions and data are recorded simultaneously in all stakeholders’
+     ledgers. The ledger is distributed because all the stakeholders record the
+     same facts. It is immutable because each block is linked to the signature
+     of the previous block, making it tamperproof.
+   - _Disintermediation protocol_—Participants in a decentralized system follow
+     the same blockchain protocol to connect and to communicate and transact
+     with one another. The protocol is a set of rules for everyone to follow.
+     Ethereum and Hyperledger, for example, are two different blockchain
+     protocols.
+   - _Trust enabler_—In a decentralized system of participants, there are no
+     central authorities or intermediaries such as banks. You, therefore, need
+     an infrastructure that implements the rules for governance, provenance,
+     compliance, and the like automatically, without any intermediaries.
+     Blockchain software assumes the role of a _trust enabler_.
 
    </Solution>
 
@@ -214,13 +471,15 @@ tags:
    A _decentralized_ system is a type of distributed system in which
 
    - Participants communicate peer to peer.
-   - Participants are in control of their assets, digital or otherwise (such as an audio
-     file, a digital health record, or a piece of land).
+   - Participants are in control of their assets, digital or otherwise (such as
+     an audio file, a digital health record, or a piece of land).
    - Participants can join and leave the system as they wish.
-   - Participants operate beyond the typical boundaries of trust (such as within a
-     university or a country).
-   - Decisions are made by the distributed participants, not by any central authority.
-   - Intermediation is achieved by the use of automated software such as a blockchain.
+   - Participants operate beyond the typical boundaries of trust (such as within
+     a university or a country).
+   - Decisions are made by the distributed participants, not by any central
+     authority.
+   - Intermediation is achieved by the use of automated software such as a
+     blockchain.
 
    </Solution>
 
@@ -228,21 +487,24 @@ tags:
 
    <Solution>
 
-   _Node_ is a collective name for blockchain software and the machine or hardware on which it is installed for the participant of a decentralized system.
+   _Node_ is a collective name for blockchain software and the machine or
+   hardware on which it is installed for the participant of a decentralized
+   system.
 
-   A node can support many accounts to represent the identities of peer participants in the decentralized
-   network. A 256-bit number represents an account.
+   A node can support many accounts to represent the identities of peer
+   participants in the decentralized network. A 256-bit number represents an
+   account.
 
    ![](/images/blockchain-node-and-application-stack.png)
 
-   A blockchain node hosts the elements represented by the stack. It serves
-   as a foundation for your blockchain application development.
+   A blockchain node hosts the elements represented by the stack. It serves as a
+   foundation for your blockchain application development.
 
    A blockchain application typically connects a large number of participants
-   through its network of nodes. Each node can host multiple accounts to identify the
-   different customers it services. A node can also host more than one Dapp, such as one
-   for a decentralized supply chain management system and another for a decentralized
-   payment system.
+   through its network of nodes. Each node can host multiple accounts to
+   identify the different customers it services. A node can also host more than
+   one Dapp, such as one for a decentralized supply chain management system and
+   another for a decentralized payment system.
 
    </Solution>
 
@@ -250,12 +512,12 @@ tags:
 
    <Solution>
 
-   A network identifier identifies a blockchain network of nodes. Network ID #1, for
-   example, is the main Ethereum public network; network ID #4 is a public network
-   called Rinkeby, and so on. You’ll have to indicate the network
-   by using its identifier while deploying your smart contract on the network. The
-   participants on a given network will share a unified distributed ledger for recording
-   their transaction details.
+   A network identifier identifies a blockchain network of nodes. Network ID #1,
+   for example, is the main Ethereum public network; network ID #4 is a public
+   network called Rinkeby, and so on. You’ll have to indicate the network by
+   using its identifier while deploying your smart contract on the network. The
+   participants on a given network will share a unified distributed ledger for
+   recording their transaction details.
 
    </Solution>
 
@@ -264,42 +526,44 @@ tags:
     <Solution>
 
     The smart contracts are deployed in a sandbox environment such as a virtual
-    machine (VM) hosted by a blockchain node. The syntax of a smart contract is similar
-    to a class in an OO (object-oriented) language. It contains data, functions, and rules
-    for the execution of functions. Calling or invoking a smart contract function generates
-    the transactions that are recorded on the blockchain. If
-    any of the verification and validation rules fails, the function invocation is reverted.
-    But if the execution is successful, the generated transactions (Txs) are broadcast to
-    the network for recording. The figure below illustrates how a function
-    call is transformed into actions that are recorded on the blockchain.
+    machine (VM) hosted by a blockchain node. The syntax of a smart contract is
+    similar to a class in an OO (object-oriented) language. It contains data,
+    functions, and rules for the execution of functions. Calling or invoking a
+    smart contract function generates the transactions that are recorded on the
+    blockchain. If any of the verification and validation rules fails, the
+    function invocation is reverted. But if the execution is successful, the
+    generated transactions (Txs) are broadcast to the network for recording. The
+    figure below illustrates how a function call is transformed into actions
+    that are recorded on the blockchain.
 
     ![](/images/smart-contract-mechanism.png)
 
     </Solution>
 
-11. How they get recorded on the blockchain.
+11. How transactions get recorded on the blockchain.
 
     <Solution>
 
-    A set of transactions makes a block, and a set of blocks make a blockchain. The process is as follows:
+    A set of transactions makes a block, and a set of blocks make a blockchain.
+    The process is as follows:
 
-    1. Transactions on the network are verified, gathered, and pooled. Nodes select a
-       set of transactions from the pool to create a block.
-    2. Participant nodes use a consensus algorithm to collectively agree or come to a
-       consensus on a single consistent block of transactions to be appended to the
-       existing chain.
-    3. A hash or representative value of the current lead block of the chain is added to
-       the newly appended block, creating a chain link.
+    1. Transactions on the network are verified, gathered, and pooled. Nodes
+       select a set of transactions from the pool to create a block.
+    2. Participant nodes use a consensus algorithm to collectively agree or come
+       to a consensus on a single consistent block of transactions to be
+       appended to the existing chain.
+    3. A hash or representative value of the current lead block of the chain is
+       added to the newly appended block, creating a chain link.
 
-    A blockchain is an _append-only_ distributed immutable ledger.
-    Its creation begins with a single block called the _genesis block_. Every node of a
-    stakeholder on the blockchain has an identical copy of the blockchain, starting with
-    the genesis node. A blockchain DLT, therefore, is
+    A blockchain is an _append-only_ distributed immutable ledger. Its creation
+    begins with a single block called the _genesis block_. Every node of a
+    stakeholder on the blockchain has an identical copy of the blockchain,
+    starting with the genesis node. A blockchain DLT, therefore, is
 
-    - _Distributed_, because the blockchain protocol ensures that every distributed node
-      involved has an identical copy of the chain of blocks.
-    - _Immutable_, because each newly created block is linked to the existing blockchain
-      by the hash value of the current head of the blockchain, as shown in figure 1.8.
+    - _Distributed_, because the blockchain protocol ensures that every
+      distributed node involved has an identical copy of the chain of blocks.
+    - _Immutable_, because each newly created block is linked to the existing
+      blockchain by the hash value of the current head of the blockchain.
 
     </Solution>
 
@@ -307,6 +571,9 @@ tags:
 
     <Solution>
 
-    In a decentralized system, trust intermediation is achieved by the decentralized infrastructure, the DLT, and the disintermediation protocol.
+    In a decentralized system, trust intermediation is achieved by the
+    decentralized infrastructure, the DLT, and the disintermediation protocol.
 
     </Solution>
+
+13.
