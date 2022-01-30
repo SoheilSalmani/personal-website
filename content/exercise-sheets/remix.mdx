@@ -86,3 +86,130 @@ tags:
    ```
 
    </Solution>
+
+3. Refactor the code by creating a module that deals with posts.
+
+   <Solution>
+
+   ```tsx fp=app/post.ts nu
+   export type Post = {
+     slug: string
+     title: string
+   }
+
+   export function getPosts() {
+     const posts: Post[] = [
+       {
+         slug: "my-first-post",
+         title: "My First Post",
+       },
+       {
+         slug: "90s-mixtape",
+         title: "A Mixtape I Made Just For You",
+       },
+     ]
+     return posts
+   }
+   ```
+
+   ```tsx fp=app/routes/posts/index.tsx
+   import { Link, useLoaderData } from "remix"
+   import { getPosts } from "~/post"
+   import type { Post } from "~/post"
+
+   export const loader = () => {
+     return getPosts()
+   }
+
+   // ...
+   ```
+
+   </Solution>
+
+4. Update the code to pull data from the filesystem.
+
+   <Solution>
+
+   ```sh
+   npm add front-matter tiny-invariant
+   ```
+
+   ```md fp=posts/my-first-post.md nu
+   ---
+   title: My First Post
+   ---
+
+   # This is my first post
+
+   Isn't it great?
+   ```
+
+   ```md fp=posts/90s-mixtape.md nu
+   ---
+   title: 90s Mixtape
+   ---
+
+   # 90s Mixtape
+
+   - I wish (Skee-Lo)
+   - This Is How We Do It (Montell Jordan)
+   - Everlong (Foo Fighters)
+   - Ms. Jackson (Outkast)
+   - Interstate Love Song (Stone Temple Pilots)
+   - Killing Me Softly With His Song (Fugees, Ms. Lauryn Hill)
+   - Just a Friend (Biz Markie)
+   - The Man Who Sold The World (Nirvana)
+   - Semi-Charmed Life (Third Eye Blind)
+   - ...Baby One More Time (Britney Spears)
+   - Better Man (Pearl Jam)
+   - It's All Coming Back to Me Now (Céline Dion)
+   - This Kiss (Faith Hill)
+   - Fly Away (Lenny Kravits)
+   - Scar Tissue (Red Hot Chili Peppers)
+   - Santa Monica (Everclear)
+   - C'mon N' Ride it (Quad City DJ's)
+   ```
+
+   ```tsx fp=app/post.ts nu
+   import path from "path"
+   import fs from "fs/promises"
+   import parseFrontMatter from "front-matter"
+   import invariant from "tiny-invariant"
+
+   export type Post = {
+     slug: string
+     title: string
+   }
+
+   export type PostMarkdownAttributes = {
+     title: string
+   }
+
+   const postsPath = path.join(__dirname, "..", "posts")
+
+   function isValidPostAttributes(
+     attributes: any
+   ): attributes is PostMarkdownAttributes {
+     return attributes?.title
+   }
+
+   export async function getPosts() {
+     const dir = await fs.readdir(postsPath)
+     return Promise.all(
+       dir.map(async filename => {
+         const file = await fs.readFile(path.join(postsPath, filename))
+         const { attributes } = parseFrontMatter(file.toString())
+         invariant(
+           isValidPostAttributes(attributes),
+           `${filename} has bad meta data!`
+         )
+         return {
+           slug: filename.replace(/\.md$/, ""),
+           title: attributes.title,
+         }
+       })
+     )
+   }
+   ```
+
+   </Solution>
