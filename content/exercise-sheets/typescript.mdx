@@ -14,7 +14,7 @@ tags:
    ```json fp=package.json nu
    {
      "name": "hello-ts",
-     "license:": "NOLICENSE",
+     "license:": "UNLICENSED",
      "scripts": {
        "dev": "tsc --watch --preserveWatchOutput"
      },
@@ -71,6 +71,123 @@ tags:
    }
 
    const result = add(3, 4)
+   ```
+
+   </Solution>
+
+3. Declare an object type and an optional property.
+
+   <Solution>
+
+   ```ts fp=src/index.ts nu
+   function printCar(car: {
+     make: string
+     model: string
+     year: number
+     chargeVoltage?: number
+   }) {
+     let str = `${car.make} ${car.model} (${car.year})`
+     if (typeof car.chargeVoltage !== "undefined") {
+       str += ` // ${car.chargeVoltage} V`
+     }
+     console.log(str)
+   }
+
+   // Works
+   printCar({
+     make: "Honda",
+     model: "Accord",
+     year: 2017,
+   })
+
+   // Also works
+   printCar({
+     make: "Tesla",
+     model: "Model 3",
+     year: 2020,
+     chargeVoltage: 220,
+   })
+
+   // Doesn't Work
+   printCar({
+     make: "Tesla",
+     model: "Model 3",
+     year: 2020,
+     chargeVoltage: 220,
+     color: "RED",
+   })
+
+   // Works
+   const car = {
+     make: "Tesla",
+     model: "Model 3",
+     year: 2020,
+     chargeVoltage: 220,
+     color: "RED",
+   }
+   printCar(car)
+   ```
+
+   </Solution>
+
+4. Declare a dictionary type.
+
+   <Solution>
+
+   ```ts fp=src/index.ts nu
+   let phones: {
+     [k: string]: {
+       country: string
+       area: string
+       number: string
+     }
+   } = {}
+
+   phones = {
+     home: { country: "+1", area: "211", number: "652-4515" },
+     work: { country: "+1", area: "670", number: "752-5856" },
+     fax: { country: "+1", area: "322", number: "525-4357" },
+   }
+   ```
+
+   </Solution>
+
+5. What is the type of `car`?
+
+   ```ts fp=src/index.ts nu
+   const cars = [
+     {
+       make: "Toyota",
+       model: "Corolla",
+       year: 2002,
+     },
+   ]
+   ```
+
+   <Solution>
+
+   ```ts
+   const cars: {
+     make: string
+     model: string
+     year: number
+   }[]
+   ```
+
+   </Solution>
+
+6. Declare a tuple type.
+
+   <Solution>
+
+   ```ts fp=src/index.ts nu
+   let myCar: [number, string, string] = [2002, "Toyota", "Corolla"]
+
+   // Error
+   myCar = ["Honda", 2017, "Accord"]
+
+   // Error
+   myCar = [2017, "Honda", "Accord", "Sedan"]
    ```
 
    </Solution>
