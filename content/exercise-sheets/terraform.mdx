@@ -8,7 +8,9 @@ tags:
   - Infrastructure as Code
 ---
 
-1. Create an administrator IAM user. Set up your credentials either with environment variables or through the AWS CLI (create a named profile called `tf-user`). Deploy an EC2 instance named "HelloWorld" using Terraform.
+1. Create an administrator IAM user. Set up your credentials either with
+   environment variables or through the AWS CLI (create a named profile called
+   `tf-user`). Deploy an EC2 instance named "HelloWorld" using Terraform.
 
    <Solution>
 
@@ -38,8 +40,8 @@ tags:
    }
    ```
 
-   **Note:** If you are using the default profile, you can simply have an empty provider
-   declaration.
+   **Note:** If you are using the default profile, you can simply have an empty
+   provider declaration.
 
    ```sh
    terraform init
@@ -47,6 +49,38 @@ tags:
    terraform show
    terraform destroy
    terraform show
+   ```
+
+   </Solution>
+
+2. Update the resource to always use the most recent Ubuntu AMI published to
+   AWS.
+
+   <Solution>
+
+   ```hcl fp=main.tf nu hl=5..14,17
+   provider "aws" {
+     region = "us-west-2"
+   }
+
+   data "aws_ami" "ubuntu" {
+     most_recent = true
+
+     filter {
+       name   = "name"
+       values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+     }
+
+     owners = ["099720109477"]
+   }
+
+   resource "aws_instance" "helloworld" {
+     ami           = data.aws_ami.ubuntu.id
+     instance_type = "t2.micro"
+     tags = {
+       Name = "HelloWorld"
+     }
+   }
    ```
 
    </Solution>
