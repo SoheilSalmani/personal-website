@@ -7,7 +7,8 @@ tags:
   - dbt
 ---
 
-1. Create a new GCP project and generate a keyfile to be used by dbt. Test the following query in BigQuery.
+1. Create a new GCP project and generate a keyfile to be used by dbt. Test the
+   following query in BigQuery.
 
    ```sql nu
    with customers as (
@@ -69,19 +70,72 @@ tags:
 
    <Solution>
 
-   Create a service account named `dbt-user` and give it the "BigQuery User" role.
+   Create a service account named `dbt-user` and give it the "BigQuery User"
+   role.
 
    </Solution>
 
-2. In dbt Cloud, create a new dbt repository and name it `dbt-tutorial`. Then initialize the starter project, name the dbt project `jaffle_shop`, and run it. Finally, make a commit through the IDE.
+2. In dbt Cloud, create a new dbt repository and name it `dbt-tutorial`. Then
+   initialize the starter project, name the dbt project `jaffle_shop`, and run
+   it. Finally, make a commit through the IDE.
 
    <Solution>
 
    ```yml fp=dbt_project.yml hl=1,6
    name: "jaffle_shop"
-   ---
+
+   # ...
+
    models:
-     jaffle_shop: ...
+     jaffle_shop:
+       # ...
+   ```
+
+   </Solution>
+
+3. Same but this time using the dbt CLI and GitHub.
+
+   <Solution>
+
+   ```sh
+   dbt --version
+   dbt init dbt-tutorial
+   cd dbt-tutorial
+   ```
+
+   ```yml fp=dbt_project.yml hl=1,5,10
+   name: "jaffle_shop"
+
+   # ...
+
+   profile: jaffle_shop
+
+   # ...
+
+   models:
+     jaffle_shop:
+       # ...
+   ```
+
+   ```yml fp=~/.dbt/profiles.yml nu
+   jaffle_shop:
+     target: dev
+     outputs:
+       dev:
+         type: bigquery
+         method: service-account
+         keyfile: <keyfile-path>
+         project: <project-id>
+         dataset: dbt_soheil
+         threads: 1
+         timeout_seconds: 300
+         location: US
+         priority: interactive
+   ```
+
+   ```sh
+   dbt debug
+   dbt run
    ```
 
    </Solution>
