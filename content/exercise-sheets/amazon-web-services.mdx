@@ -23,13 +23,31 @@ tags:
    <Solution>
 
    1. `CloudWatch > Alarms > Billing > Create alarm`.
-   2. `Select metric > Metrics > Billing > Total Estimated Charge`, then select the `EstimatedCharges` metric.
+   2. `Select metric > Metrics > Billing > Total Estimated Charge`, then select
+      the `EstimatedCharges` metric.
    3. **`than...`**: `5 USD`.
    4. `Create new topic`.
    5. **`Create a new topic...`**: `Billing_Alerts`.
-   6. **`Email endpoints that will receive the notification...`**: `salmani.soheil@gmail.com`.
+   6. **`Email endpoints that will receive the notification...`**:
+      `salmani.soheil@gmail.com`.
    7. `Create topic`.
    8. **`Alarm name`**: `Billing_Alert`.
-   9. **`Alarm description`**: "Alert me through email whenever usage goes above 5$.".
+   9. **`Alarm description`**: "Alert me through email whenever usage goes above
+      5$.".
+
+   </Solution>
+
+3. Create an infrastructure from this
+   [blueprint](https://s3.amazonaws.com/awsinaction-code2/chapter02/template.yaml).
+
+   <Solution>
+
+   1. `CloudFormation > Create stack > Billing > Create alarm`.
+   2. **Amazon S3 URL**:
+      `https://s3.amazonaws.com/awsinaction-code2/chapter02/template.yaml`.
+   3. **Stack name**: `wordpress`.
+   4. **KeyName**: `mykey`.
+   5. Create the following tag: `system: wordpress`.
+   6. `Create stack`.
 
    </Solution>
