@@ -9,7 +9,8 @@ tags:
 
 ## The Java Workshop
 
-1. Create a Java program that declares 7 different types of variables, and print them. Build the project and run it from the CLI.
+1. Create a Java program that declares 7 different types of variables, and print
+   them. Build the project and run it from the CLI.
 
    <Solution>
 
@@ -177,7 +178,8 @@ tags:
 
    </Solution>
 
-6. Create the _WordTool_ application (methods: `countWords`, `countSymbols`, `getCharFrequency`).
+6. Create the _WordTool_ application (methods: `countWords`, `countSymbols`,
+   `getCharFrequency`).
 
    <Solution>
 
@@ -873,18 +875,18 @@ tags:
 
    </Solution>
 
-4. Write a `prettyPrintApple` method that takes a `List` of `Apple`s and that can be
-   parameterized with multiple ways to generate a `String` output from an apple (a bit
-   like multiple customized `toString` methods). For example, you could tell your
-   `prettyPrintApple` method to print only the weight of each apple. In addition, you
-   could tell your `prettyPrintApple` method to print each apple individually and mention
-   whether it’s heavy or light.
+4. Write a `prettyPrintApple` method that takes a `List` of `Apple`s and that
+   can be parameterized with multiple ways to generate a `String` output from an
+   apple (a bit like multiple customized `toString` methods). For example, you
+   could tell your `prettyPrintApple` method to print only the weight of each
+   apple. In addition, you could tell your `prettyPrintApple` method to print
+   each apple individually and mention whether it’s heavy or light.
 
    <Solution>
 
    ```java
    public interface AppleFormatter {
-     String accept(Apple a);
+     String accept(Apple apple);
    }
 
    public static class AppleFancyFormatter implements AppleFormatter {
@@ -919,15 +921,96 @@ tags:
 
    </Solution>
 
+5. Update your solution using anonymous classes.
+
+   <Solution>
+
+   ```java
+   public static void main(String[] args) {
+     List<Apple> inventory = Arrays.asList(
+         new Apple(80, Color.GREEN),
+         new Apple(155, Color.RED),
+         new Apple(120, Color.RED));
+     List<Apple> redApples = filterApples(inventory, new ApplePredicate() {
+       @Override
+       public boolean test(Apple apple) {
+         return apple.getColor() == Color.RED;
+       }
+     });
+     List<Apple> heavyApples = filterApples(inventory, new ApplePredicate() {
+       @Override
+       public boolean test(Apple apple) {
+         return apple.getWeight() > 150;
+       }
+     });
+     System.out.println(redApples);
+     System.out.println(heavyApples);
+   }
+   ```
+
+   </Solution>
+
+6. Update your solution using lambda expressions.
+
+   <Solution>
+
+   ```java
+   public static void main(String[] args) {
+     List<Apple> inventory = Arrays.asList(
+         new Apple(80, Color.GREEN),
+         new Apple(155, Color.RED),
+         new Apple(120, Color.RED));
+     List<Apple> redApples = filterApples(inventory, (Apple apple) -> apple.getColor() == Color.RED);
+     List<Apple> heavyApples = filterApples(inventory, (Apple apple) -> apple.getWeight() > 150);
+     System.out.println(redApples);
+     System.out.println(heavyApples);
+   }
+   ```
+
+   </Solution>
+
+7. Implement the `filter` method.
+
+   <Solution>
+
+   ```java
+   public interface Predicate<T> {
+     boolean test(T t);
+   }
+
+   public static <T> List<T> filter(List<T> list, Predicate<T> p) {
+     List<T> result = new ArrayList<>();
+     for (T e : list) {
+       if (p.test(e)) {
+         result.add(e);
+       }
+     }
+     return result;
+   }
+
+   public static void main(String[] args) {
+     List<Apple> inventory = Arrays.asList(
+         new Apple(80, Color.GREEN),
+         new Apple(155, Color.RED),
+         new Apple(120, Color.RED));
+     List<Apple> redApples = filter(inventory, (Apple apple) -> apple.getColor() == Color.RED);
+     List<Apple> heavyApples = filter(inventory, (Apple apple) -> apple.getWeight() > 150);
+     System.out.println(redApples);
+     System.out.println(heavyApples);
+   }
+   ```
+
+   </Solution>
+
 ## The Java Module System
 
 1. List all modules contained in a JDK or JRE. Get details for a single module.
 
-<Solution>
+   <Solution>
 
-```shell
-java --list-modules
-java --describe-module java.sql
-```
+   ```shell
+   java --list-modules
+   java --describe-module java.sql
+   ```
 
-</Solution>
+   </Solution>
