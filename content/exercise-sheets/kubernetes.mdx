@@ -13,10 +13,17 @@ tags:
 
    ![](/images/kubernetes-control-plane.png)
 
-   - The **Kubernetes API Server** exposes the RESTful Kubernetes API. Engineers using the cluster and other Kubernetes components create objects via this API.
-   - The **etcd** distributed datastore persists the objects you create through the API, since the API Server itself is stateless. The Server is the only component that talks to etcd.
-   - The **Scheduler** decides on which worker node each application instance should run.
-   - **Controllers** bring to life the objects you create through the API. Most of them simply create other objects, but some also communicate with external systems (for example, the cloud provider via its API).
+   - The **Kubernetes API Server** exposes the RESTful Kubernetes API. Engineers
+     using the cluster and other Kubernetes components create objects via this
+     API.
+   - The **etcd** distributed datastore persists the objects you create through
+     the API, since the API Server itself is stateless. The Server is the only
+     component that talks to etcd.
+   - The **Scheduler** decides on which worker node each application instance
+     should run.
+   - **Controllers** bring to life the objects you create through the API. Most
+     of them simply create other objects, but some also communicate with
+     external systems (for example, the cloud provider via its API).
 
    </Solution>
 
@@ -26,9 +33,15 @@ tags:
 
    ![](/images/kubernetes-workload-plane.png)
 
-   - The **Kubelet**, an agent that talks to the API server and manages the applications running on its node. It reports the status of these applications and the node via the API.
-   - The **Container Runtime**, which can be Docker or any other runtime compatible with Kubernetes. It runs your applications in containers as instructed by the Kubelet.
-   - The **Kubernetes Service Proxy (Kube Proxy)** load-balances network traffic between applications. Its name suggests that traffic flows through it, but that’s no longer the case.
+   - The **Kubelet**, an agent that talks to the API server and manages the
+     applications running on its node. It reports the status of these
+     applications and the node via the API.
+   - The **Container Runtime**, which can be Docker or any other runtime
+     compatible with Kubernetes. It runs your applications in containers as
+     instructed by the Kubelet.
+   - The **Kubernetes Service Proxy (Kube Proxy)** load-balances network traffic
+     between applications. Its name suggests that traffic flows through it, but
+     that’s no longer the case.
 
    </Solution>
 
@@ -36,11 +49,17 @@ tags:
 
    <Solution>
 
-   Each directive creates a new layer. When you delete a file, it is only marked as deleted in the new layer and is not removed from the layers below. Therefore, deleting a file with a subsequent directive won’t reduce the size of the image. If you use the RUN directive, make sure that the command it executes deletes all temporary files it creates before it terminates.
+   Each directive creates a new layer. When you delete a file, it is only marked
+   as deleted in the new layer and is not removed from the layers below.
+   Therefore, deleting a file with a subsequent directive won’t reduce the size
+   of the image. If you use the `RUN` directive, make sure that the command it
+   executes deletes all temporary files it creates before it terminates.
 
    </Solution>
 
-4. Build the [`kiada:latest`](https://github.com/luksa/kubernetes-in-action-2nd-edition/tree/master/Chapter02/kiada-0.1) image, and push it in the Docker registry.
+4. Build the
+   [`kiada:latest`](https://github.com/luksa/kubernetes-in-action-2nd-edition/tree/master/Chapter02/kiada-0.1)
+   image, and push it in the Docker registry.
 
    <Solution>
 
@@ -53,7 +72,7 @@ tags:
 
    </Solution>
 
-5. List all images and check the layers of you image and their size.
+5. List all images and check the layers of your image and its size.
 
    <Solution>
 
@@ -64,7 +83,9 @@ tags:
 
    </Solution>
 
-6. Run a container from the `kiada` image, list all the containers that are running on your computer, and test your app. Then, get additional information about your container and inspect the application logs.
+6. Run a container from the `kiada` image, list all the containers that are
+   running on your computer, and test your app. Then, get additional information
+   about your container and inspect the application logs.
 
    <Solution>
 
@@ -100,3 +121,112 @@ tags:
    ```
 
    </Solution>
+
+9. Launch a Bash shell in your running container.
+
+   <Solution>
+
+   ```sh
+   docker exec -it kiada-container bash
+   ```
+
+   **Note:** The `-it` option is shorthand for two options:
+
+   - `-i` tells Docker to run the command in interactive mode.
+   - `-t` tells it to allocate a pseudo terminal (TTY) so you can use the shell
+     properly.
+
+   You need both if you want to use the shell the way you’re used to. If you
+   omit the first, you can’t execute any commands, and if you omit the second,
+   the command prompt doesn’t appear and some commands may complain that the
+   `TERM` variable is not set.
+
+   </Solution>
+
+10. List running processes in a container.
+
+    <Solution>
+
+    ```sh
+    ps aux
+    ```
+
+    </Solution>
+
+11. Find the container process in the host’s list of processes.
+
+    <Solution>
+
+    ```sh
+    ps aux | grep app.js
+    ```
+
+    </Solution>
+
+12. Allow a container to only use CPU cores one and two.
+
+    <Solution>
+
+    ```sh
+    docker run --cpuset-cpus="1,2" ...
+    ```
+
+    </Solution>
+
+13. Allow a container to use only half of a CPU core.
+
+    <Solution>
+
+    ```sh
+    docker run --cpus="0.5" ...
+    ```
+
+    </Solution>
+
+14. Set the maximum memory size available in the container to 100MB.
+
+    <Solution>
+
+    ```sh
+    docker run --memory="100m" ...
+    ```
+
+    </Solution>
+
+15. How to create a privileged container?
+
+    <Solution>
+
+    With Docker you create a privileged container by using the `--privileged`
+    flag.
+
+    </Solution>
+
+16. How to give additional privileges to containers without giving full
+    privileges?
+
+    <Solution>
+
+    The Linux kernel divides privileges into units called _capabilities_.
+    Capabilities can be added or removed (_dropped_) from a container when you
+    create it. Each capability represents a set of privileges available to the
+    processes in the container. Docker and Kubernetes drop all capabilities
+    except those required by typical applications, but users can add or drop
+    other capabilities if authorized to do so.
+
+    If you need even finer control over what sys-calls a program can make, you
+    can use seccomp (Secure Computing Mode). You can create a custom seccomp
+    profile by creating a JSON file that lists the sys-calls that the container
+    using the profile is allowed to make. You then provide the file to Docker
+    when you create the container.
+
+    Containers can also be secured with two additional mandatory access control
+    (MAC) mechanisms: SELinux (Security-Enhanced Linux) and AppArmor
+    (Application Armor). With SELinux, you attach labels to files and system
+    resources, as well as to users and processes. A user or process can only
+    access a file or resource if the labels of all subjects and objects involved
+    match a set of policies. AppArmor is similar but uses file paths instead of
+    labels and focuses on processes rather than users. Both SELinux and AppArmor
+    considerably improve the security of an operating system.
+
+    </Solution>
