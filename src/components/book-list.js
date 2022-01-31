@@ -50,7 +50,11 @@ export default function BookList({ books }) {
               <Badge>
                 <b>{book.publicationDate ?? <i>Not published yet</i>}</b>
               </Badge>{" "}
-              {book.isbn && <Badge><b>ISBN:</b> {book.isbn}</Badge>}
+              {book.isbn && (
+                <Badge>
+                  <b>ISBN:</b> {book.isbn}
+                </Badge>
+              )}
             </div>
             {renderProgressBar(book.progression, book.status)}
             <small>{book.progression.total} chapters</small>

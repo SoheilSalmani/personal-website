@@ -1,7 +1,7 @@
 import React from "react"
 import * as styles from "./progress-bar.module.css"
 
-const renderProgressBar = (progression) => {
+const renderProgressBar = progression => {
   let progressStacks = []
   let totalStacks = progression.total
   let xlinkHref

@@ -34,6 +34,8 @@ module.exports = {
             `${__dirname}/src/components/exercise-sheet-layout.js`
           ),
         },
+        remarkPlugins: [require("remark-math")],
+        rehypePlugins: [require("rehype-katex")],
       },
     },
     {
