@@ -1,0 +1,40 @@
+.website-section {
+  display: flex;
+  padding: 25px 0;
+}
+
+.website-image {
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: 0.3s ease;
+  width: 200px;
+}
+
+.website-image:hover {
+  transform: scale(1.1);
+}
+
+.website-details {
+  padding: 0 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.website-details h3 {
+  font-size: 1.2rem;
+}
+
+.website-details h4 {
+  font-size: 1rem;
+  color: #555;
+}
+
+.website-details small {
+  margin-top: 0.15rem;
+}
+
+.badge-containers {
+  margin-top: 0.35rem;
+  margin-bottom: 0.7rem;
+}

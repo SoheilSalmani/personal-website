@@ -1,8 +1,8 @@
 import React from "react"
-import { css } from "@emotion/react"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import Badge from "../components/badge"
 import ProgressBar from "../components/progress-bar"
+import * as styles from "./course-list.module.css"
 
 const renderAuthors = authors => {
   if (authors.length === 1) return authors
@@ -32,74 +32,29 @@ export default function CourseList({ courses }) {
   return (
     <>
       {courses.map(course => (
-        <article
-          css={css`
-            display: flex;
-            padding: 25px;
-          `}
-        >
+        <section className={styles.courseSection}>
           <a href={course.link} target="_blank">
             <GatsbyImage
+              className={styles.courseImage}
               image={getImage(course.image)}
-              css={css`
-                cursor: pointer;
-                border-radius: 0.25rem;
-                box-shadow: -2px 6px 19px 0px #7f818e;
-                transition: 0.3s ease;
-
-                &:hover {
-                  transform: scale(1.1);
-                }
-              `}
             />
           </a>
-          <div
-            css={css`
-              padding: 0 25px;
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-            `}
-          >
-            <h3
-              css={css`
-                font-size: 1.2rem;
-              `}
-            >
+          <div className={styles.courseDetails}>
+            <h3>
               {course.title} {renderEdition(course.edition)}{" "}
-              {course.isVideo && <Badge backgroundColor="#853530">Video</Badge>}
+              {course.isVideo && <Badge>Video</Badge>}
             </h3>
-            {course.subtitle && (
-              <h4
-                css={css`
-                  font-size: 1rem;
-                  color: #555;
-                `}
-              >
-                {course.subtitle}
-              </h4>
-            )}
-            {renderAuthors(course.authors)}{" "}
-            <div
-              css={css`
-                margin-top: 0.35rem;
-                margin-bottom: 0.7rem;
-              `}
-            >
-              <Badge backgroundColor="#cccc00" color="#000">
+            {course.subtitle && <h4>{course.subtitle}</h4>}
+            {renderAuthors(course.authors)}
+            <div className={styles.badgeContainers}>
+              <Badge>
                 <b>{course.publicationDate ?? <i>Not published yet</i>}</b>
-              </Badge>{" "}
+              </Badge>
             </div>
             {renderProgressBar(course.progression, course.status)}
-            <small
-              css={css`
-                margin-top: 0.15rem;
-              `}
-            >
-              {course.progression.total} chapters
-            </small>
+            <small>{course.progression.total} chapters</small>
           </div>
-        </article>
+        </section>
       ))}
     </>
   )

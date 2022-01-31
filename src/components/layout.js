@@ -1,26 +1,13 @@
 import React from "react"
-import { Global, css } from "@emotion/react"
 import Header from "../components/header"
-import { rhythm } from "../utils/typography"
+import "../styles/global.css"
+import * as styles from "./layout.module.css"
 
-const Layout = ({ children }) => (
-  <>
-    <Global
-      styles={css`
-        * {
-          box-sizing: border-box;
-        }
-      `}
-    />
-    <Header />
-    <main
-      css={css`
-        padding: ${rhythm(4 / 4)};
-      `}
-    >
-      {children}
-    </main>
-  </>
-)
-
-export default Layout
+export default function Layout({ children }) {
+  return (
+    <>
+      <Header />
+      <main className={styles.mainContent}>{children}</main>
+    </>
+  )
+}
