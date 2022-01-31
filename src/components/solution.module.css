@@ -1,0 +1,21 @@
+.solution {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  text-align: justify;
+  margin-bottom: 0.7rem;
+}
+
+.solution summary {
+  cursor: pointer;
+  padding: 0.5rem;
+  font-weight: bold;
+  font-variant: small-caps;
+}
+
+.solution[open] summary {
+  border-bottom: 1px solid #aaa;
+}
+
+.solutionContent {
+  padding: 0.5rem;
+}

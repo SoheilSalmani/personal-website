@@ -1,0 +1,41 @@
+.course-section {
+  display: flex;
+  padding: 25px 0;
+}
+
+.course-image {
+  cursor: pointer;
+  border-radius: 0.25rem;
+  box-shadow: -2px 6px 19px 0px #7f818e;
+  transition: 0.3s ease;
+  width: 200px;
+}
+
+.course-image:hover {
+  transform: scale(1.1);
+}
+
+.course-details {
+  padding: 0 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.course-details h3 {
+  font-size: 1.2rem;
+}
+
+.course-details h4 {
+  font-size: 1rem;
+  color: #555;
+}
+
+.course-details small {
+  margin-top: 0.15rem;
+}
+
+.badge-containers {
+  margin-top: 0.35rem;
+  margin-bottom: 0.7rem;
+}

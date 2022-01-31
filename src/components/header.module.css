@@ -1,0 +1,36 @@
+.header {
+  background: var(--bg-color-header);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+  font-variant: small-caps;
+  align-items: center;
+}
+
+.navigation-bar {
+  width: 1200px;
+  margin: auto;
+  font-size: 1.25rem;
+}
+
+.navigation-bar ul {
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+}
+
+.navigation-bar li {
+  margin: 0 0 0 1rem;
+}
+
+.navigation-bar li:first-child {
+  flex-grow: 1;
+  font-size: 1.75rem;
+}
+
+.navigation-bar a {
+  text-decoration: none;
+  display: inline-block;
+}
