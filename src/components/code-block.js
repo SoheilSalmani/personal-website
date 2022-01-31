@@ -5,8 +5,7 @@ import { Prism } from "prism-react-renderer"
 import theme from "prism-react-renderer/themes/nightOwl"
 import React from "react"
 import * as styles from "./code-block.module.css"
-
-  ; (typeof global !== "undefined" ? global : window).Prism = Prism
+;(typeof global !== "undefined" ? global : window).Prism = Prism
 
 require("prismjs/components/prism-bash")
 require("prismjs/components/prism-csharp")
