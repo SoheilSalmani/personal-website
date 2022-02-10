@@ -33,7 +33,7 @@ tags:
    7. `Create topic`.
    8. **`Alarm name`**: `Billing_Alert`.
    9. **`Alarm description`**: "Alert me through email whenever usage goes above
-      5$.".
+      $5.".
 
    </Solution>
 
@@ -42,12 +42,24 @@ tags:
 
    <Solution>
 
-   1. `CloudFormation > Create stack > Billing > Create alarm`.
+   1. `CloudFormation > Create stack`.
    2. **Amazon S3 URL**:
       `https://s3.amazonaws.com/awsinaction-code2/chapter02/template.yaml`.
    3. **Stack name**: `wordpress`.
    4. **KeyName**: `mykey`.
    5. Create the following tag: `system: wordpress`.
    6. `Create stack`.
+
+   </Solution>
+
+4. Create a resource group for your WordPress infrastructure. Inspect the
+   resources in your resource group.
+
+   <Solution>
+
+   1. Select the "N. Virginia" region.
+   2. `Resource Groups & Tag Editor > Create resource group`.
+   3. Set _Group Name_ to `wordpress`.
+   4. Add the tag `system` with the value `wordpress`.
 
    </Solution>
