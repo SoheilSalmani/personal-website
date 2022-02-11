@@ -11,14 +11,106 @@ tags:
    <Solution>
 
    ```latex fp=document.tex nu
-   \documentclass{article}
+   \documentclass[a4paper, 11pt]{article}
+
+   \title{My Document}
+   \author{Soheil Salmani}
+   \date{January 1, 2022}
+
    \begin{document}
-   This is our first document.
+   \maketitle
+   \section{What's this?}
+   This is our second document. It contains a title and a section with text.
    \end{document}
    ```
 
    ```sh
    latex --output-format=pdf document.tex
    ```
+
+   </Solution>
+
+2. Describe the structure of a LaTeX document.
+
+   <Solution>
+
+   A LaTeX document is based on a versatile template called a **class**. It
+   provides customizable features, usually built for a certain purpose.
+
+   This first part of the document is called the **preamble** of the document.
+   This is where we choose the class, specify properties, and in general make
+   document-wide definitions.
+
+   `\begin{document}` marks the end of the preamble and the beginning of the
+   actual document. `\end{document}` marks the end of the document. Everything
+   that follows would be ignored by LaTeX. Generally, such a piece of code
+   that's framed by a `\begin` and `\end` command pair is called an
+   **environment**.
+
+   </Solution>
+
+3. Describe how LaTeX commands work.
+
+   <Solution>
+
+   LaTeX **commands** begin with a backslash, followed by big or small letters,
+   and are usually named in a descriptive way.
+
+   Commands can have **parameters**, that is, options that determine in which
+   way the command does its work. The values that we hand over as parameters are
+   called **arguments**. They are given in curly braces or square brackets.
+
+   ```latex
+   \command
+   ```
+
+   ```latex
+   \command{argument}
+   ```
+
+   ```latex
+   \command[optional argument]{argument}
+   ```
+
+   There could be several arguments, each of them in braces or brackets.
+
+   Most LaTeX commands, including those we define ourselves, consist of other
+   commands. That's why LaTeX commands are also called **macros**, and the terms
+   _macro_ and _command_ are used interchangeably. A command or macro that
+   doesn't print something but just changes current settings, such as the font
+   shape or text alignment, is also called a **declaration**.
+
+   </Solution>
+
+4. Describe the syntax of environments.
+
+   <Solution>
+
+   LaTeX environments start with `\begin` and end with `\end`. Both commands
+   require the name of the environment as their argument.
+
+   ```latex
+   \begin{name}
+     ...
+   \end{name}
+   ```
+
+   ```latex
+   \begin{name}{argument}
+     ...
+   \end{name}
+   ```
+
+   ```latex
+   \begin{name}[optional argument]{argument}
+     ...
+   \end{name}
+   ```
+
+   Such environments can be used for each declaration called `\name`.
+
+   Environments are like declarations with a built-in scope. With `\begin`, the
+   environment introduces a change in layout, font, or other properties. There
+   must be an `\end` command, where this change will be canceled.
 
    </Solution>

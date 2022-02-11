@@ -84,3 +84,16 @@ tags:
    ```
 
    </Solution>
+
+3. What are life cycle function hooks?
+
+   <Solution>
+
+   All Terraform resources implement the resource schema interface. The resource
+   schema mandates, among other things, that resources define CRUD functions
+   hooks, one each for `Create()`, `Read()`, `Update()`, and `Delete()`. A data
+   source only implements only implements `Read()`.
+
+   ![](/images/local-provider.png)
+
+   </Solution>

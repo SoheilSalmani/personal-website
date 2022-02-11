@@ -48,7 +48,7 @@ tags:
    import { useRouter } from "next/router"
    import Link from "next/link"
 
-   const Page = () => {
+   export default function Page() {
      const router = useRouter()
      const id = 1
      return (
@@ -64,15 +64,13 @@ tags:
        </div>
      )
    }
-
-   export default Page
    ```
 
    ```jsx fp=pages/notes/index.jsx nu
    import React from "react"
    import Link from "next/link"
 
-   const Page = () => {
+   export default function Page() {
      const notes = new Array(15)
        .fill(1)
        .map((e, i) => ({ id: i, title: `Note: ${i}` }))
@@ -93,47 +91,487 @@ tags:
        </div>
      )
    }
-
-   export default Page
    ```
 
    ```jsx fp=pages/notes/[id].jsx nu
    import React from "react"
    import { useRouter } from "next/router"
 
-   const Page = () => {
+   export default function Page() {
      const router = useRouter()
      const { id } = router.query
      return <h1>Note: {id}</h1>
    }
-
-   export default Page
    ```
 
    ```jsx fp=pages/docs/[...params].jsx nu
    import React from "react"
    import { useRouter } from "next/router"
 
-   const Page = () => {
+   export default function Page() {
      const router = useRouter()
      const { params } = router.query
      return <pre>{JSON.stringify(params, null, 2)}</pre>
    }
-
-   export default Page
    ```
 
    ```jsx fp=pages/wiki/[[...params]].jsx nu
    import React from "react"
    import { useRouter } from "next/router"
 
-   const Page = () => {
+   export default function Page() {
      const router = useRouter()
      const { params } = router.query
      return <pre>{JSON.stringify(params, null, 2)}</pre>
    }
-
-   export default Page
    ```
 
    </Solution>
+
+3. Import a CSS file with global rules, and a CSS module.
+
+   <Solution>
+
+   ```css fp=src/styles.css nu
+   body {
+     color: red;
+   }
+   ```
+
+   ```jsx fp=pages/_app.jsx nu
+   import * as React from "react"
+   import "../src/styles.css"
+
+   export default function App({ Component, pageProps }) {
+     return <Component {...pageProps} />
+   }
+   ```
+
+   ```css fp=src/button.module.css nu
+   .button {
+     color: green;
+   }
+   ```
+
+   ```jsx fp=pages/index.js nu hl=4,15,19
+   import * as React from "react"
+   import { useRouter } from "next/router"
+   import Link from "next/link"
+   import * as styles from "../src/button.module.css"
+
+   export default function Page() {
+     const router = useRouter()
+     const id = 1
+     return (
+       <div>
+         <h1>Index Page</h1>
+         <Link href="/notes">
+           <a>Notes</a>
+         </Link>
+         <button className={styles.button} onClick={e => router.push("/wiki")}>
+           Go Wiki
+         </button>
+         <button
+           className={styles.button}
+           onClick={e => router.push("/notes/[id]", `/notes/${id}`)}
+         >
+           Go First Note
+         </button>
+       </div>
+     )
+   }
+   ```
+
+   </Solution>
+
+4. Remove your styles, and add your styles through Theme UI.
+
+   <Solution>
+
+   ```sh
+   npm i theme-ui @theme-ui/presets
+   ```
+
+   ```js fp=theme.js nu
+   import { roboto } from "@theme-ui/presets"
+
+   const theme = {
+     ...roboto,
+     colors: {
+       ...roboto.colors,
+       // background: "yellow"
+     },
+     containers: {
+       card: {
+         boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+         border: "1px solid",
+         borderColor: "muted",
+         borderRadius: "4px",
+         p: 2,
+       },
+       page: {
+         width: "100%",
+         maxWidth: "960px",
+         m: 0,
+         mx: "auto",
+       },
+     },
+     styles: {
+       ...roboto.styles,
+     },
+   }
+
+   export default theme
+   ```
+
+   ```jsx fp=src/components/nav.jsx nu
+   /** @jsxImportSource theme-ui */
+   import Link from "next/link"
+
+   const Nav = () => (
+     <header
+       sx={{
+         height: "60px",
+         width: "100vw",
+         bg: "primary",
+         borderBottom: "1px solid",
+         borderColor: "primary",
+       }}
+     >
+       <nav
+         sx={{
+           display: "flex",
+           alignItems: "center",
+           justifyContent: "space-between",
+           variant: "containers.page",
+           height: "100%",
+         }}
+       >
+         <Link href="/">
+           <a sx={{ fontWeight: "bold", fontSize: 4, cursor: "pointer" }}>
+             Note App
+           </a>
+         </Link>
+
+         <Link href="/notes">
+           <a sx={{ color: "text", fontSize: 3, cursor: "pointer" }}>Notes</a>
+         </Link>
+       </nav>
+     </header>
+   )
+
+   export default Nav
+   ```
+
+   ```jsx fp=pages/_app.jsx nu
+   /** @jsxImportSource theme-ui */
+   import { ThemeProvider } from "theme-ui"
+   import theme from "../theme"
+   import Nav from "../src/components/nav"
+
+   export default function App({ Component, pageProps }) {
+     return (
+       <ThemeProvider theme={theme}>
+         <div>
+           <Nav />
+           <Component {...pageProps} />
+         </div>
+       </ThemeProvider>
+     )
+   }
+   ```
+
+   ```jsx fp=pages/index.js nu
+   /** @jsxImportSource theme-ui */
+
+   export default () => (
+     <div sx={{ height: `calc(100vh - 60px)` }}>
+       <div
+         sx={{
+           variant: "containers.page",
+           display: "flex",
+           alignItems: "center",
+           height: "100%",
+         }}
+       >
+         <h1 sx={{ fontSize: 8, my: 0 }}>
+           This is a really dope note taking app.
+         </h1>
+       </div>
+     </div>
+   )
+   ```
+
+   ```jsx fp=pages/notes/index.jsx nu
+   /** @jsxImportSource theme-ui */
+   import Link from "next/link"
+
+   export default () => {
+     const notes = new Array(15)
+       .fill(1)
+       .map((e, i) => ({ id: i, title: `This is my note ${i}` }))
+     return (
+       <div sx={{ variant: "containers.page" }}>
+         <h1>My Notes</h1>
+         <div
+           sx={{
+             display: "flex",
+             justifyContent: "space-between",
+             alignItems: "center",
+             flexWrap: "wrap",
+           }}
+         >
+           {notes.map(note => (
+             <div key={note.id} sx={{ width: "33%", p: 2 }}>
+               <Link href="/notes/[id]" as={`/notes/${note.id}`}>
+                 <a sx={{ textDecoration: "none", cursor: "pointer" }}>
+                   <div sx={{ variant: "containers.card" }}>
+                     <strong>{note.title}</strong>
+                   </div>
+                 </a>
+               </Link>
+             </div>
+           ))}
+         </div>
+       </div>
+     )
+   }
+   ```
+
+   ```jsx fp=pages/notes/[id].jsx nu
+   /** @jsxImportSource theme-ui */
+   import { useRouter } from "next/router"
+
+   export default () => {
+     const router = useRouter()
+     const { id } = router.query
+
+     return (
+       <div sx={{ variant: "containers.page" }}>
+         <h1>Note: {id} </h1>
+       </div>
+     )
+   }
+   ```
+
+   </Solution>
+
+5. Customize the Next.js config.
+
+   <Solution>
+
+   ```js fp=next.config.js nu
+   module.exports = {
+     webpack: {
+       // webpack config properties
+     },
+     env: {
+       MY_ENV_VAR: process.env.SECRET,
+     },
+   }
+   ```
+
+   ```js fp=next.config.js nu
+   const { PHASE_PRODUCTION_SERVER } = require("next/constants")
+   const BundleAnalyzerPlugin =
+     require("webpack-bundle-analyzer").BundleAnalyzerPlugin
+
+   module.exports = (phase, { defaultConfig }) => {
+     if (phase === PHASE_PRODUCTION_SERVER) {
+       return {
+         ...defaultConfig,
+         webpack: {
+           plugins: [new BundleAnalyzerPlugin()],
+         },
+       }
+     }
+
+     return defaultConfig
+   }
+   ```
+
+   ```js fp=next.config.js nu
+   const {
+     PHASE_PRODUCTION_BUILD,
+     PHASE_DEVELOPMENT_SERVER,
+   } = require("next/constants")
+
+   module.exports = (phase, { defaultConfig }) => {
+     if (phase === PHASE_DEVELOPMENT_SERVER) {
+       console.log("Development mode!")
+     }
+     if (phase === PHASE_PRODUCTION_BUILD) {
+       console.log("Production mode!")
+     }
+     return defaultConfig
+   }
+   ```
+
+   </Solution>
+
+6. How to add plugins in your project?
+
+   <Solution>
+
+   ```js fp=next.config.js nu
+   const withOffline = require("next-offline")
+   const config = {
+     // your next config
+   }
+
+   module.exports = withOffline(config)
+   ```
+
+   ```js fp=next.config.js nu
+   const withPlugins = require("next-compose-plugins")
+   const withOffline = require("next-offline")
+   const withReactSvg = require("next-react-svg")
+   const config = {
+     env: {
+       MY_ENV: process.env.MY_ENV,
+     },
+   }
+
+   module.exports = withPlugins(
+     [
+       withOffline,
+       [
+         withReactSvg,
+         {
+           // config for the SVG plugin
+         },
+       ],
+     ],
+     config
+   )
+   ```
+
+   </Solution>
+
+7. Give an example which uses a `.env` file.
+
+   <Solution>
+
+   ```env fp=.env nu
+   HELP_APP_URL=https://www.google.com/
+   ```
+
+   ```jsx fp=src/components/nav.js
+   <a
+     sx={{
+       color: "text",
+       fontSize: 3,
+       cursor: "pointer",
+     }}
+     href={process.env.HELP_APP_URL}
+   >
+     Help
+   </a>
+   ```
+
+   </Solution>
+
+8. Configure the project to be able to use TypeScript.
+
+   <Solution>
+
+   ```sh
+   touch tsconfig.json
+   npm install --save-dev typescript @types/react @types/node
+   npm run dev
+   ```
+
+   </Solution>
+
+9. Create a simple API route.
+
+   <Solution>
+
+   ```js fp=pages/api/index.js nu
+   export default (req, res) => {
+     res.statusCode = 200
+     res.setHeader("Content-Type", "application/json")
+     res.end(JSON.stringify({ message: "hello" }))
+   }
+   ```
+
+   </Solution>
+
+10. Implement the `/api/note/` and `/api/note/:id` routes.
+
+    <Solution>
+
+    ```js fp=src/data/data.js nu
+    const notes = []
+
+    module.exports = notes
+    ```
+
+    ```js fp=pages/api/note/index.js nu
+    import nc from "next-connect"
+    import notes from "../../../src/data/data"
+
+    const handler = nc()
+      .get((req, res) => {
+        res.json({ data: notes })
+      })
+      .post((req, res) => {
+        const id = Date.now()
+        const note = { ...req.body, id }
+        notes.push(note)
+        res.json({ data: note })
+      })
+
+    export default handler
+    ```
+
+    ```js fp=pages/api/note/[id].js
+    import nc from "next-connect"
+    import notes from "../../../src/data/data"
+
+    const getNote = id => notes.find(n => n.id === parseInt(id))
+
+    const handler = nc()
+      .get((req, res) => {
+        const note = getNote(req.query.id)
+
+        if (!note) {
+          res.status(404)
+          res.end()
+          return
+        }
+
+        res.json({ data: note })
+      })
+      .patch((req, res) => {
+        const note = getNote(req.query.id)
+
+        if (!note) {
+          res.status(404)
+          res.end()
+          return
+        }
+
+        const i = notes.findIndex(n => n.id === parseInt(req.query.id))
+        const updated = { ...note, ...req.body }
+        notes[i] = updated
+        res.json({ data: updated })
+      })
+      .delete((req, res) => {
+        const note = getNote(req.query.id)
+
+        if (!note) {
+          res.status(404)
+          res.end()
+          return
+        }
+
+        const i = notes.findIndex(n => n.id === parseInt(req.query.id))
+        notes.splice(i, 1)
+        res.json({ data: req.query.id })
+      })
+
+    export default handler
+    ```
+
+    </Solution>

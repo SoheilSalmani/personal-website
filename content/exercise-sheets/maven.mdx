@@ -141,3 +141,67 @@ tags:
    - `**/Abstract*TestCase.java`
 
    </Solution>
+
+10. What is a SNAPSHOT version?
+
+    <Solution>
+
+    The `SNAPSHOT` value refers to the _latest_ code along a development branch,
+    and provides no guarantee the code is stable or unchanging. Conversely, the
+    code in a _release_ version is unchanging.
+
+    </Solution>
+
+11. Add a new plugin and configure it.
+
+    <Solution>
+
+    ```xml fp=pom.xml
+    ...
+      <build>
+        <plugins>
+          <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>exec-maven-plugin</artifactId>
+              <version>3.0.0</version>
+              <configuration>
+                <executable>java</executable>
+                <arguments>
+                  <argument>-cp</argument>
+                  <classpath />
+                  <argument>com.mycompany.app.App</argument>
+                </arguments>
+              </configuration>
+            </plugin>
+        </plugins>
+      </build>
+    ...
+    ```
+
+    The `configuration` element applies the given parameters to every goal from
+    a plugin. It is also possible to add new goals to the process, and configure
+    specific goals.
+
+    **Note:** Without a specified version, the default behavior is to use the
+    latest available.
+
+    </Solution>
+
+12. Add resources in a JAR file?
+
+    <Solution>
+
+    ```sh
+    mkdir -p src/main/resources/META-INF
+    touch src/main/resources/application.properties
+    mkdir src/test/resources
+    touch src/test/resources/test.properties
+    ```
+
+    **Note:** You will also notice some other files there like
+    `META-INF/MANIFEST.MF` as well as a `pom.xml` and `pom.properties` file.
+    These come standard with generation of a JAR in Maven. You can create your
+    own manifest if you choose, but Maven will generate one by default if you
+    don't.
+
+    </Solution>

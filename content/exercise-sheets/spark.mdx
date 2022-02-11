@@ -152,3 +152,125 @@ tags:
    ```
 
    </Solution>
+
+1. Write a Spark application which ingests the following CSV file, create a new
+   column, and write the data in a PostgreSQL database:
+
+   ```csv fp=data/authors.csv nu
+   lname,fname
+   Pascal,Blaise
+   Voltaire,François
+   Perrin,Jean-Georges
+   Maréchal,Pierre Sylvain
+   Karau,Holden
+   Zaharia,Matei
+   ```
+
+   <Solution>
+
+   ```xml fp=pom.xml nu
+   <?xml version="1.0" encoding="UTF-8"?>
+   <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+     <modelVersion>4.0.0</modelVersion>
+
+     <groupId>com.mycompany.app</groupId>
+     <artifactId>my-app</artifactId>
+     <version>1.0-SNAPSHOT</version>
+
+     <properties>
+       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+       <maven.compiler.release>8</maven.compiler.release>
+       <spark.version>3.2.1</spark.version>
+       <scala.version>2.13</scala.version>
+       <postgresql.version>42.3.1</postgresql.version>
+     </properties>
+
+     <dependencies>
+       <dependency>
+         <groupId>org.apache.spark</groupId>
+         <artifactId>spark-core_${scala.version}</artifactId>
+         <version>${spark.version}</version>
+       </dependency>
+       <dependency>
+         <groupId>org.apache.spark</groupId>
+         <artifactId>spark-sql_${scala.version}</artifactId>
+         <version>${spark.version}</version>
+       </dependency>
+       <dependency>
+         <groupId>org.postgresql</groupId>
+         <artifactId>postgresql</artifactId>
+         <version>${postgresql.version}</version>
+       </dependency>
+     </dependencies>
+
+     <build>
+       <plugins>
+         <plugin>
+           <groupId>org.codehaus.mojo</groupId>
+           <artifactId>exec-maven-plugin</artifactId>
+           <version>3.0.0</version>
+           <configuration>
+             <executable>java</executable>
+             <arguments>
+               <argument>-classpath</argument>
+               <classpath />
+               <argument>com.mycompany.app.App</argument>
+             </arguments>
+           </configuration>
+         </plugin>
+       </plugins>
+     </build>
+   </project>
+   ```
+
+   ```java nu
+   package com.mycompany.app;
+
+   import static org.apache.spark.sql.functions.concat;
+   import static org.apache.spark.sql.functions.lit;
+
+   import java.util.Properties;
+
+   import org.apache.spark.sql.Dataset;
+   import org.apache.spark.sql.Row;
+   import org.apache.spark.sql.SaveMode;
+   import org.apache.spark.sql.SparkSession;
+
+   public class App {
+
+     public static void main(String[] args) {
+       App app = new App();
+       app.start();
+     }
+
+     private void start() {
+       SparkSession spark = SparkSession.builder()
+           .appName("CSV to DB")
+           .master("local")
+           .getOrCreate();
+
+       Dataset<Row> df = spark.read()
+           .format("csv")
+           .option("header", "true")
+           .load("data/authors.csv");
+
+       df = df.withColumn(
+           "name",
+           concat(df.col("lname"), lit(", "), df.col("fname")));
+
+       String dbConnectionUrl = "jdbc:postgresql://postgres/spark";
+       Properties prop = new Properties();
+       prop.setProperty("driver", "org.postgresql.Driver");
+       prop.setProperty("user", "spark");
+       prop.setProperty("password", "spark");
+       df.write()
+           .mode(SaveMode.Overwrite)
+           .jdbc(dbConnectionUrl, "authors", prop);
+
+       System.out.println("Process complete");
+     }
+   }
+   ```
+
+   </Solution>

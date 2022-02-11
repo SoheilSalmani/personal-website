@@ -152,7 +152,7 @@ tags:
 
    </Solution>
 
-5. What is the type of `car`?
+5. What is the type of `cars`?
 
    ```ts fp=src/index.ts nu
    const cars = [
@@ -191,3 +191,243 @@ tags:
    ```
 
    </Solution>
+
+7. Test union and intersection types, and narrowing with type guards.
+
+   <Solution>
+
+   ```ts nu
+   function flipCoin(): "heads" | "tails" {
+     if (Math.random() > 0.5) return "heads"
+     return "tails"
+   }
+
+   function maybeGetUserInfo():
+     | ["error", Error]
+     | ["success", { name: string; email: string }] {
+     if (flipCoin() === "heads") {
+       return ["success", { name: "Mike North", email: "mike@example.com" }]
+     } else {
+       return ["error", new Error("The coin landed on TAILS :(")]
+     }
+   }
+
+   const outcome = maybeGetUserInfo()
+   const [first, second] = outcome
+
+   if (second instanceof Error) {
+     // In this branch of your code, second is an Error
+     second
+   } else {
+     // In this branch of your code, second is the user info
+     second
+   }
+
+   if (outcome[0] === "error") {
+     // In this branch of your code, second is an Error
+     outcome
+   } else {
+     // In this branch of your code, second is the user info
+     outcome
+   }
+   ```
+
+   ```ts nu
+   const ONE_WEEK = 1000 * 60 * 60 * 24 * 7
+
+   function makeWeek(): Date & { end: Date } {
+     const start = new Date()
+     const end = new Date(start.valueOf() + ONE_WEEK)
+     return { ...start, end }
+   }
+
+   const thisWeek = makeWeek()
+   thisWeek.toISOString()
+   thisWeek.end.toISOString()
+   ```
+
+   </Solution>
+
+8. Declare type aliases.
+
+   <Solution>
+
+   ```ts nu
+   import { UserContactInfo } from "./types"
+
+   function printContactInfo(info: UserContactInfo) {
+     console.log(info)
+     console.log(info.email)
+   }
+
+   const painter = {
+     name: "Robert Ross",
+     email: "bross@pbs.org",
+     favoriteColor: "Titanium White",
+   }
+
+   printContactInfo(painter)
+   ```
+
+   ```ts nu
+   type UserInfoOutcomeError = ["error", Error]
+   type UserInfoOutcomeSuccess = ["success", { name: string; email: string }]
+   type UserInfoOutcome = UserInfoOutcomeError | UserInfoOutcomeSuccess
+
+   export function maybeGetUserInfo(): UserInfoOutcome {
+     if (Math.random() > 0.5) {
+       return ["success", { name: "Mike North", email: "mike@example.com" }]
+     } else {
+       return ["error", new Error("The coin landed on TAILS :(")]
+     }
+   }
+   ```
+
+   ```ts
+   type SpecialDate = Date & { getReason(): string }
+
+   const newYearsEve: SpecialDate = {
+     ...new Date(),
+     getReason: () => "Last day of the year",
+   }
+   newYearsEve.getReason
+   ```
+
+   You can create type aliases that combine existing types with new behavior by
+   using Intersection (`&`) types.
+
+   While there’s no true `extends` keyword that can be used when defining type
+   aliases, this pattern has a very similar effect
+
+   </Solution>
+
+9. Define interfaces. Test `extends` and `implements`.
+
+   <Solution>
+
+   ```ts nu
+   interface UserInfo {
+     name: string
+     email: string
+   }
+
+   function printUserInfo(info: UserInfo) {
+     info.name
+   }
+   ```
+
+   ```ts nu
+   interface Animal {
+     isAlive(): boolean
+   }
+   interface Mammal extends Animal {
+     getFurOrHairColor(): string
+   }
+   interface Dog extends Mammal {
+     getBreed(): string
+   }
+   function careForDog(dog: Dog) {
+     dog.getBreed
+   }
+   ```
+
+   ```ts nu
+   class LivingOrganism {
+     isAlive() {
+       return true
+     }
+   }
+   interface AnimalLike {
+     eat(food): void
+   }
+   interface CanBark {
+     bark(): string
+   }
+
+   class Dog extends LivingOrganism implements AnimalLike, CanBark {
+     bark() {
+       return "woof"
+     }
+     eat(food) {
+       consumeFood(food)
+     }
+   }
+   ```
+
+   **Note:** While it’s possible to use implements with a type alias, if the
+   type ever breaks the “object type” rules there’s some potential for
+   problems...
+
+   ```ts nu
+   interface AnimalLike {
+     isAlive(): boolean
+   }
+   function feed(animal: AnimalLike) {
+     animal.eat
+     animal.isAlive
+   }
+
+   interface AnimalLike {
+     eat(food): void
+   }
+   ```
+
+   </Solution>
+
+10. Declare a recursive type.
+
+    <Solution>
+
+    ```ts nu
+    type NestedNumbers = number | NestedNumbers[]
+
+    const val: NestedNumbers = [3, 4, [5, 6, [7], 59], 221]
+
+    if (typeof val !== "number") {
+      val.push(41)
+    }
+    ```
+
+    </Solution>
+
+11. Edit the code to pass all tests.
+
+    ```ts nu
+    type JSONObject = any
+    type JSONArray = any
+    type JSONValue = any
+
+    function isJSON(arg: JSONValue) {}
+
+    // POSITIVE test cases (must pass)
+    isJSON("hello")
+    isJSON([4, 8, 15, 16, 23, 42])
+    isJSON({ greeting: "hello" })
+    isJSON(false)
+    isJSON(true)
+    isJSON(null)
+    isJSON({ a: { b: [2, 3, "foo"] } })
+
+    // NEGATIVE test cases (must fail)
+    // @ts-expect-error
+    isJSON(() => "")
+    // @ts-expect-error
+    isJSON(class {})
+    // @ts-expect-error
+    isJSON(undefined)
+    // @ts-expect-error
+    isJSON(new BigInt(143))
+    // @ts-expect-error
+    isJSON(isJSON)
+    ```
+
+    <Solution>
+
+    ```ts
+    type JSONPrimitive = string | number | boolean | null
+    type JSONObject = { [k: string]: JSONValue }
+    type JSONArray = JSONValue[]
+    type JSONValue = JSONArray | JSONObject | JSONPrimitive
+    ```
+
+    </Solution>

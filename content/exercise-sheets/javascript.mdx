@@ -92,3 +92,42 @@ tags:
    ```
 
    </Solution>
+
+4. Declare an object with a function (two ways).
+
+   <Solution>
+
+   ```js nu
+   const obj1 = {
+     name: "Soheil",
+     color: "black",
+     speak: function () {
+       console.log("My name is", this.name)
+     },
+   }
+
+   const obj2 = {
+     name: "Soheil",
+     color: "black",
+     speak() {
+       console.log("My name is", this.name)
+     },
+   }
+   ```
+
+   </Solution>
+
+5. Give an example using the `forEach` method.
+
+   <Solution>
+
+   ```js nu
+   const x = [1, 2, 3]
+   x.forEach((value, index, list) => {
+     console.log(value)
+     console.log(index)
+     console.log(list)
+   })
+   ```
+
+   </Solution>

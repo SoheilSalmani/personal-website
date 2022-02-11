@@ -318,3 +318,189 @@ tags:
     ```
 
     </Solution>
+
+11. Write schema tests.
+
+    <Solution>
+
+    ```yml fp=models/schema.yml nu
+    version: 2
+
+    models:
+      - name: customers
+        columns:
+          - name: customer_id
+            tests:
+              - unique
+              - not_null
+
+      - name: stg_customers
+        columns:
+          - name: customer_id
+            tests:
+              - unique
+              - not_null
+
+      - name: stg_orders
+        columns:
+          - name: order_id
+            tests:
+              - unique
+              - not_null
+          - name: status
+            tests:
+              - accepted_values:
+                  values:
+                    [
+                      "placed",
+                      "shipped",
+                      "completed",
+                      "return_pending",
+                      "returned",
+                    ]
+          - name: customer_id
+            tests:
+              - not_null
+              - relationships:
+                  to: ref('stg_customers')
+                  field: customer_id
+    ```
+
+    ```sh
+    dbt test
+    ```
+
+    </Solution>
+
+12. What tests are available out of the box in dbt?
+
+    <Solution>
+
+    Out of the box, dbt ships with the following tests:
+
+    - `unique`
+    - `not_null`
+    - `accepted_values`
+    - `relationships` (i.e. referential integrity)
+
+    </Solution>
+
+13. What tests should we add to a project?
+
+    <Solution>
+
+    We recommend that every model has a test on a primary key, that is, a column
+    that is `unique` and `not_null`.
+
+    We also recommend that you test any assumptions on your source data. For
+    example, if you believe that your payments can only be one of three payment
+    methods, you should test that assumption regularly — a new payment method
+    may introduce logic errors in your SQL.
+
+    In advanced dbt projects, we recommend using sources and running these
+    source data-integrity tests against the sources rather than models.
+
+    </Solution>
+
+14. When should we run tests?
+
+    <Solution>
+
+    You should run your tests whenever you are writing new code (to ensure you
+    haven't broken any existing models by changing SQL), and whenever you run
+    your transformations in production (to ensure that your assumptions about
+    your source data are still valid).
+
+    </Solution>
+
+15. Document your models.
+
+    <Solution>
+
+    ```yml fp=models/schema.yml nu hl=5,8,13,16,25,28
+    version: 2
+
+    models:
+      - name: customers
+        description: One record per customer
+        columns:
+          - name: customer_id
+            description: Primary key
+            tests:
+              - unique
+              - not_null
+          - name: first_order_date
+            description: NULL when a customer has not yet placed an order.
+
+      - name: stg_customers
+        description: This model cleans up customer data
+        columns:
+          - name: customer_id
+            description: Primary key
+            tests:
+              - unique
+              - not_null
+
+      - name: stg_orders
+        description: This model cleans up order data
+        columns:
+          - name: order_id
+            description: Primary key
+            tests:
+              - unique
+              - not_null
+          - name: status
+            tests:
+              - accepted_values:
+                  values:
+                    [
+                      "placed",
+                      "shipped",
+                      "completed",
+                      "return_pending",
+                      "returned",
+                    ]
+    ```
+
+    ```sh
+    dbt docs generate
+    dbt docs serve
+    ```
+
+    </Solution>
+
+16. How to write long-form explanations in descriptions?
+
+    <Solution>
+
+    1. Split your description over multiple lines, like so:
+
+       ```yaml
+       version: 2
+
+       models:
+         - name: customers
+           description: >
+             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+             aliquip ex ea commodo consequat.
+       ```
+
+    2. Use a docs block to write the description in a Markdown file.
+
+       ```md fp=models/customers.md nu
+       {% docs customers %}
+       This is the `customers` model.
+       {% enddocs %}
+       ```
+
+       ```yaml fp=schema.yml hl=5
+       version: 2
+
+       models:
+         - name: customers
+           description: "{{ doc('customers') }}"
+       ```
+
+    </Solution>

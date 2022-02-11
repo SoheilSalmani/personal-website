@@ -5,3 +5,138 @@ relatedResources:
 tags:
   - Mathematics
 ---
+
+1. Define $\mathbb{N}$, $\mathbb{Z}$ and $\mathbb{Q}$.
+
+   <Solution>
+
+   - Set of **positive integers** (or **natural numbers**):
+
+     $$
+     \mathbb{N} = \{1, 2, 3, \dots\} \, .
+     $$
+
+   - The set of integers:
+
+     $$
+     \mathbb{Z} = \{\dots, -3, -2, -1, 0, 1, 2, 3, \dots\} \, .
+     $$
+
+   - The set of **rational numbers**:
+
+     $$
+     \mathbb{Q} = \left\{\frac{m}{n} : m, n \in \mathbb{Z}, n \ne 0 \right\} \, .
+     $$
+
+   </Solution>
+
+2. Define what a irrational number is using the number line. Define
+   $\mathbb{R}$.
+
+   <Solution>
+
+   Geometrically, the integers can be represented by points on a line by fixing
+   a base point (signifying the number 0) and a unit distance. Such a line is
+   called the **number line**. By suitably subdividing the segment between 0 and
+   1, we can also represent rational numbers such as $1/n$, where
+   $n \in \mathbb{N}$, and this can, in turn, be used to represent any rational
+   number by a unique point on the number line.
+
+   It is seen that the rational numbers spread themselves rather densely on this
+   line. Nevertheless, several gaps remain. For example, the “number” $\sqrt{2}$
+   can be represented by a unique point between 1 and 2 on the number line using
+   simple geometric constructions this is not a rational number. We are
+   therefore forced to reckon with the so-called _irrational numbers_, which are
+   precisely the “numbers” needed to fill the gaps left on the number line after
+   marking all the rational numbers. The rational numbers and the irrational
+   numbers together constitute the set $\mathbb{R}$, called the set of _real
+   numbers_.
+
+   </Solution>
+
+3. Give the five algebraic properties of $\mathbb{R}$.
+
+   <Solution>
+
+   The set $\mathbb{R}$ has the operations of addition (denoted by $+$) and
+   multiplication (denoted by $\cdot$ or by juxtaposition), which extend the
+   usual addition and multiplication of rational numbers and satisfy the
+   following properties.
+
+   - **(A1)** $a + (b + c) = (a + b) + c$ and $a(bc) = (ab)c$ for all
+     $a, b, c \in \mathbb{R}$.
+   - **(A2)** $a + b = b + a$ and $ab = ba$ for all $a,b \in \mathbb{R}$.
+   - **(A3)** There are distinct elements $0, 1 \in \mathbb{R}$ satisfying the
+     following: $a + 0 = a$ and $a \cdot 1 = a$ for all $a \in \mathbb{R}$.
+   - **(A4)** Given any $a \in \mathbb{R}$, there is $a' \in \mathbb{R}$ such
+     that $a + a' = 0$. Further, if $a \in \mathbb{R}$ is such that $a \ne 0$,
+     then there is $a^* \in \mathbb{R}$ such that $aa^* = 1$.
+   - **(A5)** $a(b + c) = ab + ac$ for all $a, b, c \in \mathbb{R}$.
+
+   </Solution>
+
+4. Prove that $a \cdot 0 = 0$ for all $a \in \mathbb{R}$.
+
+   <Solution>
+
+   First, by A3, $0 + 0 = 0$. So, by A5,
+   $a \cdot 0 = a(0 + 0) = a \cdot 0 + a \cdot 0$. Now, by A4, there is a
+   $b' \in \mathbb{R}$ such that $a \cdot 0 + b' = 0$. Thus,
+
+   $$
+   0 = a \cdot 0 + b' = (a \cdot 0 + a \cdot 0) + b' = a \cdot 0 + (a \cdot 0 + b') = a \cdot 0 + 0 = a \cdot 0 \, ,
+   $$
+
+   where the third equality follows from A1 and the last equality follows from
+   A3.
+
+   </Solution>
+
+5. Define the _negative_ (or _additive inverse_) of $a$. Same with the
+   _reciprocal_ (or _multiplicative inverse_) of $a$.
+
+   <Solution>
+
+   Given any $a \in \mathbb{R}$, an element $a' \in \mathbb{R}$ such that
+   $a + a' = 0$ is unique; this element will be called the **negative** or the
+   **additive inverse** of $a$ and is denoted by $-a$. Likewise, if
+   $a \in \mathbb{R}$ and $a \ne 0$, then an element $a^* \in \mathbb{R}$ such
+   that $aa^* = 1$ is unique; this element is called the **reciprocal** or the
+   **multiplicative inverse** of $a$ and is denoted by $a^{-1}$ or by $1/a$.
+
+   </Solution>
+
+6. What is the value of $\sum_{i=1}^n a_i$ and $\prod_{i=1}^n a_i$ if $n = 0$?
+
+   <Solution>
+
+   If $n = 0$, then $\sum_{i=1}^n a_i := 0$, whereas $\prod_{i=1}^n a_i := 1$.
+
+   </Solution>
+
+7. Give the two order properties of $\mathbb{R}$. Define an _order relation_ on
+   $\mathbb{R}$.
+
+   <Solution>
+
+   The set $\mathbb{R}$ contains a subset $\mathbb{R}^+$, called the set of all
+   positive real numbers, satisfying the following properties:
+
+   - **(O1)** Given any $a \in \mathbb{R}$, exactly one of the following
+     statements is true:
+
+     $$
+     a \in \mathbb{R}^+ ; \quad a = 0; \quad -a \in \mathbb{R}^+ \, .
+     $$
+
+   - **(O2)** If $a,b \in \mathbb{R}^+$, then $a + b \in \mathbb{R}^+$ and
+     $ab \in \mathbb{R}^+$.
+
+   Given the existence of $\mathbb{R}^+$, we can define an _order relation_ on
+   $\mathbb{R}$ as follows. For $a,b \in \mathbb{R}$, define $a$ to be **less
+   than** $b$, and write $a < b$, if $b - a \in \mathbb{R}^+$. Sometimes, we
+   write $b > a$ in place of $a < b$ and say that $b$ is **greater than** $a$.
+   With this notation, it follows from the algebraic properties that
+   $\mathbb{R}^+ = \{x \in \mathbb{R} : x > 0\}$.
+
+   </Solution>
