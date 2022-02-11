@@ -139,3 +139,182 @@ tags:
    ```
 
    </Solution>
+
+4. Create a branch named `add-customers-model`. Add the `customers.sql` model,
+   and run dbt.
+
+5. How can I see the SQL that dbt is running?
+
+   <Solution>
+
+   To check out the SQL that dbt is running, you can look in:
+
+   - dbt Cloud:
+     - Within the run output, click on a model name, and then select "Details"
+   - dbt CLI:
+     - The `target/compiled/` directory for compiled `select` statements
+     - The `target/run/` directory for compiled `create` statements
+     - The `logs/dbt.log` file for verbose logging.
+
+   </Solution>
+
+6. How did dbt choose which schema to build my models in?
+
+   <Solution>
+
+   By default, dbt builds models in your target schema. To change your target
+   schema:
+
+   - If you're developing in **dbt Cloud**, these are set for each user when you
+     first use a development environment.
+   - If you're developing with the **dbt CLI**, this is the `schema:` parameter
+     in your `profiles.yml` file.
+
+   </Solution>
+
+7. Update the materialization of some models. Then, delete the example models.
+
+   <Solution>
+
+   ```yml fp=dbt_project.yml
+   models:
+     jaffle_shop:
+       +materialized: table
+       example:
+         +materialized: view
+   ```
+
+   ```sh
+   dbt run
+   ```
+
+   ```sql fp=models/customers.sql nu
+   {{
+     config(
+       materialized='view'
+     )
+   }}
+
+   with customers as (
+
+       select
+           id as customer_id
+           ...
+
+   )
+   ```
+
+   ```sh
+   dbt run
+   dbt run --full-refresh # BigQuery
+   ```
+
+   </Solution>
+
+8. What other model configurations are there?
+
+   <Solution>
+
+   You can also configure:
+
+   - tags to support easy categorization and graph selection
+   - custom schemas to split your models across multiple schemas
+   - aliases if your view/table name should differ from the filename
+   - snippets of SQL to run at the start or end of a model, known as hooks
+   - warehouse-specific configurations for performance (e.g. `sort` and `dist`
+     keys on Redshift, `partitions` on BigQuery)
+
+   </Solution>
+
+9. Refactor your code to have three dbt models.
+
+   <Solution>
+
+   ```sql fp=models/stg_orders.sql nu
+   select
+       id as order_id,
+       user_id as customer_id,
+       order_date,
+       status
+
+   from `dbt-tutorial`.jaffle_shop.orders
+   ```
+
+   ```sql fp=models/staging/stg_customers.sql nu
+   select
+       id as customer_id,
+       first_name,
+       last_name
+
+   from `dbt-tutorial`.jaffle_shop.customers
+   ```
+
+   ```sql fp=models/customers.sql nu hl=3,9
+   with customers as (
+
+       select * from {{ ref('stg_customers') }}
+
+   ),
+
+   orders as (
+
+       select * from {{ ref('stg_orders') }}
+
+   ),
+
+   customer_orders as (
+
+       select
+           customer_id,
+
+           min(order_date) as first_order_date,
+           max(order_date) as most_recent_order_date,
+           count(order_id) as number_of_orders
+
+       from orders
+
+       group by 1
+
+   ),
+
+   final as (
+
+       select
+           customers.customer_id,
+           customers.first_name,
+           customers.last_name,
+           customer_orders.first_order_date,
+           customer_orders.most_recent_order_date,
+           coalesce(customer_orders.number_of_orders, 0) as number_of_orders
+
+       from customers
+
+       left join customer_orders using (customer_id)
+
+   )
+
+   select * from final
+   ```
+
+   ```yml fp=dbt_project.yml hl=4..5
+   models:
+     jaffle_shop:
+       +materialized: table
+       staging:
+         +materialized: view
+   ```
+
+   </Solution>
+
+10. How to select resources to build?
+
+    <Solution>
+
+    To select resources to build, use the `--select` flag (or `-s` flag):
+
+    ```sh
+    dbt run --select +customers --exclude customers
+    dbt run -s staging.*
+    ```
+
+    </Solution>
