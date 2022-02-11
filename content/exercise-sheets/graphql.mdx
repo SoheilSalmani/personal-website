@@ -1,0 +1,88 @@
+---
+title: GraphQL
+relatedResources:
+  - https://frontendmasters.com/courses/server-graphql-nodejs/
+tags:
+  - GraphQL
+---
+
+1. What is GraphQL?
+
+   <Solution>
+
+   A spec that describes a declarative query language that your clients can use
+   to ask an API for the exact data they want. This is achieved by creating a
+   strongly typed Schema for your API, ultimate flexibility in how your API can
+   resolve data, and client queries validated against your Schema.
+
+   </Solution>
+
+2. Define _Types_, _Fields_, _Scalars_, _Query_ and _Mutation_.
+
+   <Solution>
+
+   - **Types:** a construct defining a shape with fields.
+   - **Fields:** keys on a Type that have a name and a value type.
+   - **Scalars:** primitive value type build into GraphQL.
+   - **Query:** type that defines how clients can access data.
+   - **Mutation:** type that defines how clients can modify or create data.
+
+   </Solution>
+
+3. Build a simple GraphQL server using Apollo.
+
+   <Solution>
+
+   ```sh
+   npm install apollo-server graphql
+   ```
+
+   ```js nu
+   const { ApolloServer, gql } = require("apollo-server")
+
+   const typeDefs = gql`
+     type User {
+       email: String!
+       avatar: String
+       friends: [User!]!
+     }
+
+     type Query {
+       me: User!
+     }
+   `
+
+   const resolver = {
+     Query: {
+       me() {
+         return {
+           email: "soheil@salmani.me",
+           avatar: "https://soheil.salmani.me/avatar.svg",
+           friends: [],
+         }
+       },
+     },
+   }
+
+   const server = new ApolloServer({
+     typeDefs,
+     resolvers,
+   })
+
+   server.listen(4000).then(() => console.log("on port 4000"))
+   ```
+
+   ```graphql nu
+   {
+     me {
+       email
+       avatar
+       friends {
+         email
+         avatar
+       }
+     }
+   }
+   ```
+
+   </Solution>
